@@ -6,11 +6,11 @@ const ProductDisplay = () => (
     <div className="product">
       <img
         src="https://i.imgur.com/EHyR2nP.png"
-        alt="The cover of Stubborn Attachments"
+        alt="Llama Plus"
       />
       <div className="description">
-      <h3>Stubborn Attachments</h3>
-      <h5>$20.00</h5>
+      <h3>Llama Plus</h3>
+      <h5>$8.00 per month</h5>
       </div>
     </div>
     <form action="/create-checkout-session" method="POST">
