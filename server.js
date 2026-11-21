@@ -13,24 +13,35 @@ const YOUR_DOMAIN =
 app.post(
   '/create-checkout-session',
   async (req, res) => {
-    const session = await
-      stripe.checkout.sessions
-        .create({
-          line_items: [
-            {
-              price:
-                process.env
-                  .PRICE_MONTHLY,
-              quantity: 1,
+    try {
+      const session = await
+        stripe.checkout.sessions
+          .create({
+            line_items: [
+              {
+                price:
+                  process.env
+                    .PRICE_MONTHLY,
+                quantity: 1,
+              },
+            ],
+            mode: 'subscription',
+            managed_payments: {
+              enabled: false,
             },
-          ],
-          mode: 'subscription',
-          success_url:
-            `${YOUR_DOMAIN}` +
-            '/checkout?success=true',
-        });
+            success_url:
+              `${YOUR_DOMAIN}` +
+              '/checkout?success=true',
+            cancel_url:
+              `${YOUR_DOMAIN}` +
+              '/checkout?canceled=true',
+          });
 
-    res.redirect(303, session.url);
+      res.redirect(303, session.url);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send(err.message);
+    }
   }
 );
 
