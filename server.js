@@ -7,6 +7,7 @@ const app = express();
 app.use(express.static('public'));
 
 const YOUR_DOMAIN =
+  process.env.DOMAIN ||
   'http://localhost:3000';
 
 app.post(
