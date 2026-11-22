@@ -211,6 +211,9 @@ app.post(
           },
         ],
         mode: 'subscription',
+        automatic_tax: {
+          enabled: true,
+        },
         allow_promotion_codes: true,
         managed_payments: {
           enabled: false,
