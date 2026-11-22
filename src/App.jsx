@@ -1,6 +1,20 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 
+const PORTAL_URL =
+  "https://billing.stripe.com/p/login/test_5kQbJ24Sifts4zG90m6g800";
+
+const PortalLink = () => (
+  <a
+    className="portal-link"
+    href={PORTAL_URL}
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    Manage or cancel your subscription
+  </a>
+);
+
 const ProductDisplay = () => (
   <section>
     <form action="/create-checkout-session" method="POST">
@@ -25,12 +39,14 @@ const ProductDisplay = () => (
       </div>
       <button type="submit">Checkout</button>
     </form>
+    <PortalLink />
   </section>
 );
 
 const Message = ({ message }) => (
   <section>
     <p>{message}</p>
+    {message.startsWith("Order placed!") && <PortalLink />}
   </section>
 );
 
