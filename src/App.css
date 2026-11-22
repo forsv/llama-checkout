@@ -656,6 +656,21 @@ a {
   color: var(--white);
 }
 
+.unlocked {
+  display: inline-block;
+  margin: 0 0 1.2rem;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+}
+
+.unlocked li {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0.4rem 0;
+}
+
 #pricing,
 #yearly {
   scroll-margin-top: 1rem;

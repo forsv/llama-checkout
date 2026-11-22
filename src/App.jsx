@@ -704,10 +704,66 @@ function Landing() {
 }
 
 function Success() {
+  const params = new URLSearchParams(window.location.search);
+  const sessionId = params.get("session_id");
+  const [features, setFeatures] = useState([]);
+
+  useEffect(() => {
+    if (!sessionId) return undefined;
+    let cancelled = false;
+    let timer;
+
+    const load = (attempt) => {
+      fetch(
+        "/session-status?session_id=" +
+          encodeURIComponent(sessionId)
+      )
+        .then((response) => {
+          if (!response.ok) throw new Error("status");
+          return response.json();
+        })
+        .then((data) => {
+          if (cancelled) return;
+          const names = Array.isArray(data.features)
+            ? data.features.filter((name) => name)
+            : [];
+          if (names.length > 0) {
+            setFeatures(names);
+            return;
+          }
+          if (attempt < 8) {
+            timer = setTimeout(() => load(attempt + 1), 1000);
+          }
+        })
+        .catch(() => {
+          if (!cancelled) setFeatures([]);
+        });
+    };
+
+    load(0);
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
+  }, [sessionId]);
+
   return (
     <main className="status-wrap">
       <section className="status-card">
         <h1>Welcome to Llama Plus</h1>
+        {features.length > 0 && (
+          <>
+            <p>Unlocked on your account</p>
+            <ul className="unlocked">
+              {features.map((name) => (
+                <li key={name}>
+                  <span className="check" aria-hidden="true" />
+                  {name}
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
         <PortalLink />
       </section>
     </main>

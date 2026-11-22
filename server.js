@@ -1,5 +1,7 @@
 require('dotenv').config();
+const https = require('https');
 const path = require('path');
+const querystring = require('querystring');
 const stripe = require('stripe')(
   process.env.STRIPE_SECRET_KEY
 );
@@ -161,6 +163,24 @@ app.post(
           ' subscription=' + subscription
       );
     } else if (
+      event.type ===
+      'entitlements.active_entitlement_summary.updated'
+    ) {
+      const summary = event.data.object;
+      const rows =
+        (summary.entitlements &&
+          summary.entitlements.data) ||
+        [];
+      const keys = rows.map(
+        (item) => item.lookup_key
+      );
+      console.log(
+        'ENTITLEMENTS ' +
+          idOf(summary.customer) +
+          ' ' +
+          keys.join(' ')
+      );
+    } else if (
       subscriptionEvents.includes(event.type)
     ) {
       const object = event.data.object;
@@ -228,7 +248,8 @@ app.post(
         },
         success_url:
           `${YOUR_DOMAIN}` +
-          '/checkout?success=true',
+          '/checkout?success=true' +
+          '&session_id={CHECKOUT_SESSION_ID}',
         cancel_url:
           `${YOUR_DOMAIN}` +
           '/checkout#pricing',
@@ -261,6 +282,93 @@ app.post(
     }
   }
 );
+
+const stripeRequest = (method, requestPath) =>
+  new Promise((resolve, reject) => {
+    const req = https.request(
+      {
+        hostname: 'api.stripe.com',
+        path: requestPath,
+        method,
+        headers: {
+          Authorization:
+            'Bearer ' +
+            process.env.STRIPE_SECRET_KEY,
+        },
+      },
+      (response) => {
+        let body = '';
+        response.on('data', (chunk) => {
+          body += chunk;
+        });
+        response.on('end', () => {
+          if (response.statusCode >= 400) {
+            reject(new Error(body));
+            return;
+          }
+          resolve(JSON.parse(body));
+        });
+      }
+    );
+    req.on('error', reject);
+    req.end();
+  });
+
+const sessionIdPattern =
+  /^cs_(test|live)_[A-Za-z0-9]+$/;
+
+app.get('/session-status', async (req, res) => {
+  const sessionId = req.query.session_id;
+  if (
+    typeof sessionId !== 'string' ||
+    !sessionIdPattern.test(sessionId)
+  ) {
+    res.status(400).end();
+    return;
+  }
+
+  try {
+    const session = await
+      stripe.checkout.sessions.retrieve(sessionId);
+    const customer = idOf(session.customer);
+    const names = [];
+    if (customer !== 'none') {
+      const listed = await stripeRequest(
+        'GET',
+        '/v1/entitlements/active_entitlements?' +
+          querystring.stringify({
+            customer,
+            limit: 100,
+          })
+      );
+      const keys = (listed.data || [])
+        .map((item) => item.lookup_key)
+        .filter(Boolean);
+      for (const lookupKey of keys) {
+        const features = await stripeRequest(
+          'GET',
+          '/v1/entitlements/features?' +
+            querystring.stringify({
+              lookup_key: lookupKey,
+              limit: 1,
+            })
+        );
+        const feature =
+          features.data && features.data[0];
+        if (feature && feature.name) {
+          names.push(feature.name);
+        }
+      }
+    }
+    res.json({
+      status: session.status,
+      features: names,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).end();
+  }
+});
 
 const sendCheckoutPage = (req, res) => {
   res.sendFile(path.join(buildDir, 'index.html'));
