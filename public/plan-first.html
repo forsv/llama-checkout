@@ -66,7 +66,7 @@ button:focus-visible{outline:2px solid var(--pri);outline-offset:2px}
 .co{border:1px solid #dfe5ee;border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 6px 20px rgba(20,40,80,.06)}
 .cobar{font-size:11.5px;color:#6b7a94;text-align:center;padding:6px;border-bottom:1px solid var(--line)}
 .cogrid{display:grid;grid-template-columns:1fr 1fr}
-.coL{background:#f5f5f5;padding:18px 18px 22px}
+.coL{background:var(--cobg,#f5f5f5);padding:18px 18px 22px}
 .coR{padding:18px}
 .biz{display:flex;align-items:center;gap:8px;font-weight:600;font-size:12.5px;flex-wrap:wrap}
 .ico{width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 0 0 1px #e1e4ea;display:flex;align-items:center;justify-content:center;font-size:13px}
@@ -171,7 +171,10 @@ code{font:11.5px Menlo,Consolas,monospace;background:#eef1f6;padding:1px 5px;bor
       </div>
       <div class="f" id="codeBox"><label class="lab" for="code">Promo code · 20% off the first payment</label><div class="in"><input type="text" id="code"></div></div>
       <div class="f"><span class="lab">Brand on the payment page</span>
-        <div class="in"><input type="color" id="brand" aria-label="Button color"><span>Button color</span><label class="sfx" style="display:flex;gap:5px;align-items:center"><input type="checkbox" id="icon">Logo</label></div></div>
+        <div class="in"><input type="color" id="brand" aria-label="Button color"><span>Button color</span><label class="sfx" style="display:flex;gap:5px;align-items:center"><input type="checkbox" id="icon">Logo</label></div>
+        <div class="in"><input type="color" id="bg" aria-label="Background color"><span>Background color</span></div>
+        <button class="btn o" id="upBtn" style="width:100%">Upload brand assets</button><input type="file" id="up" accept="image/*" hidden>
+        <div class="small" id="upNote" style="margin-top:5px"></div></div>
       <div class="f"><span class="lab">Countries you sell to</span>
         <div class="sel" id="sel"></div>
         <div class="pick"><div class="in"><input type="text" id="cq" placeholder="Search countries" autocomplete="off" aria-label="Search countries"></div><div class="menu" id="cmenu" hidden></div></div>
@@ -227,7 +230,7 @@ const EURO='AT BE CY EE FI FR DE GR IE IT LV LT LU MT NL PT SK SI ES HR'.split('
 let dn;try{dn=new Intl.DisplayNames(['en'],{type:'region'});}catch(e){}
 const cname=c=>{if(c==='US')return 'United States';try{return dn?dn.of(c):c;}catch(e){return c;}};
 const ALL=AP.map(c=>({c,n:cname(c)})).sort((a,b)=>a.n.localeCompare(b.n));
-const DEF={name:'Plus',mOn:true,mAmt:8,yOn:true,yAmt:80,tDays:7,tOn:'yearly',promo:true,portal:true,anchor:false,tax:false,icon:true,brand:'#008cff',code:'LAUNCH20',c:['IN','NL','BR'],lang:'node',ui:'react',vc:'US',vp:'yearly',applied:false};
+const DEF={name:'Plus',mOn:true,mAmt:8,yOn:true,yAmt:80,tDays:7,tOn:'yearly',promo:true,portal:true,anchor:false,tax:false,icon:true,brand:'#008cff',bg:'#f5f5f5',logoData:null,logoName:'',code:'LAUNCH20',c:['IN','NL','BR'],lang:'node',ui:'react',vc:'US',vp:'yearly',applied:false};
 let S=JSON.parse(JSON.stringify(DEF));let open=null;let done={};let tabs={};let chat=[];
 const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
@@ -356,26 +359,30 @@ const CARDS=[['Payment succeeds','4242 4242 4242 4242'],['Payment needs authenti
 function steps(){
   const ps=plans();const g=localGroups();const gk=Object.keys(g);const st=[];
   const G1='Create product and price',G2='Accept subscription payments',G3='Additional recommended configurations',G4='Monitor your subscriptions',G5='Go live';
+  const pmList=gk.length?gk.join(', '):'';
+  const run=S.lang==='node'?'npm install\nnpm start':S.lang==='python'?'pip install -r requirements.txt\npython server.py':'bundle install\nruby server.rb';
   st.push({g:G1,id:'prod',auto:1,a:esc(S.name)+' and '+ps.length+' price'+(ps.length===1?'':'s')+' created in your sandbox',
-    h:'<p>Created from your plan, so there is no product form to retype and the guide, the Dashboard and the sample all show '+esc(S.name)+'.</p><table>'+ps.map(p=>'<tr><td><code>price_… '+p+'</code></td><td>'+(p==='monthly'?usd(S.mAmt)+' per month':usd(S.yAmt)+' per year')+'</td></tr>').join('')+'</table><p style="margin-top:6px"><span class="tag mutd">Simulated in this prototype</span></p>'});
+    h:'<p>Created from your plan, so there is no product form to retype, and the guide, the Dashboard and the sample all show the same product.</p><table><tr><td>Name</td><td>'+esc(S.name)+'</td></tr>'+ps.map(p=>'<tr><td>Price</td><td>'+(p==='monthly'?usd(S.mAmt)+' per month':usd(S.yAmt)+' per year')+' · <code>price_… '+p+'</code></td></tr>').join('')+'<tr><td>Currency</td><td>USD</td></tr><tr><td>Billing</td><td>Recurring</td></tr><tr><td>Product image</td><td>'+(S.logoData?'Taken from your brand assets':'Upload brand assets on the left to add one')+'</td></tr></table><p style="margin-top:6px"><span class="tag mutd">Simulated in this prototype</span></p>'});
   if(S.c.length)st.push({g:G1,id:'local',a:'Set prices for '+S.c.length+' countr'+(S.c.length===1?'y':'ies')+' outside the United States',
-    h:'<p>For subscriptions sold across borders, converted prices offer cards, Apple Pay and Google Pay only.</p>'+(gk.length?'<p style="margin-top:5px">Add a price in the local currency so these customers can pay the way they already do:</p><table>'+gk.map(k=>'<tr><td><b>'+k+'</b></td><td>'+(g[k].length>4?g[k].length+' countries':g[k].join(', '))+'</td></tr>').join('')+'</table>':'')+'<p style="margin-top:5px">Switch "Customer in" above the preview to see each one.</p>'});
+    h:'<p>Stripe shows each customer the payment methods they are eligible for, so you turn methods on once under Settings, Payment methods. For subscriptions sold across borders, a converted price offers cards, Apple Pay and Google Pay only.</p>'+(gk.length?'<p style="margin-top:5px">Add a price in the local currency so these customers can pay the way they already do:</p><table>'+gk.map(k=>'<tr><td><b>'+k+'</b></td><td>'+(g[k].length>4?g[k].length+' countries':g[k].join(', '))+'</td></tr>').join('')+'</table>':'')+'<p style="margin-top:5px">Switch "Customer in" above the preview to see each one.</p>'});
   st.push({g:G2,id:'sample',auto:1,a:'Sample built for your plan',
-    h:'<p>Subscription mode, '+(ps.length===2?'both prices':'your price')+', and the page shows '+esc(S.name)+', not a placeholder product. The README start command matches the scripts, the Stripe library is current, and each session opts out of Managed Payments, which is on by default and would reject your first Checkout.</p>',files:sampleFiles()});
-  st.push({g:G2,id:'pay',a:'Make a test payment',h:'<p>Run the sample, open the page and pay with a test card. Use any future date and any CVC.</p><table>'+CARDS.slice(0,3).map(c=>'<tr><td>'+c[0]+'</td><td><code>'+c[1]+'</code></td></tr>').join('')+'<tr><td>Returning customer with Link</td><td>Code <code>000000</code></td></tr></table>',
-    files:[['Terminal',(S.lang==='node'?'npm install\nnpm start':S.lang==='python'?'pip install -r requirements.txt\npython server.py':'bundle install\nruby server.rb')+'\n# open http://localhost:4242']]});
+    h:'<p>The sample follows the guide\'s server and checkout page steps, already filled in for your plan:</p><ul><li>'+(S.ui==='react'?'React':'HTML')+' page and '+LN[S.lang]+' server, as you chose</li><li>Current Stripe library installed</li><li>Checkout Session created at <code>/create-checkout-session</code>, the same path as the form\'s action</li><li>Your '+(ps.length===2?'two price IDs':'price ID')+' read from <code>.env</code>, not a placeholder</li><li><code>mode</code> set to <code>subscription</code></li><li>Success and cancel URLs on your own site</li><li>Customer redirected to the session URL</li><li>Order page that shows '+esc(S.name)+' with a checkout button</li><li>Each session opts out of Managed Payments, which is on by default and would reject your first Checkout</li><li>README start command matches the scripts</li></ul><p style="margin-top:5px">Alternative to this page: an embedded pricing table that sends customers to Checkout.</p>',files:sampleFiles()});
+  st.push({g:G2,id:'pay',a:'Make a test payment',h:'<p>Run the sample, open <code>http://localhost:4242</code> and pay with a test card. Use any future date and any CVC.</p><table>'+CARDS.slice(0,3).map(c=>'<tr><td>'+c[0]+'</td><td><code>'+c[1]+'</code></td></tr>').join('')+'<tr><td>Returning customer with Link</td><td>Tick "Save my information", then use code <code>000000</code> next time</td></tr></table><p style="margin-top:5px">This tests the first payment only. Renewals, trial endings and failed payments need a test clock; see the failed renewal step.</p>',
+    files:[['Terminal',run+'\n# open http://localhost:4242']]});
+  st.push({g:G3,id:'brand',a:'Customize the payment page',h:'<p>Branding covers a logo or icon, the background color, the button color, the font and the shapes. Set the two colors on the left, or click "Upload brand assets" and the logo and button color are taken from your file. '+(S.icon?'Your logo is passed from the sample, so the page does not look like a stranger\'s site.':'')+'</p>'});
+  if(S.c.length)st.push({g:G3,id:'pm',a:'Turn on payment methods',h:'<p>In Settings, Payment methods, turn on the methods you want to accept'+(pmList?', including '+pmList:'')+'. Stripe then shows each customer only the ones that fit their location and that support subscriptions.</p>'});
+  if(S.promo)st.push({g:G3,id:'promo',a:'Enable discounts: the '+esc(S.code)+' promo code',h:'<p>The coupon holds the discount, 20% off the first payment; the promotion code '+esc(S.code)+' is what the customer types. Checkout shows the code box because the sample turns on promotion codes. Try it in the preview: click "Add promotion code".</p>'});
   if(ps.some(trialOn))st.push({g:G3,id:'trial',a:'Add the '+S.tDays+'-day trial'+(S.tOn==='both'?'':' to '+(S.tOn==='yearly'?'Yearly':'Monthly')),
-    h:'<p>Already in your sample, in '+LN[S.lang]+', with your price. A trial signup charges $0.00, so look under Subscriptions, not Transactions.</p>',files:[[SRV()+' · trial',trialSnippet()]]});
-  if(S.promo)st.push({g:G3,id:'promo',a:'Create the '+esc(S.code)+' promo code',h:'<p>20% off the first payment. Checkout shows the code box because the sample turns on promotion codes. Try it in the preview: click "Add promotion code".</p>'});
-  if(S.portal)st.push({g:G3,id:'portal',a:'Turn on the customer portal',h:'<p>Customers switch plans, cancel and update their card without emailing you.</p><p style="margin-top:5px"><b>Turn on with it:</b> "Limit customers to one subscription". Without it, each Checkout with the same email creates a new customer, and the portal shows only the newest one.</p>'});
-  if(S.anchor)st.push({g:G3,id:'anchor',a:'Set the fixed billing day',h:'<p>Applies to prices without a trial. The first charge is prorated up to your billing day'+(S.promo?', and a one-time promo code is spent on that part-month charge, so the saving is smaller than a full period.':'.')+'</p>'});
-  if(S.tax)st.push({g:G3,id:'tax',a:'Set up tax',h:'<p>Confirm your head office address, choose whether tax is added on top of the price, and add a registration for each place you must collect. Everywhere else Checkout shows $0.00 tax.</p>'});
-  st.push({g:G3,id:'brand',a:'Brand the payment page',h:'<p>Your button color'+(S.icon?' and logo are':' is')+' passed from the sample, so the page does not look like a stranger\'s site. Change them on the left and watch the preview.</p>'});
-  st.push({g:G4,id:'hook',a:'Listen for subscription events',h:'<p>Your server learns about renewals, failed payments and cancellations only through events. Verify the signature, answer 200, then turn Premium on or off from the subscription status.</p>',
+    h:'<p>Already in your sample, in '+LN[S.lang]+', with your price, using <code>trial_period_days</code>. The other option is <code>trial_end</code> with a fixed end time. A trial signup charges $0.00, so look under Subscriptions, not Transactions.</p>',files:[[SRV()+' · trial',trialSnippet()]]});
+  if(S.portal)st.push({g:G3,id:'portal',a:'Add a customer portal',h:'<p>Create it in Settings, Billing, Customer portal. At a minimum let customers update their payment method; you can also let them change or cancel their plan, update billing details and see past invoices.</p><p style="margin-top:5px"><b>Turn on with it:</b> "Limit customers to one subscription". Without it, each Checkout with the same email creates a new customer, and the portal shows only the newest one.</p>'});
+  if(S.tax)st.push({g:G3,id:'tax',a:'Collect tax',h:'<p>Confirm your head office address, choose whether tax is added on top of the price, and add a registration for each place you must collect. Your sample already passes <code>automatic_tax</code>. Everywhere without a registration, Checkout shows $0.00 tax.</p>'});
+  st.push({g:G4,id:'hook',a:'Set up a webhook endpoint',h:'<p>Your server learns about renewals, failed payments and cancellations only through events.</p><ul><li>The endpoint is already in your sample at <code>/webhook</code>, with signature verification.</li><li>Register its URL in Workbench, Webhooks, and select the events below.</li><li>Copy the signing secret from the destination\'s details into <code>STRIPE_WEBHOOK_SECRET</code>.</li></ul><table><tr><td><code>checkout.session.completed</code></td><td>The customer finished Checkout. Grant access with entitlements, but wait for <code>invoice.paid</code> if the payment can be delayed.</td></tr><tr><td><code>invoice.paid</code></td><td>A period was paid. Keep access on, and store the subscription and customer IDs.</td></tr><tr><td><code>invoice.payment_failed</code></td><td>A payment failed. Tell the customer and send them to the portal to update their card.</td></tr><tr><td><code>customer.subscription.*</code></td><td>The status changed. Turn Premium on or off from the status, not from the order events arrive in.</td></tr></table>',
     files:[[SRV()+' · webhook',hookCode()],['Terminal','stripe listen --forward-to localhost:4242/webhook\n# then make a test purchase in Checkout']]});
-  st.push({g:G4,id:'fail',a:'See a failed renewal recover or cancel',h:'<p>Stripe retries a declined renewal on its own. In my sandbox it retried 8 times over 14 days, then canceled the subscription.</p><table><tr><td>Test card</td><td><code>'+CARDS[3][1]+'</code> on a test clock</td></tr><tr><td>While retrying</td><td><code>customer.subscription.updated</code>, status past_due</td></tr><tr><td>After the last retry</td><td><code>customer.subscription.deleted</code></td></tr></table>'});
-  if(ps.some(trialOn))st.push({g:G4,id:'remind',a:'Remind customers before the trial converts',h:'<p>Stripe sends <code>customer.subscription.trial_will_end</code> 3 days before the trial ends. Use it to email the customer, so nobody feels tricked by the first charge.</p>'});
-  st.push({g:G5,id:'live',a:'Switch to live keys',h:'<p>Swap the sandbox keys and price IDs for live ones. Your plan, prices and settings carry over.</p>'});
+  if(S.anchor)st.push({g:G4,id:'anchor',a:'Set the billing cycle',h:'<p>Your sample sets <code>billing_cycle_anchor</code> to the 1st of next month on prices without a trial. The anchor must be a future time before the next natural billing date. A monthly plan started May 15 with a June 1 anchor is charged a part month on May 15, then on the 1st of each month'+(S.promo?'. A one-time promo code is spent on that part-month charge, so the saving is smaller than a full period.':'.')+'</p>'});
+  st.push({g:G4,id:'fail',a:'Recover failed payments',h:'<p>Stripe retries a declined renewal on its own with Smart Retries, and can email the customer to update their card; both are under Billing, Revenue recovery. In my sandbox it retried 8 times over 14 days, then canceled the subscription.</p><table><tr><td>Test card</td><td><code>'+CARDS[3][1]+'</code> on a test clock</td></tr><tr><td>While retrying</td><td><code>customer.subscription.updated</code>, status past_due</td></tr><tr><td>After the last retry</td><td><code>customer.subscription.deleted</code></td></tr></table>'});
+  if(ps.some(trialOn))st.push({g:G4,id:'remind',a:'Remind customers before the trial converts',h:'<p>Stripe can email customers before their trial ends, and it sends <code>customer.subscription.trial_will_end</code> 3 days before, so you can send your own reminder. Nobody should feel tricked by the first charge.</p>'});
+  st.push({g:G5,id:'live',a:'Activate your account and switch keys',h:'<ul><li>In Account settings, enter your business type, tax details, business details, personal verification and a statement descriptor.</li><li>Add bank details for payouts.</li><li>Set up two-step authentication.</li><li>Review, then click "Agree and submit".</li><li>Swap the sandbox keys and price IDs in <code>.env</code> for live ones. Your plan and settings carry over.</li></ul>'});
+  st.push({g:G5,id:'after',a:'After launch',h:'<ul><li>Refund or cancel a payment when a customer asks.</li><li>Check your payout schedule.</li>'+(S.tax?'':'<li>Register to collect tax, then turn on automatic tax.</li>')+'<li>Turn on Adaptive Pricing for countries without their own price.</li><li>Send invoices for custom deals, and automate revenue recognition as you grow.</li></ul>'});
   const hid=['Usage-based pricing','quantities'];
   if(!S.portal)hid.push('customer portal');if(!S.promo)hid.push('promo codes');if(!S.tax)hid.push('tax');
   if(!S.anchor)hid.push('fixed billing day');if(!ps.some(trialOn))hid.push('free trials');if(!S.c.length)hid.push('local currencies');
@@ -396,7 +403,7 @@ function preview(){
   const start=new Date(Date.now()+S.tDays*864e5).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
   const sym=m.replace(/[0-9.,]+/,'');const base=parseFloat(m.replace(/,/g,'').replace(/[^0-9.]/g,''));const off=Math.round(base*20)/100;
   const fmt=v=>sym+v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
-  let L='<div class="biz">'+(S.icon?'<span class="ico">🦙</span>':'')+'Llama Inc <span class="sbx">Sandbox</span></div>';
+  let L='<div class="biz">'+(S.icon?'<span class="ico">'+(S.logoData?'<img src="'+S.logoData+'" alt="" style="width:100%;height:100%;border-radius:50%;object-fit:cover">':'🦙')+'</span>':'')+'Llama Inc <span class="sbx">Sandbox</span></div>';
   L+='<div class="sub">'+(tr?'Try ':'Subscribe to ')+esc(S.name)+'</div>';
   L+=tr?'<div class="big">'+S.tDays+' days free</div><div class="then">Then '+m+' per '+per+' starting '+start+'</div>':'<div class="big">'+m+'<small>per<br>'+per+'</small></div>';
   if(S.anchor&&!tr)L+='<div class="then">First charge is prorated to your fixed billing day</div>';
@@ -429,10 +436,12 @@ const QA={
  promo:['Will my promo code work with a fixed billing day?','It works, but a one-time code is spent on the prorated first charge, so the saving is smaller than a full period. Either drop the fixed billing day or make the code last longer than one invoice.'],
  link:['How do I test a returning customer with Link?','Tick "Save my information" on the first test payment. On the next one, enter the same email and use the test code 000000.'],
  tax:['Why is tax showing $0.00?','Stripe calculates tax only where you have added a registration. Add one for each place you must collect; everywhere else stays at $0.00.'],
+ ent:['How do I unlock Premium for a paying customer?','Use the webhook. On <code>checkout.session.completed</code> grant access, ideally through entitlements, and for payment methods that settle later wait for <code>invoice.paid</code>. After that, read the subscription status on each <code>customer.subscription</code> event: active or trialing is on, canceled is off.'],
+ agent:['Can my coding agent set this up?','Yes. Click "Send this plan to Claude or Cursor" for a prompt built from your plan. Stripe also has agent skills: install the Stripe CLI and run <code>stripe agent setup</code>.'],
  live:['What changes when I go live?','Only the keys and the price IDs. Swap the sandbox values in .env for live ones; your plan and settings carry over.'],
 };
-const KW={mp:['managed','fail','first checkout','tax code','error'],trial:['trial','$0','transactions','where'],clash:['combine','billing day','anchor','both'],hook:['webhook','event','listen','trigger','local'],local:['upi','pix','sepa','india','brazil','currency','local','ideal'],dup:['duplicate','customer','email','portal'],fail:['renew','retry','declin','past_due','failed'],promo:['promo','coupon','code','discount'],link:['link','000000','returning'],tax:['tax','vat','gst'],live:['live','production','launch']};
-const STEPQ={prod:['local','live'],local:['local','tax'],sample:['mp','hook'],pay:['mp','link'],trial:['trial','clash'],promo:['promo'],portal:['dup'],anchor:['clash','promo'],tax:['tax'],brand:['mp'],hook:['hook','fail'],fail:['fail','hook'],remind:['trial'],live:['live','tax']};
+const KW={ent:['premium','access','unlock','entitle','grant'],agent:['agent','cursor','claude','skill','mcp','connector'],mp:['managed','fail','first checkout','tax code','error'],trial:['trial','$0','transactions','where'],clash:['combine','billing day','anchor','both'],hook:['webhook','event','listen','trigger','local'],local:['upi','pix','sepa','india','brazil','currency','local','ideal'],dup:['duplicate','customer','email','portal'],fail:['renew','retry','declin','past_due','failed'],promo:['promo','coupon','code','discount'],link:['link','000000','returning'],tax:['tax','vat','gst'],live:['live','production','launch']};
+const STEPQ={prod:['local','live'],local:['local','tax'],sample:['mp','hook'],pay:['mp','link'],trial:['trial','clash'],promo:['promo'],portal:['dup'],anchor:['clash','promo'],tax:['tax'],brand:['mp'],hook:['hook','ent'],fail:['fail','hook'],remind:['trial'],live:['live','tax'],pm:['local'],after:['tax','agent']};
 function ctxLabel(){const st=window._st||[];const x=st.find(s=>s.id===open);return x?x.a.replace(/<[^>]+>/g,''):'Your plan';}
 function suggestions(){const ids=(open&&STEPQ[open])||['mp','local','clash'];const asked=chat.filter(m=>m.k).map(m=>m.k);return ids.concat(['mp','trial','dup','fail','hook']).filter((v,i,a)=>a.indexOf(v)===i&&!asked.includes(v)).slice(0,3);}
 function ask(k,text){
@@ -461,8 +470,9 @@ function renderMenu(){
     (list.length?list.map(x=>'<label><input type="checkbox" data-cc="'+x.c+'"'+(S.c.includes(x.c)?' checked':'')+'>'+esc(x.n)+'</label>').join(''):'<label>No match</label>');
 }
 function render(keep){
-  if(!keep){$('pname').value=S.name;$('tDays').value=S.tDays;$('code').value=S.code;$('brand').value=S.brand;$('icon').checked=S.icon;renderPrices();}
-  document.documentElement.style.setProperty('--brand',S.brand);
+  if(!keep){$('pname').value=S.name;$('tDays').value=S.tDays;$('code').value=S.code;$('brand').value=S.brand;$('bg').value=S.bg;$('icon').checked=S.icon;renderPrices();}
+  document.documentElement.style.setProperty('--brand',S.brand);document.documentElement.style.setProperty('--cobg',S.bg);
+  $('upNote').textContent=S.logoData?'Using '+S.logoName+': logo'+(S.fromLogo?' and button color taken from it.':' added.'):'Add a logo file and the button color is picked from it.';
   $('codeBox').style.display=S.promo?'':'none';
   $('tOn').innerHTML=[['yearly','Yearly only'],['monthly','Monthly only'],['both','All prices'],['none','No trial']].map(o=>'<option value="'+o[0]+'"'+(S.tOn===o[0]?' selected':'')+'>'+o[1]+'</option>').join('');
   document.querySelectorAll('[data-k]').forEach(b=>b.setAttribute('aria-pressed',String(!!S[b.dataset.k])));
@@ -520,11 +530,18 @@ document.addEventListener('click',e=>{
   else if(b.dataset.dlf){const f=curFile(b.dataset.dlf);save(f[0].replace(/ · .*/,'').replace(/^Terminal$/,'commands.txt'),f[1]);}
   else if(b.dataset.done){const id=b.dataset.done;done[id]=!done[id];if(done[id]){const nx=window._st.find(x=>!(x.auto||done[x.id]));open=nx?nx.id:null;}render(true);}
   else if(b.dataset.q){ask(b.dataset.q);}
+  else if(b.id==='upBtn'){$('up').click();}
   else if(b.id==='human'){chat.push({a:'In the product this opens a chat with a Stripe specialist, with your plan and current step attached, so support and the assistant are in one place.'});renderChat();}
   else if(b.id==='reset'){S=JSON.parse(JSON.stringify(DEF));open=null;done={};tabs={};chat=[];$('cq').value='';render();}
   else if(b.id==='send'){const t=aiPrompt();chat.push({q:'Send this plan to Claude or Cursor'});chat.push({a:'Copied. Paste this into Claude with the Stripe connector, or into Cursor:<br><br>'+esc(t).replace(/\n/g,'<br>')});renderChat();copy(t,b,'Copied');}
   else if(b.id==='dl'){save(S.name.toLowerCase().replace(/[^a-z0-9]+/g,'-')+'-subscription-sample.txt',bundle());}
 });
+$('up').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{const img=new Image();img.onload=()=>{
+  S.logoData=rd.result;S.logoName=f.name;S.icon=true;S.fromLogo=false;
+  try{const c=document.createElement('canvas');c.width=c.height=48;const x=c.getContext('2d');x.drawImage(img,0,0,48,48);const d=x.getImageData(0,0,48,48).data;let r=0,g=0,b=0,n=0;
+    for(let i=0;i<d.length;i+=4){const mx=Math.max(d[i],d[i+1],d[i+2]),mn=Math.min(d[i],d[i+1],d[i+2]);if(d[i+3]<128||mn>215||mx<35||mx-mn<40)continue;r+=d[i];g+=d[i+1];b+=d[i+2];n++;}
+    if(n>20){const h=v=>Math.round(v/n).toString(16).padStart(2,'0');S.brand='#'+h(r)+h(g)+h(b);S.fromLogo=true;}}catch(_){}
+  render();};img.src=rd.result;};rd.readAsDataURL(f);e.target.value='';});
 $('askForm').addEventListener('submit',e=>{e.preventDefault();const v=$('askIn').value.trim();if(v){ask(null,v);$('askIn').value='';}});
 $('cq').addEventListener('focus',()=>{$('cmenu').hidden=false;renderMenu();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')$('cmenu').hidden=true;});
@@ -540,7 +557,8 @@ document.addEventListener('input',e=>{const t=e.target;
   else if(t.id==='yAmt')S.yAmt=Math.max(1,Number(t.value)||1);
   else if(t.id==='tDays')S.tDays=Math.max(0,Number(t.value)||0);
   else if(t.id==='code')S.code=(t.value||'LAUNCH20').toUpperCase();
-  else if(t.id==='brand')S.brand=t.value;
+  else if(t.id==='brand'){S.brand=t.value;S.fromLogo=false;}
+  else if(t.id==='bg')S.bg=t.value;
   else if(t.id==='cq'){$('cmenu').hidden=false;renderMenu();return;}
   else return;
   render(true);
