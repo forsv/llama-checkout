@@ -1,41 +1,30 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 
-const plans = [
-  {
-    name: "Monthly",
-    price: "$8.00 per month",
-    plan: "monthly",
-  },
-  {
-    name: "Yearly",
-    price: "$80.00 per year, 7-day free trial",
-    plan: "yearly",
-  },
-];
-
 const ProductDisplay = () => (
   <section>
-    {plans.map(({ name, price, plan }) => (
-      <form
-        key={plan}
-        action="/create-checkout-session"
-        method="POST"
-      >
-        <div className="product">
-          <img
-            src="https://i.imgur.com/EHyR2nP.png"
-            alt={`Llama Plus ${name}`}
+    <form action="/create-checkout-session" method="POST">
+      <div className="description">
+        <h3>Llama Plus</h3>
+        <h5>Premium travel planning</h5>
+      </div>
+      <div className="plans">
+        <label>
+          <input
+            type="radio"
+            name="plan"
+            value="monthly"
+            defaultChecked
           />
-          <div className="description">
-            <h3>{name}</h3>
-            <h5>{price}</h5>
-          </div>
-        </div>
-        <input type="hidden" name="plan" value={plan} />
-        <button type="submit">Checkout</button>
-      </form>
-    ))}
+          Monthly, $8.00 per month
+        </label>
+        <label>
+          <input type="radio" name="plan" value="yearly" />
+          Yearly, $80.00 per year, 7-day free trial
+        </label>
+      </div>
+      <button type="submit">Checkout</button>
+    </form>
   </section>
 );
 

@@ -11,28 +11,38 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 section {
-  background: transparent;
+  background: #ffffff;
   display: flex;
   flex-direction: column;
   width: 400px;
   height: auto;
-  gap: 16px;
+  border-radius: 6px;
   justify-content: space-between;
 }
 form {
-  background: #ffffff;
   display: flex;
   flex-direction: column;
-  border-radius: 6px;
-  overflow: hidden;
-}
-.product {
-  display: flex;
 }
 .description {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding: 20px 20px 8px;
+}
+.plans {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 4px 20px 16px;
+}
+label {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  color: #242d60;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
 }
 p {
   font-style: normal;
@@ -43,17 +53,11 @@ p {
   color: #242d60;
   height: 100%;
   width: 100%;
-  padding: 0 20px;
+  padding: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-}
-img {
-  border-radius: 6px;
-  margin: 10px;
-  width: 54px;
-  height: 57px;
 }
 h3,
 h5 {
