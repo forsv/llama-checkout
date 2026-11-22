@@ -421,11 +421,15 @@ function PayingFrom({ country, onChange }) {
 
   return (
     <div className="paying-from" ref={rootRef} onKeyDown={onKeyDown}>
+      <label id="paying-from-label" className="paying-label" htmlFor="paying-from-button">
+        Select your country
+      </label>
       <button
         ref={buttonRef}
+        id="paying-from-button"
         type="button"
         className="paying-pill"
-        aria-label={`Paying from ${current.label}`}
+        aria-labelledby="paying-from-label paying-from-value"
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-controls="paying-from-menu"
@@ -435,9 +439,11 @@ function PayingFrom({ country, onChange }) {
         }}
       >
         <Flag code={current.code} title={`pill-${current.code}`} />
-        <span>{current.label}</span>
-        <span className="paying-dot" aria-hidden="true">·</span>
-        <span>{current.currency}</span>
+        <span id="paying-from-value">
+          {current.label}
+          <span className="paying-dot" aria-hidden="true"> · </span>
+          {current.currency}
+        </span>
         <Chevron />
       </button>
       {open && (
