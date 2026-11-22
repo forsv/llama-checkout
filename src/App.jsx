@@ -222,15 +222,46 @@ function PerkList() {
   );
 }
 
+const COUNTRIES = [
+  { code: "US", label: "United States" },
+  { code: "IN", label: "India" },
+  { code: "NL", label: "Netherlands" },
+  { code: "BR", label: "Brazil" },
+];
+
+const MONEY = {
+  US: {
+    monthly: "$8.00",
+    yearly: "$80.00",
+    save: "Save $16",
+    trial: "7-day free trial, then $80.00 per year",
+  },
+  IN: {
+    monthly: "₹699.00",
+    yearly: "₹6,999.00",
+    save: "Save ₹1,389",
+    trial: "7-day free trial, then ₹6,999.00 per year",
+  },
+  NL: {
+    monthly: "€8.00",
+    yearly: "€80.00",
+    save: "Save €16",
+    trial: "7-day free trial, then €80.00 per year",
+  },
+  BR: {
+    monthly: "R$45.00",
+    yearly: "R$450.00",
+    save: "Save R$90",
+    trial: "7-day free trial, then R$450.00 per year",
+  },
+};
+
 const PLANS = {
   yearly: {
-    amount: "$80.00",
     period: "per year",
-    billing: "7-day free trial, then $80.00 per year",
     button: "Start 7-day free trial",
   },
   monthly: {
-    amount: "$8.00",
     period: "per month",
     billing: "Billed every month. Cancel anytime.",
     button: "Subscribe monthly",
@@ -239,10 +270,26 @@ const PLANS = {
 
 function PlanPicker() {
   const [plan, setPlan] = useState("yearly");
+  const [country, setCountry] = useState("US");
   const current = PLANS[plan];
+  const money = MONEY[country];
 
   return (
     <div className="plan-picker" id="yearly">
+      <div className="paying-from">
+        <label htmlFor="paying-from">Paying from</label>
+        <select
+          id="paying-from"
+          value={country}
+          onChange={(event) => setCountry(event.target.value)}
+        >
+          {COUNTRIES.map((item) => (
+            <option key={item.code} value={item.code}>
+              {item.label}
+            </option>
+          ))}
+        </select>
+      </div>
       <div className="billing-switch" role="group" aria-label="Billing period">
         <button
           type="button"
@@ -257,18 +304,23 @@ function PlanPicker() {
           onClick={() => setPlan("yearly")}
         >
           Yearly
-          <span className="save-badge">Save $16</span>
+          <span className="save-badge">{money.save}</span>
         </button>
       </div>
       <article className="plan">
         <p className="price">
-          <span className="amount">{current.amount}</span>
+          <span className="amount">
+            {plan === "yearly" ? money.yearly : money.monthly}
+          </span>
           <span className="period">{current.period}</span>
         </p>
-        <p className="billing">{current.billing}</p>
+        <p className="billing">
+          {plan === "yearly" ? money.trial : current.billing}
+        </p>
         <PerkList />
         <form action="/create-checkout-session" method="POST">
           <input type="hidden" name="plan" value={plan} />
+          <input type="hidden" name="country" value={country} />
           <button type="submit">{current.button}</button>
         </form>
       </article>
@@ -305,7 +357,7 @@ function LaunchNote() {
       <span className={drawn ? "launch-code is-drawn" : "launch-code"}>
         <svg
           className="launch-mark"
-          viewBox="0 0 320 64"
+          viewBox="0 0 320 40"
           preserveAspectRatio="none"
           aria-hidden="true"
           focusable="false"
@@ -346,17 +398,17 @@ function LaunchNote() {
           <g filter="url(#launch-pencil)">
             <path
               fill="#FFE14D"
-              d="M6 26c22-14 34 10 58 2 24-12 30 12 56 1 26-12 32 11 58 0 24-10 30 10 54 2 22-8 30 8 48 1 8 8 2 14-6 18-22 8-34-8-56-2-26 10-32-10-58 0-24 10-30-8-54 2-22 8-32-4-46 4-10 6-16-2-18-6 2-8 6-12 14-16z"
+              d="M0 6C36 2 58 8 96 5 134 2 156 7 198 4 236 2 268 7 320 5L318 34C276 38 244 32 206 36 166 39 132 33 94 36 54 39 28 33 2 35Z"
             />
             <path
               fill="#FFE14D"
-              transform="translate(7 4)"
-              d="M6 26c22-14 34 10 58 2 24-12 30 12 56 1 26-12 32 11 58 0 24-10 30 10 54 2 22-8 30 8 48 1 8 8 2 14-6 18-22 8-34-8-56-2-26 10-32-10-58 0-24 10-30-8-54 2-22 8-32-4-46 4-10 6-16-2-18-6 2-8 6-12 14-16z"
+              transform="translate(6 1.5)"
+              d="M0 6C36 2 58 8 96 5 134 2 156 7 198 4 236 2 268 7 320 5L318 34C276 38 244 32 206 36 166 39 132 33 94 36 54 39 28 33 2 35Z"
             />
             <path
               fill="#FFE14D"
-              transform="translate(-4 1)"
-              d="M18 24c18-10 28 8 48 2 22-10 26 10 48 1 22-10 28 9 50 0 20-8 26 8 44 2 16-6 22 6 36 1 6 7 0 12-6 14-16 6-28-6-46-1-22 8-26-8-48 0-20 8-26-6-44 2-16 6-24-2-34 3-8 4-12-2-14-4 1-6 5-9 12-12z"
+              transform="translate(-4 0.5)"
+              d="M8 7C40 4 64 9 104 6 142 4 168 8 208 5 246 3 274 7 312 6L310 33C272 36 240 31 202 34 164 37 134 32 96 35 58 37 32 32 10 34Z"
             />
           </g>
         </svg>
@@ -421,20 +473,6 @@ function Success() {
   );
 }
 
-function Canceled() {
-  return (
-    <main className="status-wrap">
-      <section className="status-card">
-        <h1>Checkout canceled</h1>
-        <p>No charge was made. Your plans are still here when you want them.</p>
-        <a className="btn" href="/checkout#pricing">
-          Back to pricing
-        </a>
-      </section>
-    </main>
-  );
-}
-
 function Footer() {
   return (
     <footer className="footer">
@@ -449,7 +487,6 @@ export default function App() {
   const params = new URLSearchParams(window.location.search);
   let view = <Landing />;
   if (params.get("success")) view = <Success />;
-  else if (params.get("canceled")) view = <Canceled />;
 
   return (
     <div className="page">

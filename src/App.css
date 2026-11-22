@@ -261,6 +261,45 @@ a {
   text-align: left;
 }
 
+.paying-from {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  width: min(460px, 100%);
+  margin: 0 auto 0.7rem;
+  padding: 0.25rem 0.25rem 0.25rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(12px);
+}
+
+.paying-from label {
+  color: var(--white);
+  font-size: 0.95rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.paying-from select {
+  flex: 1;
+  min-width: 0;
+  min-height: 42px;
+  padding: 0.35rem 0.7rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--white);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.paying-from select:focus-visible {
+  outline: 2px solid var(--white);
+  outline-offset: 2px;
+}
+
 .billing-switch {
   display: flex;
   width: min(460px, 100%);
@@ -419,8 +458,8 @@ a {
   z-index: 0;
   left: -0.28em;
   width: calc(100% + 0.56em);
-  bottom: -0.02em;
-  height: 70%;
+  top: -0.42em;
+  height: calc(100% + 0.88em);
   transform: rotate(-2deg);
   transform-origin: center;
   pointer-events: none;

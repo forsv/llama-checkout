@@ -228,8 +228,18 @@ app.post(
           '/checkout?success=true',
         cancel_url:
           `${YOUR_DOMAIN}` +
-          '/checkout?canceled=true',
+          '/checkout#pricing',
       };
+
+      const currencyFor = {
+        IN: 'inr',
+        NL: 'eur',
+        BR: 'brl',
+      };
+      const currency = currencyFor[req.body.country];
+      if (currency) {
+        sessionParams.currency = currency;
+      }
 
       if (plan === 'yearly') {
         sessionParams.subscription_data = {
