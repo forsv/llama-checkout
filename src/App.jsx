@@ -222,33 +222,57 @@ function PerkList() {
   );
 }
 
-function PlanCard({
-  id,
-  name,
-  price,
-  billing,
-  extra,
-  plan,
-  button,
-  featured,
-}) {
+const PLANS = {
+  yearly: {
+    amount: "$80.00",
+    period: "per year",
+    billing: "7-day free trial, then $80.00 per year",
+    button: "Start 7-day free trial",
+  },
+  monthly: {
+    amount: "$8.00",
+    period: "per month",
+    billing: "Billed every month. Cancel anytime.",
+    button: "Subscribe monthly",
+  },
+};
+
+function PlanPicker() {
+  const [plan, setPlan] = useState("yearly");
+  const current = PLANS[plan];
+
   return (
-    <article className={featured ? "plan featured" : "plan"} id={id}>
-      <p className={featured ? "tag" : "tag tag-hidden"} aria-hidden={!featured}>
-        Best value
-      </p>
-      <h3>{name}</h3>
-      <p className="price">{price}</p>
-      <p className="billing">{billing}</p>
-      <p className={extra ? "save" : "save save-hidden"} aria-hidden={!extra}>
-        {extra || "Save $16 a year"}
-      </p>
-      <PerkList />
-      <form action="/create-checkout-session" method="POST">
-        <input type="hidden" name="plan" value={plan} />
-        <button type="submit">{button}</button>
-      </form>
-    </article>
+    <div className="plan-picker" id="yearly">
+      <div className="billing-switch" role="group" aria-label="Billing period">
+        <button
+          type="button"
+          aria-pressed={plan === "monthly"}
+          onClick={() => setPlan("monthly")}
+        >
+          Monthly
+        </button>
+        <button
+          type="button"
+          aria-pressed={plan === "yearly"}
+          onClick={() => setPlan("yearly")}
+        >
+          Yearly
+          <span className="save-badge">Save $16</span>
+        </button>
+      </div>
+      <article className="plan">
+        <p className="price">
+          <span className="amount">{current.amount}</span>
+          <span className="period">{current.period}</span>
+        </p>
+        <p className="billing">{current.billing}</p>
+        <PerkList />
+        <form action="/create-checkout-session" method="POST">
+          <input type="hidden" name="plan" value={plan} />
+          <button type="submit">{current.button}</button>
+        </form>
+      </article>
+    </div>
   );
 }
 
@@ -271,25 +295,7 @@ function Landing() {
         <p className="plus-line">
           A planner for the whole trip, billed monthly or once a year.
         </p>
-        <div className="plan-grid">
-          <PlanCard
-            name="Monthly"
-            price="$8.00 per month"
-            billing="Billed every month"
-            plan="monthly"
-            button="Subscribe monthly"
-          />
-          <PlanCard
-            id="yearly"
-            name="Yearly"
-            price="$80.00 per year"
-            billing="7-day free trial"
-            extra="Save $16 a year"
-            plan="yearly"
-            button="Start 7-day free trial"
-            featured
-          />
-        </div>
+        <PlanPicker />
         <p className="note">
           Launch code LAUNCH20 gives 20% off the first payment.
         </p>
