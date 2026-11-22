@@ -1,6 +1,6 @@
 {
   "name": "stripe-sample",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "dependencies": {
     "@stripe/react-stripe-js": "^3.7.0",
     "@stripe/stripe-js": "^7.3.0",

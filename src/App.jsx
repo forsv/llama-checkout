@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./App.css";
 
 const PORTAL_URL =
@@ -223,11 +223,259 @@ function PerkList() {
 }
 
 const COUNTRIES = [
-  { code: "US", label: "United States" },
-  { code: "IN", label: "India" },
-  { code: "NL", label: "Netherlands" },
-  { code: "BR", label: "Brazil" },
+  { code: "US", label: "United States", currency: "USD", method: "Cards" },
+  { code: "IN", label: "India", currency: "INR", method: "UPI" },
+  { code: "NL", label: "Netherlands", currency: "EUR", method: "SEPA Direct Debit" },
+  { code: "BR", label: "Brazil", currency: "BRL", method: "Pix" },
 ];
+
+function Flag({ code, title }) {
+  return (
+    <svg
+      className="flag"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <defs>
+        <clipPath id={`flag-${title}`}>
+          <circle cx="12" cy="12" r="12" />
+        </clipPath>
+      </defs>
+      <g clipPath={`url(#flag-${title})`}>
+        {code === "US" && <UsFlag />}
+        {code === "IN" && <IndiaFlag />}
+        {code === "NL" && <NetherlandsFlag />}
+        {code === "BR" && <BrazilFlag />}
+      </g>
+    </svg>
+  );
+}
+
+function UsFlag() {
+  const band = 24 / 13;
+  return (
+    <>
+      {Array.from({ length: 13 }, (_, index) => (
+        <rect
+          key={index}
+          y={band * index}
+          width="24"
+          height={band + 0.15}
+          fill={index % 2 === 0 ? "#B22234" : "#FFFFFF"}
+        />
+      ))}
+      <rect width="10.4" height={band * 7} fill="#3C3B6E" />
+      {[
+        [2.3, 1.7],
+        [5.1, 1.7],
+        [7.9, 1.7],
+        [3.7, 3.4],
+        [6.5, 3.4],
+        [2.3, 5.1],
+        [5.1, 5.1],
+        [7.9, 5.1],
+      ].map(([cx, cy]) => (
+        <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r="0.42" fill="#FFFFFF" />
+      ))}
+    </>
+  );
+}
+
+function IndiaFlag() {
+  return (
+    <>
+      <rect width="24" height="8" fill="#FF9933" />
+      <rect y="8" width="24" height="8" fill="#FFFFFF" />
+      <rect y="16" width="24" height="8" fill="#138808" />
+      <circle cx="12" cy="12" r="2.35" fill="none" stroke="#000080" strokeWidth="0.45" />
+      {[0, 45, 90, 135].map((angle) => (
+        <line
+          key={angle}
+          x1="12"
+          y1="9.8"
+          x2="12"
+          y2="14.2"
+          stroke="#000080"
+          strokeWidth="0.35"
+          transform={`rotate(${angle} 12 12)`}
+        />
+      ))}
+    </>
+  );
+}
+
+function NetherlandsFlag() {
+  return (
+    <>
+      <rect width="24" height="8" fill="#AE1C28" />
+      <rect y="8" width="24" height="8" fill="#FFFFFF" />
+      <rect y="16" width="24" height="8" fill="#21468B" />
+    </>
+  );
+}
+
+function BrazilFlag() {
+  return (
+    <>
+      <rect width="24" height="24" fill="#009C3B" />
+      <polygon points="12,2.6 21.4,12 12,21.4 2.6,12" fill="#FFDF00" />
+      <circle cx="12" cy="12" r="4.05" fill="#002776" />
+      <path
+        d="M8.1 13.3c1.15-1.7 2.5-2.35 3.9-2.35s2.75.65 3.9 2.35"
+        fill="none"
+        stroke="#FFFFFF"
+        strokeWidth="0.55"
+      />
+    </>
+  );
+}
+
+function Chevron() {
+  return (
+    <svg className="paying-chevron" viewBox="0 0 12 12" aria-hidden="true" focusable="false">
+      <path
+        d="M2.2 4.3 L6 8 L9.8 4.3"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function Tick({ on }) {
+  return (
+    <svg
+      className={on ? "paying-tick" : "paying-tick is-empty"}
+      viewBox="0 0 16 16"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path
+        d="M3.2 8.3 L6.4 11.3 L12.8 4.7"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function PayingFrom({ country, onChange }) {
+  const [open, setOpen] = useState(false);
+  const [active, setActive] = useState(0);
+  const rootRef = useRef(null);
+  const buttonRef = useRef(null);
+  const listRef = useRef(null);
+  const selected = COUNTRIES.findIndex((item) => item.code === country);
+  const current = COUNTRIES[selected];
+
+  useEffect(() => {
+    if (!open) return undefined;
+    listRef.current.focus();
+    function onPointer(event) {
+      if (!rootRef.current.contains(event.target)) setOpen(false);
+    }
+    document.addEventListener("mousedown", onPointer);
+    return () => document.removeEventListener("mousedown", onPointer);
+  }, [open]);
+
+  function choose(index) {
+    onChange(COUNTRIES[index].code);
+    setOpen(false);
+    buttonRef.current.focus();
+  }
+
+  function onKeyDown(event) {
+    if (event.key === "Tab" && open) {
+      setOpen(false);
+      return;
+    }
+    if (event.key === "Escape" && open) {
+      event.preventDefault();
+      setOpen(false);
+      buttonRef.current.focus();
+      return;
+    }
+    if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+      event.preventDefault();
+      if (!open) {
+        setActive(selected);
+        setOpen(true);
+        return;
+      }
+      const step = event.key === "ArrowDown" ? 1 : -1;
+      setActive((index) => (index + step + COUNTRIES.length) % COUNTRIES.length);
+      return;
+    }
+    if ((event.key === "Enter" || event.key === " ") && open) {
+      event.preventDefault();
+      choose(active);
+    }
+  }
+
+  return (
+    <div className="paying-from" ref={rootRef} onKeyDown={onKeyDown}>
+      <button
+        ref={buttonRef}
+        type="button"
+        className="paying-pill"
+        aria-label={`Paying from ${current.label}`}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-controls="paying-from-menu"
+        onClick={() => {
+          setActive(selected);
+          setOpen((value) => !value);
+        }}
+      >
+        <Flag code={current.code} title={`pill-${current.code}`} />
+        <span>{current.label}</span>
+        <span className="paying-dot" aria-hidden="true">·</span>
+        <span>{current.currency}</span>
+        <Chevron />
+      </button>
+      {open && (
+        <ul
+          ref={listRef}
+          id="paying-from-menu"
+          className="paying-menu"
+          role="listbox"
+          tabIndex={-1}
+          aria-label="Paying from"
+          aria-activedescendant={`paying-option-${COUNTRIES[active].code}`}
+        >
+          {COUNTRIES.map((item, index) => (
+            <li key={item.code} role="presentation">
+              <button
+                type="button"
+                role="option"
+                id={`paying-option-${item.code}`}
+                tabIndex={-1}
+                aria-selected={item.code === country}
+                className={index === active ? "paying-option is-active" : "paying-option"}
+                onMouseEnter={() => setActive(index)}
+                onClick={() => choose(index)}
+              >
+                <Tick on={item.code === country} />
+                <Flag code={item.code} title={`menu-${item.code}`} />
+                <span className="name">{item.label}</span>
+                <span className="paying-meta">
+                  {item.currency} · {item.method}
+                </span>
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
 
 const MONEY = {
   US: {
@@ -276,20 +524,7 @@ function PlanPicker() {
 
   return (
     <div className="plan-picker" id="yearly">
-      <div className="paying-from">
-        <label htmlFor="paying-from">Paying from</label>
-        <select
-          id="paying-from"
-          value={country}
-          onChange={(event) => setCountry(event.target.value)}
-        >
-          {COUNTRIES.map((item) => (
-            <option key={item.code} value={item.code}>
-              {item.label}
-            </option>
-          ))}
-        </select>
-      </div>
+      <PayingFrom country={country} onChange={setCountry} />
       <div className="billing-switch" role="group" aria-label="Billing period">
         <button
           type="button"
