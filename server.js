@@ -5,6 +5,63 @@ const stripe = require('stripe')(
 const express = require('express');
 const app = express();
 app.use(express.static('public'));
+
+const idOf = (value) => {
+  if (!value) return 'none';
+  if (typeof value === 'string') return value;
+  return value.id || 'none';
+};
+
+app.post(
+  '/webhook',
+  express.raw({ type: 'application/json' }),
+  (req, res) => {
+    let event;
+
+    try {
+      event = stripe.webhooks.constructEvent(
+        req.body,
+        req.headers['stripe-signature'],
+        process.env.STRIPE_WEBHOOK_SECRET
+      );
+    } catch (err) {
+      console.error(
+        'Webhook signature check failed'
+      );
+      return res.status(400).send(
+        'Webhook signature check failed'
+      );
+    }
+
+    const watched = [
+      'checkout.session.completed',
+      'invoice.paid',
+      'invoice.payment_failed',
+    ];
+
+    if (watched.includes(event.type)) {
+      const object = event.data.object;
+      const customer = idOf(object.customer);
+      const subscription = idOf(
+        object.subscription ||
+          (object.parent &&
+            object.parent.subscription_details &&
+            object.parent.subscription_details
+              .subscription)
+      );
+      console.log(
+        event.type +
+          ' customer=' + customer +
+          ' subscription=' + subscription
+      );
+    } else {
+      console.log('Other event ' + event.type);
+    }
+
+    res.sendStatus(200);
+  }
+);
+
 app.use(express.urlencoded({ extended: false }));
 
 const YOUR_DOMAIN =
