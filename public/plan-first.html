@@ -6,120 +6,175 @@
 <title>Plan-first setup · concept prototype</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--ink:#1a2b4a;--mut:#5b6b85;--line:#edf0f5;--pri:#635bff;--navy:#0a2540}
-body{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;color:var(--ink);background:#f6f8fb;font-size:14.5px;line-height:1.45;min-height:100vh;
- background-image:radial-gradient(circle at 50% 420px,transparent 349px,#e3e9f2 350px,transparent 352px),radial-gradient(circle at 50% 420px,transparent 499px,#e3e9f2 500px,transparent 502px),radial-gradient(circle at 50% 420px,transparent 649px,#e3e9f2 650px,transparent 652px)}
-.note{font-size:12.5px;color:var(--mut);text-align:center;padding:12px 16px 0}
+:root{--ink:#1a2b4a;--mut:#5b6b85;--line:#edf0f5;--pri:#635bff;--navy:#0a2540;--brand:#008cff}
+body{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;color:var(--ink);background:#f6f8fb;font-size:14px;line-height:1.45}
+.note{font-size:12.5px;color:var(--mut);text-align:center;padding:10px 16px 0}
 .note b{color:var(--ink)}
-.titlepill{display:table;margin:14px auto 18px;background:var(--navy);color:#fff;font-weight:500;padding:9px 16px;border-radius:999px}
-.win{max-width:1040px;margin:0 auto 50px;background:#fff;border-radius:14px;box-shadow:0 18px 50px rgba(20,40,80,.14),0 0 0 1px #dfe5ee;overflow:hidden}
-.bar{height:44px;background:#eef1f6;display:flex;align-items:center;padding:0 16px;gap:8px;border-bottom:1px solid #dfe5ee}
+.win{max-width:1480px;margin:12px auto 40px;background:#fff;border-radius:14px;box-shadow:0 18px 50px rgba(20,40,80,.12),0 0 0 1px #dfe5ee;overflow:hidden}
+.bar{height:40px;background:#eef1f6;display:flex;align-items:center;padding:0 16px;gap:8px;border-bottom:1px solid #dfe5ee}
 .bar i{width:11px;height:11px;border-radius:50%;background:#cfd6e2;display:block}
-.url{margin-left:14px;flex:1;background:#fff;border-radius:7px;height:26px;font-size:13px;color:var(--mut);display:flex;align-items:center;padding:0 12px;overflow:hidden;white-space:nowrap}
-.hd{padding:20px 26px 14px;border-bottom:1px solid var(--line)}
-.crumb{font-size:12.5px;color:#6b7a94;margin-bottom:6px}
-.hd h1{font-size:23px;font-weight:600;letter-spacing:-.2px}
-.hd p{color:var(--mut);margin-top:5px}
-.cols{display:grid;grid-template-columns:390px 1fr}
-.L{padding:20px 22px;border-right:1px solid var(--line);min-width:0}
-.R{padding:20px 22px;min-width:0}
-h2{font-size:12px;letter-spacing:.6px;text-transform:uppercase;color:#6b7a94;margin-bottom:12px;font-weight:600}
-.f{margin-bottom:14px}
+.url{margin-left:14px;flex:1;background:#fff;border-radius:7px;height:24px;font-size:12.5px;color:var(--mut);display:flex;align-items:center;padding:0 12px;overflow:hidden;white-space:nowrap}
+.hd{padding:16px 22px 12px;border-bottom:1px solid var(--line);display:flex;gap:16px;align-items:flex-end;flex-wrap:wrap}
+.hd .tx{flex:1;min-width:260px}
+.crumb{font-size:12px;color:#6b7a94;margin-bottom:4px}
+.hd h1{font-size:21px;font-weight:600;letter-spacing:-.2px}
+.hd p{color:var(--mut);margin-top:3px;font-size:13px}
+.fit{font-size:12.5px;background:#e1f5e6;color:#1c7a3c;border-radius:8px;padding:7px 11px;max-width:420px}
+.cols{display:grid;grid-template-columns:300px minmax(0,1fr) 380px}
+.col{padding:16px 18px;min-width:0}
+.col+.col{border-left:1px solid var(--line)}
+.mid{background:#fafbfd}
+h2{font-size:11.5px;letter-spacing:.6px;text-transform:uppercase;color:#6b7a94;margin-bottom:10px;font-weight:600}
+.f{margin-bottom:13px}
 .lab{display:block;font-size:12.5px;color:var(--mut);margin-bottom:5px}
-.in{border:1px solid #d5dbe6;border-radius:7px;padding:0 10px;display:flex;align-items:center;gap:6px;background:#fff;margin-bottom:6px;min-height:36px}
-.in input,.in select{font:inherit;color:inherit;border:0;outline:0;background:transparent;padding:7px 0;min-width:0}
+.in{border:1px solid #d5dbe6;border-radius:7px;padding:0 10px;display:flex;align-items:center;gap:6px;background:#fff;margin-bottom:6px;min-height:34px}
+.in input,.in select{font:inherit;color:inherit;border:0;outline:0;background:transparent;padding:6px 0;min-width:0}
 .in input[type=text]{flex:1}
-.in input[type=number]{width:56px}
+.in input[type=number]{width:52px}
+.in input[type=color]{width:26px;height:22px;padding:0;border:0}
 .in:focus-within{border-color:var(--pri);box-shadow:0 0 0 3px #e6e4ff}
-.in input:focus-visible,.in select:focus-visible{outline:0}
 .in .sfx{margin-left:auto;color:#6b7a94;font-size:12.5px;white-space:nowrap}
 .x{font:inherit;border:0;background:none;color:#8a96ab;cursor:pointer;font-size:16px;line-height:1;padding:2px 4px}
-.add{font:inherit;font-size:13px;color:var(--pri);background:none;border:0;cursor:pointer;padding:2px 0}
-.chips{display:flex;gap:7px;flex-wrap:wrap}
-.chip{font:inherit;font-size:13px;padding:6px 11px;border-radius:999px;border:1px solid #d5dbe6;color:var(--mut);background:#fff;cursor:pointer}
+.add{font:inherit;font-size:13px;color:var(--pri);background:none;border:0;cursor:pointer;padding:2px 0;text-align:left}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font:inherit;font-size:12.5px;padding:5px 10px;border-radius:999px;border:1px solid #d5dbe6;color:var(--mut);background:#fff;cursor:pointer}
 .chip[aria-pressed=true]{background:#efeeff;border-color:var(--pri);color:#4338ca;font-weight:500}
-button:focus-visible,input:focus-visible{outline:2px solid var(--pri);outline-offset:2px}
-.conf{background:#fff7e6;border:1px solid #f3d999;border-radius:8px;padding:10px 12px;font-size:13px;color:#7a5200;margin-top:8px}
+button:focus-visible{outline:2px solid var(--pri);outline-offset:2px}
+.conf{background:#fff7e6;border:1px solid #f3d999;border-radius:8px;padding:9px 11px;font-size:12.5px;color:#7a5200;margin-top:8px}
 .conf.bad{background:#fdecea;border-color:#f3b7b1;color:#8f1f17}
-.conf button{font:inherit;font-size:12.5px;margin:7px 6px 0 0;padding:4px 9px;border-radius:6px;border:1px solid currentColor;background:#fff;color:inherit;cursor:pointer}
-.sel{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
-.tok{font-size:12.5px;background:#eef1f6;border-radius:999px;padding:4px 4px 4px 10px;display:inline-flex;align-items:center;gap:2px}
+.conf button{font:inherit;font-size:12px;margin:6px 6px 0 0;padding:3px 8px;border-radius:6px;border:1px solid currentColor;background:#fff;color:inherit;cursor:pointer}
+.sel{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:6px}
+.tok{font-size:12px;background:#eef1f6;border-radius:999px;padding:3px 3px 3px 9px;display:inline-flex;align-items:center}
 .pick{position:relative}
-.menu{position:absolute;left:0;right:0;top:100%;z-index:5;background:#fff;border:1px solid #d5dbe6;border-radius:8px;box-shadow:0 10px 30px rgba(20,40,80,.16);max-height:230px;overflow:auto;margin-top:2px}
-.menu label{display:flex;align-items:center;gap:8px;padding:7px 10px;font-size:13.5px;cursor:pointer}
-.menu label:hover,.menu label:focus-within{background:#f3f5fa}
-.menu .tools{display:flex;gap:12px;padding:7px 10px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#fff}
-.st{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);align-items:flex-start}
-.n{width:24px;height:24px;border-radius:50%;background:#eef1f6;color:var(--mut);font-size:12.5px;font-weight:600;display:flex;align-items:center;justify-content:center;flex:none}
-.n.d{background:#1c7a3c;color:#fff}
-.st .t{flex:1;min-width:0}
-.st .a{font-size:14.5px;font-weight:500}
-.st .b{font-size:12.5px;color:var(--mut);margin-top:3px}
-.mono{font-family:Menlo,Consolas,monospace;font-size:12px}
-pre{background:var(--navy);color:#d6e2ff;border-radius:7px;padding:10px 12px;margin-top:8px;font:12px/1.55 Menlo,Consolas,monospace;overflow:auto;max-height:340px}
-.tag{font-size:11.5px;font-weight:600;padding:3px 8px;border-radius:5px;white-space:nowrap}
-.ok{background:#e1f5e6;color:#1c7a3c}.mutd{background:#eef1f6;color:#6b7a94}.warn{background:#fff1d1;color:#8a5a00}
-.more{font:inherit;font-size:12.5px;color:var(--pri);background:none;border:0;cursor:pointer;margin-top:6px;padding:0}
-.foot{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
-.btn{font:inherit;font-size:13.5px;font-weight:500;padding:9px 14px;border-radius:7px;background:var(--pri);color:#fff;border:0;cursor:pointer}
+.menu{position:absolute;left:0;right:0;top:100%;z-index:5;background:#fff;border:1px solid #d5dbe6;border-radius:8px;box-shadow:0 10px 30px rgba(20,40,80,.16);max-height:220px;overflow:auto;margin-top:2px}
+.menu label{display:flex;align-items:center;gap:8px;padding:6px 10px;font-size:13px;cursor:pointer}
+.menu label:hover{background:#f3f5fa}
+.menu .tools{display:flex;gap:12px;padding:6px 10px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#fff}
+/* preview */
+.vbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.vbar select{font:inherit;border:1px solid #d5dbe6;border-radius:7px;padding:5px 8px;background:#fff;color:inherit}
+.seg{display:inline-flex;border:1px solid #d5dbe6;border-radius:7px;overflow:hidden}
+.seg button{font:inherit;font-size:12.5px;padding:5px 10px;border:0;background:#fff;color:var(--mut);cursor:pointer}
+.seg button[aria-pressed=true]{background:var(--navy);color:#fff}
+.co{border:1px solid #dfe5ee;border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 6px 20px rgba(20,40,80,.06)}
+.cobar{font-size:11.5px;color:#6b7a94;text-align:center;padding:6px;border-bottom:1px solid var(--line);background:#fff}
+.cogrid{display:grid;grid-template-columns:1fr 1fr}
+.coL{background:#f5f5f5;padding:22px 22px 26px}
+.coR{padding:22px}
+.biz{display:flex;align-items:center;gap:8px;font-weight:600;font-size:13px}
+.ico{width:26px;height:26px;border-radius:50%;background:#fff;box-shadow:0 0 0 1px #e1e4ea;display:flex;align-items:center;justify-content:center;font-size:14px}
+.sbx{background:var(--navy);color:#fff;font-size:10.5px;font-weight:700;border-radius:4px;padding:2px 6px}
+.sub{color:#6b6f76;margin-top:18px;font-size:14px}
+.big{font-size:30px;font-weight:700;letter-spacing:-.5px;display:flex;align-items:center;gap:8px;line-height:1.1;margin-top:2px}
+.big small{font-size:12px;font-weight:600;color:#6b6f76;line-height:1.15}
+.then{font-size:12.5px;color:#6b6f76;margin-top:4px}
+.li{display:flex;justify-content:space-between;gap:10px;padding:9px 0;font-size:13px}
+.li.b{border-top:1px solid #e1e1e1;font-weight:600}
+.li span.m{color:#6b6f76;font-weight:400;font-size:12px;display:block}
+.pc{font:inherit;font-size:12.5px;font-weight:600;background:#e9e9e9;border:0;border-radius:8px;padding:7px 11px;cursor:pointer;margin:2px 0 8px}
+.wal{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.wal div{border-radius:6px;height:36px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px}
+.or{text-align:center;color:#8a8f98;font-size:11px;margin:10px 0}
+.fld{border:1px solid #e1e4ea;border-radius:6px;padding:8px 10px;color:#a0a5ae;font-size:13px;margin:4px 0 12px}
+.pm{border:1px solid #e1e4ea;border-radius:8px}
+.pm div{display:flex;align-items:center;gap:9px;padding:9px 11px;font-size:13px;font-weight:600}
+.pm div+div{border-top:1px solid #e1e4ea}
+.pm i{width:13px;height:13px;border-radius:50%;border:1.5px solid #9aa1ad;display:block}
+.pm em{margin-left:auto;font-style:normal;font-size:11px;color:#1c7a3c;background:#e1f5e6;border-radius:4px;padding:1px 6px;font-weight:700}
+.sbtn{margin-top:14px;border-radius:7px;height:40px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;background:var(--brand)}
+.pv{font-size:11.5px;color:#8a8f98;text-align:center;margin-top:8px}
+.real{margin-top:12px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.btn{font:inherit;font-size:13px;font-weight:500;padding:8px 13px;border-radius:7px;background:var(--pri);color:#fff;border:0;cursor:pointer}
 .btn.o{background:#fff;color:var(--ink);box-shadow:0 0 0 1px #cfd6e2}
-ul.tl{margin:6px 0 0 16px;font-size:12.5px;color:var(--mut)}
-ul.tl li{margin-bottom:3px}
-code{font:12px Menlo,Consolas,monospace;background:#eef1f6;padding:1px 5px;border-radius:4px}
-@media(max-width:860px){.cols{grid-template-columns:1fr}.L{border-right:0;border-bottom:1px solid var(--line)}.hd h1{font-size:20px}}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.small{font-size:12px;color:var(--mut)}
+/* steps */
+.prog{height:6px;border-radius:3px;background:#eef1f6;margin-bottom:10px;overflow:hidden}
+.prog i{display:block;height:100%;background:#1c7a3c}
+.st{border-bottom:1px solid var(--line)}
+.sth{font:inherit;color:inherit;width:100%;text-align:left;background:none;border:0;display:flex;gap:10px;padding:10px 0;align-items:center;cursor:pointer}
+.n{width:22px;height:22px;border-radius:50%;background:#eef1f6;color:var(--mut);font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;flex:none}
+.n.d{background:#1c7a3c;color:#fff}.n.nx{background:var(--pri);color:#fff}
+.sth .a{flex:1;font-weight:500;font-size:13.5px}
+.tag{font-size:11px;font-weight:700;padding:2px 7px;border-radius:5px;white-space:nowrap}
+.ok{background:#e1f5e6;color:#1c7a3c}.nxt{background:#e6e4ff;color:#4338ca}.mutd{background:#eef1f6;color:#6b7a94}
+.bd{padding:0 0 12px 32px;font-size:12.5px;color:var(--mut)}
+.bd ul{margin:4px 0 0 16px}.bd li{margin-bottom:3px}
+.bd .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.bd .acts button{font:inherit;font-size:12px;padding:4px 9px;border-radius:6px;border:1px solid #cfd6e2;background:#fff;cursor:pointer;color:var(--ink)}
+.bd .acts button.p{background:var(--pri);border-color:var(--pri);color:#fff}
+pre{background:var(--navy);color:#d6e2ff;border-radius:7px;padding:9px 11px;margin-top:6px;font:11.5px/1.5 Menlo,Consolas,monospace;overflow:auto;max-height:260px}
+.ft{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+code{font:11.5px Menlo,Consolas,monospace;background:#eef1f6;padding:1px 5px;border-radius:4px;color:var(--ink)}
+@media(max-width:1180px){.cols{grid-template-columns:300px minmax(0,1fr)}.col.r{grid-column:1/-1;border-left:0;border-top:1px solid var(--line)}}
+@media(max-width:760px){.cols{grid-template-columns:1fr}.col+.col{border-left:0;border-top:1px solid var(--line)}.cogrid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<p class="note"><b>Concept prototype</b> by Shlok Vaidya for a Stripe PM written exercise. Not a Stripe product. It does not read or change a Stripe account; sandbox results are simulated.</p>
-<div class="titlepill">Plan-first setup in the subscriptions guide</div>
-
+<p class="note"><b>Concept prototype.</b> Not a Stripe product. The Checkout in the middle is a preview; the sandbox results are simulated.</p>
 <div class="win">
-  <div class="bar"><i></i><i></i><i></i><div class="url">Concept · docs.stripe.com/get-started/use-cases/saas-subscriptions</div></div>
+  <div class="bar"><i></i><i></i><i></i><div class="url">Concept · Sell subscriptions as a SaaS startup · plan-first setup</div></div>
   <div class="hd">
-    <div class="crumb">Get started › Sell subscriptions as a SaaS startup</div>
-    <h1>Tell us your plan. We set up the rest.</h1>
-    <p>Signed in as Llama Inc sandbox · Online payments, subscriptions, digital goods</p>
+    <div class="tx">
+      <div class="crumb">Get started › Sell subscriptions as a SaaS startup</div>
+      <h1>Tell us your plan. We set up the rest.</h1>
+      <p>Signed in as Llama Inc sandbox · Online payments, subscriptions, digital goods</p>
+    </div>
+    <div class="fit" id="fit"></div>
   </div>
   <div class="cols">
-    <div class="L">
-      <h2>Your plan</h2>
+    <div class="col">
+      <h2>1 · Your plan</h2>
       <div class="f"><label class="lab" for="pname">Product</label><div class="in"><input type="text" id="pname"></div></div>
       <div class="f"><span class="lab">Prices</span><div id="prices"></div><button class="add" id="addPrice">+ Add another price</button></div>
       <div class="f"><span class="lab">Free trial</span>
-        <div class="in"><input type="number" id="tDays" min="0" step="1" aria-label="Trial days"><span>days</span>
-          <select id="tOn" class="sfx" aria-label="Trial applies to"></select></div></div>
+        <div class="in"><input type="number" id="tDays" min="0" step="1" aria-label="Trial days"><span>days</span><select id="tOn" class="sfx" aria-label="Trial applies to"></select></div></div>
       <div class="f"><span class="lab">Extras</span>
         <div class="chips">
           <button class="chip" data-k="promo">Promo code</button>
           <button class="chip" data-k="portal">Customer portal</button>
           <button class="chip" data-k="anchor">Fixed billing day</button>
           <button class="chip" data-k="tax">Tax</button>
-          <button class="chip" data-k="icon">Logo on Checkout</button>
         </div>
         <div id="heads"></div>
       </div>
+      <div class="f" id="codeBox"><label class="lab" for="code">Promo code · 20% off the first payment</label><div class="in"><input type="text" id="code"></div></div>
+      <div class="f"><span class="lab">Brand on the payment page</span>
+        <div class="in"><input type="color" id="brand" aria-label="Button color"><span>Button color</span><label class="sfx" style="display:flex;gap:5px;align-items:center"><input type="checkbox" id="icon">Logo</label></div></div>
       <div class="f"><span class="lab">Countries you sell to</span>
         <div class="sel" id="sel"></div>
-        <div class="pick">
-          <div class="in"><input type="text" id="cq" placeholder="Search countries" autocomplete="off" aria-label="Search countries" aria-controls="cmenu"></div>
-          <div class="menu" id="cmenu" hidden></div>
-        </div>
+        <div class="pick"><div class="in"><input type="text" id="cq" placeholder="Search countries" autocomplete="off" aria-label="Search countries"></div><div class="menu" id="cmenu" hidden></div></div>
       </div>
       <div class="f"><span class="lab">Your stack</span>
         <div class="chips">
-          <button class="chip" data-ui="react">React</button>
-          <button class="chip" data-ui="html">HTML</button>
-          <button class="chip" data-l="node">Node</button>
-          <button class="chip" data-l="ruby">Ruby</button>
-          <button class="chip" data-l="python">Python</button>
+          <button class="chip" data-ui="react">React</button><button class="chip" data-ui="html">HTML</button>
+          <button class="chip" data-l="node">Node</button><button class="chip" data-l="ruby">Ruby</button><button class="chip" data-l="python">Python</button>
         </div>
       </div>
       <button class="add" id="reset">Reset to the Llama Plus plan</button>
     </div>
-    <div class="R">
+
+    <div class="col mid">
+      <h2>2 · What your customer will see</h2>
+      <div class="vbar">
+        <span class="small">Customer in</span><select id="vc" aria-label="Preview as a customer in"></select>
+        <div class="seg" id="vplan"></div>
+      </div>
+      <div id="preview"></div>
+      <div class="real">
+        <form action="/create-checkout-session" method="POST" target="_blank" id="realForm">
+          <input type="hidden" name="plan" id="rPlan"><input type="hidden" name="country" id="rCountry">
+          <button class="btn" id="realBtn" type="submit">Open the real sandbox Checkout</button>
+        </form>
+        <span class="small" id="realNote"></span>
+      </div>
+    </div>
+
+    <div class="col r">
       <h2 id="stepSum"></h2>
+      <div class="prog"><i id="bar"></i></div>
       <div id="steps"></div>
-      <div class="foot"><button class="btn" id="dl">Download sample for this plan</button><button class="btn o" id="send">Send this plan to Claude or Cursor</button></div>
+      <div class="ft"><button class="btn" id="dl">Download sample for this plan</button><button class="btn o" id="send">Send this plan to Claude or Cursor</button></div>
       <div id="aiBox"></div>
     </div>
   </div>
@@ -129,20 +184,25 @@ code{font:12px Menlo,Consolas,monospace;background:#eef1f6;padding:1px 5px;borde
 const AP='AG AW BS BB BZ BM CA KY CR DM DO GD GT HT HN MX JM PA KN LC VC TT BR BO CO CL FK GY PY PE UY AL AD AT BE BA HR CY CZ DK EE FI FR DE GI GR HU IS IE IT LV LT LU MT MC MD ME NL MK NO PL PT RO SM RS SK SI ES SE CH UA GB VA AF AM AZ BD BN KH GE IN ID IL JP KZ KG MO MY MV MN NP PK PH QA SA SG KR LK TW TJ TH TR AE UZ VN YE AU PF NC NZ WF AO DZ BJ BW BF BI CM CV CF TD CI DJ GQ GA GM GN GW KE LR MG ML MU MA MZ NA NE CG RW SH ST SN ZA TZ TG UG ZM'.split(' ');
 const EURO='AT BE CY EE FI FR DE GR IE IT LV LT LU MT NL PT SK SI ES HR'.split(' ');
 let dn;try{dn=new Intl.DisplayNames(['en'],{type:'region'});}catch(e){}
-const cname=c=>{try{return dn?dn.of(c):c;}catch(e){return c;}};
+const cname=c=>{if(c==='US')return 'United States';try{return dn?dn.of(c):c;}catch(e){return c;}};
 const ALL=AP.map(c=>({c,n:cname(c)})).sort((a,b)=>a.n.localeCompare(b.n));
-const DEF={name:'Plus',mOn:true,mAmt:8,yOn:true,yAmt:80,tDays:7,tOn:'yearly',promo:true,portal:true,anchor:false,tax:false,icon:true,code:'LAUNCH20',c:['IN','NL','BR'],lang:'node',ui:'react'};
-let S=JSON.parse(JSON.stringify(DEF));let open={};let showAi=false;
+const DEF={name:'Plus',mOn:true,mAmt:8,yOn:true,yAmt:80,tDays:7,tOn:'yearly',promo:true,portal:true,anchor:false,tax:false,icon:true,brand:'#008cff',code:'LAUNCH20',c:['IN','NL','BR'],lang:'node',ui:'react',vc:'US',vp:'yearly',applied:false};
+let S=JSON.parse(JSON.stringify(DEF));let open=null;let done={};let showAi=false;
 const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
-const usd=n=>'$'+Number(n).toFixed(2);
 const LN={node:'Node',python:'Python',ruby:'Ruby'};
 function plans(){const a=[];if(S.mOn)a.push('monthly');if(S.yOn)a.push('yearly');return a;}
 function trialOn(p){return S.tDays>0&&(S.tOn==='both'||S.tOn===p);}
 function clash(){return S.anchor&&plans().some(trialOn);}
 function method(c){return c==='IN'?'UPI':c==='BR'?'Pix':EURO.includes(c)?'SEPA Direct Debit':null;}
+function cur(c){return c==='IN'?{s:'₹',r:87.4,k:'IN'}:c==='BR'?{s:'R$',r:5.6,k:'BR'}:EURO.includes(c)?{s:'€',r:1,k:'EU'}:null;}
+function money(usdAmt,c){const u=cur(c);if(!u||!S.c.includes(c))return '$'+Number(usdAmt).toFixed(2);
+  let v=usdAmt*u.r;if(u.k==='IN')v=Math.max(1,Math.round(v/100)*100-1);else if(u.k==='BR')v=Math.round(v/5)*5;
+  return u.s+v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});}
+const usd=n=>'$'+Number(n).toFixed(2);
 function localGroups(){const m={};S.c.forEach(c=>{const k=method(c);if(k)(m[k]=m[k]||[]).push(cname(c));});return m;}
 
+/* ---------- generated sample ---------- */
 function sessionParams(p){
   const o={line_items:[{price:'{{'+p.toUpperCase()+'_PRICE}}',quantity:1}],mode:'subscription'};
   if(S.promo)o.allow_promotion_codes=true;
@@ -192,11 +252,7 @@ function serverCode(){
   s+=two?"  session_params = {\n    monthly: "+ser(sessionParams('monthly'),L,2)+",\n    yearly: "+ser(sessionParams('yearly'),L,2)+",\n  }[plan]\n":"  session_params = "+ser(sessionParams(ps[0]),L,1)+"\n";
   return s+"  session = Stripe::Checkout::Session.create(session_params)\n  redirect session.url, 303\nend";
 }
-function trialSnippet(){
-  const d=Number(S.tDays);
-  if(S.lang==='python')return "'subscription_data': {\n  'trial_period_days': "+d+",\n}";
-  return "subscription_data: {\n  trial_period_days: "+d+",\n}";
-}
+function trialSnippet(){const d=Number(S.tDays);return S.lang==='python'?"'subscription_data': {\n  'trial_period_days': "+d+",\n}":"subscription_data: {\n  trial_period_days: "+d+",\n}";}
 function pageCode(){
   const ps=plans();const p=ps.includes('yearly')?'yearly':'monthly';
   const price=p==='yearly'?usd(S.yAmt)+' per year':usd(S.mAmt)+' per month';
@@ -204,8 +260,7 @@ function pageCode(){
   let f='<form action="/create-checkout-session" method="POST">\n';
   if(ps.length===2)f+='  <input type="hidden" name="plan" value="'+p+'" />\n';
   f+='  <h3>'+S.name+'</h3>\n  <p>'+price+'</p>\n  <button type="submit">'+btn+'</button>\n</form>';
-  if(S.ui==='html')return f;
-  return 'export default function Pricing() {\n  return (\n'+f.split('\n').map(l=>'    '+l).join('\n')+'\n  );\n}';
+  return S.ui==='html'?f:'export default function Pricing() {\n  return (\n'+f.split('\n').map(l=>'    '+l).join('\n')+'\n  );\n}';
 }
 function envCode(){
   let s='STRIPE_SECRET_KEY=sk_test_...   # never commit this file\nSTRIPE_WEBHOOK_SECRET=whsec_...\nDOMAIN=http://localhost:4242\n';
@@ -213,11 +268,7 @@ function envCode(){
   if(S.yOn)s+='YEARLY_PRICE=price_...    # '+usd(S.yAmt)+' per year\n';
   return s.trim();
 }
-function events(){
-  const e=['checkout.session.completed','invoice.paid','invoice.payment_failed','customer.subscription.created','customer.subscription.updated','customer.subscription.deleted'];
-  if(plans().some(trialOn))e.push('customer.subscription.trial_will_end');
-  return e;
-}
+function events(){const e=['checkout.session.completed','invoice.paid','invoice.payment_failed','customer.subscription.created','customer.subscription.updated','customer.subscription.deleted'];if(plans().some(trialOn))e.push('customer.subscription.trial_will_end');return e;}
 function hookCode(){
   if(S.lang!=='node')return '# '+LN[S.lang]+': verify the signature, answer 200,\n# then act on the event type.\n# Events for this plan:\n'+events().map(e=>'#   '+e).join('\n');
   return "app.post('/webhook',\n  express.raw({ type: 'application/json' }),\n  (req, res) => {\n    let event;\n    try {\n      event = stripe.webhooks.constructEvent(\n        req.body,\n        req.headers['stripe-signature'],\n        process.env.STRIPE_WEBHOOK_SECRET\n      );\n    } catch (err) {\n      return res.status(400).send('Bad signature');\n    }\n    switch (event.type) {\n"+events().map(e=>"      case '"+e+"':").join('\n')+"\n        // turn Premium on or off from\n        // event.data.object.status\n        break;\n    }\n    res.sendStatus(200);\n  }\n);";
@@ -226,98 +277,162 @@ function aiPrompt(){
   const ps=plans();let s='Add a '+S.name+' subscription checkout to my site with Stripe Checkout, in '+(S.ui==='react'?'React and ':'')+LN[S.lang]+'.\n';
   if(S.mOn)s+='- Monthly price: '+usd(S.mAmt)+' per month.\n';
   if(S.yOn)s+='- Yearly price: '+usd(S.yAmt)+' per year.\n';
-  if(ps.some(trialOn))s+='- '+S.tDays+'-day free trial on '+(S.tOn==='both'?'both prices':S.tOn)+'.\n';
+  if(ps.some(trialOn))s+='- '+S.tDays+'-day free trial on '+(S.tOn==='both'?'all prices':S.tOn)+'.\n';
   if(S.promo)s+='- Promo code '+S.code+': 20% off the first payment.\n';
   if(S.c.length)s+='- Sell to '+S.c.length+' countries outside the United States; add local prices where a local payment method needs one.\n';
   if(S.portal)s+='- Customer portal for switching and canceling, one subscription per customer.\n';
   if(S.anchor)s+='- Fixed billing day on prices without a trial.\n';
   if(S.tax)s+='- Collect tax automatically.\n';
-  if(S.icon)s+='- Show my logo on the Checkout page.\n';
+  if(S.icon)s+='- Show my logo and button color '+S.brand+' on the Checkout page.\n';
   return s+'- Opt each session out of Managed Payments.\n- Add a webhook that verifies the signature, answers 200, and turns Premium on or off from the subscription status.\n- Work in my sandbox only. Keep the secret key in .env and never commit it.';
 }
+
+/* ---------- steps ---------- */
 function steps(){
-  const ps=plans();const st=[];const g=localGroups();const gk=Object.keys(g);
-  st.push({d:1,a:'Product and '+ps.length+' price'+(ps.length===1?'':'s')+' created in your sandbox',b:'<span class="mono">'+ps.map(p=>'price_… '+p).join(' · ')+'</span> <span class="tag mutd">Simulated</span>'});
-  st.push({d:1,id:'sample',a:'Sample built for this plan',b:'Subscription mode, '+(ps.length===2?'both prices':'your price')+', page shows '+esc(S.name)+', npm scripts, Managed Payments opted out',
-    code:[[({node:'server.js',python:'server.py',ruby:'server.rb'}[S.lang]),serverCode()],[S.ui==='react'?'Pricing.jsx':'pricing.html',pageCode()],['.env',envCode()]]});
-  if(ps.some(trialOn))st.push({a:'Add the '+S.tDays+'-day trial'+(S.tOn==='both'?'':' to '+(S.tOn==='yearly'?'Yearly':'Monthly')),tag:LN[S.lang],pre:trialSnippet(),b:'A trial signup charges $0.00, so it shows under Subscriptions, not Transactions.'});
-  if(S.promo)st.push({a:'Create the promo code',b:'<span class="in" style="display:inline-flex;margin:4px 0 0"><input type="text" id="code" value="'+esc(S.code)+'" aria-label="Promo code" style="width:110px"></span> 20% off the first payment. The code box shows at Checkout.'});
-  if(S.c.length)st.push({a:'Price for '+S.c.length+' countr'+(S.c.length===1?'y':'ies')+' outside the United States',
-    b:(gk.length?'Add a local price so customers can pay with '+gk.map(k=>k+' ('+(g[k].length>3?g[k].length+' countries':g[k].join(', '))+')').join(', ')+'. ':'')+'Converted prices alone offer cards, Apple Pay and Google Pay for subscriptions.'});
-  if(S.portal)st.push({a:'Turn on the customer portal',b:'Switch plans, cancel, update card. Also limit customers to one subscription, or the same email becomes several customers.'});
-  if(S.anchor)st.push({a:'Set the fixed billing day',b:'Applies to prices without a trial. The first charge is prorated'+(S.promo?', and a one-time promo code is spent on that part-month charge.':'.')});
-  if(S.tax)st.push({a:'Set up tax',b:'Head office address, tax behavior and a registration for each place you collect. Elsewhere Checkout shows $0.00 tax.'});
-  if(S.icon)st.push({a:'Add your logo to Checkout',b:'Passed from your sample with your colors and font.'});
-  st.push({id:'hook',a:'Listen for subscription events',b:'Webhook code and local test commands for '+LN[S.lang],code:[['Webhook',hookCode()],['Test on your laptop','stripe listen --forward-to localhost:4242/webhook\n# then make a test purchase']]});
+  const ps=plans();const st=[];const g=localGroups();const gk=Object.keys(g);const srv={node:'server.js',python:'server.py',ruby:'server.rb'}[S.lang];
+  st.push({id:'prod',auto:1,a:'Product and '+ps.length+' price'+(ps.length===1?'':'s')+' created in your sandbox',
+    h:'<p>Created from your plan, so there is no product form to fill in again and the guide, the Dashboard and the sample all show '+esc(S.name)+'.</p><ul>'+ps.map(p=>'<li><code>price_… '+p+'</code> '+(p==='monthly'?usd(S.mAmt)+' per month':usd(S.yAmt)+' per year')+'</li>').join('')+'</ul><p style="margin-top:6px"><span class="tag mutd">Simulated in this prototype</span></p>'});
+  st.push({id:'sample',auto:1,a:'Sample built for this plan',
+    h:'<p>Subscription mode, '+(ps.length===2?'both prices':'your price')+', the page shows '+esc(S.name)+' and not a placeholder product, and the README says <code>npm install</code> then <code>npm start</code>, which is what the scripts run. It uses the current Stripe library and opts each session out of Managed Payments, which is on by default and would reject the first Checkout.</p>',
+    code:[[srv,serverCode()],[S.ui==='react'?'Pricing.jsx':'pricing.html',pageCode()],['.env',envCode()]]});
+  if(ps.some(trialOn))st.push({id:'trial',a:'Add the '+S.tDays+'-day trial'+(S.tOn==='both'?'':' to '+(S.tOn==='yearly'?'Yearly':'Monthly')),
+    h:'<p>Already in your sample, in '+LN[S.lang]+', with your price. A trial signup charges $0.00, so look under Subscriptions, not Transactions. Stripe sends a trial-ending event 3 days before the trial converts, so you can remind the customer.</p>',code:[[srv+' · trial',trialSnippet()]]});
+  if(S.promo)st.push({id:'promo',a:'Create the '+esc(S.code)+' promo code',h:'<p>20% off the first payment. Checkout shows the code box because the sample turns on promotion codes. Try it in the preview: click "Add promotion code".</p>'});
+  if(S.c.length)st.push({id:'local',a:'Set prices for '+S.c.length+' countr'+(S.c.length===1?'y':'ies')+' outside the United States',
+    h:'<p>For subscriptions sold across borders, converted prices offer cards, Apple Pay and Google Pay only.</p>'+(gk.length?'<p style="margin-top:5px">Add a price in the local currency so these customers can pay the way they already do:</p><ul>'+gk.map(k=>'<li><b>'+k+'</b>: '+(g[k].length>4?g[k].length+' countries':g[k].join(', '))+'</li>').join('')+'</ul>':'')+'<p style="margin-top:5px">Switch "Customer in" above the preview to see each one.</p>'});
+  if(S.portal)st.push({id:'portal',a:'Turn on the customer portal',h:'<p>Customers switch plans, cancel and update their card without emailing you.</p><p style="margin-top:5px"><b>One setting to turn on with it:</b> "Limit customers to one subscription". Without it, each Checkout with the same email creates a new customer, and the portal shows only the newest one.</p>'});
+  if(S.anchor)st.push({id:'anchor',a:'Set the fixed billing day',h:'<p>Applies to prices without a trial. The first charge is prorated up to your billing day'+(S.promo?', and a one-time promo code is spent on that part-month charge, so the saving is smaller than a full period.':'.')+'</p>'});
+  if(S.tax)st.push({id:'tax',a:'Set up tax',h:'<p>Confirm your head office address, choose whether tax is added on top of the price, and add a registration for each place you must collect. Everywhere else Checkout shows $0.00 tax.</p>'});
+  st.push({id:'brand',a:'Brand the payment page',h:'<p>Your button color'+(S.icon?' and logo are':' is')+' passed from the sample, so the page does not look like a stranger\'s site. Change them on the left and watch the preview.</p>'});
+  st.push({id:'hook',a:'Listen for subscription events',h:'<p>Your server learns about renewals, failed payments and cancellations only through events. Verify the signature, answer 200, then turn Premium on or off from the subscription status, not from the order events arrive in.</p>',
+    code:[['Webhook',hookCode()],['Test on your laptop','stripe listen --forward-to localhost:4242/webhook\n# then make a test purchase in Checkout']]});
   const t=['First payment: card 4242 4242 4242 4242, any future date, any CVC.','Returning customer with Link: test code 000000.'];
   if(ps.some(trialOn))t.push('Trial signup: total due today is $0.00.');
   if(S.promo)t.push('Promo: enter '+esc(S.code)+' at Checkout.');
-  t.push('Failed renewal: card 4000 0000 0000 0341 on a test clock; Stripe retries, then cancels.');
-  st.push({id:'test',a:'Test it',b:t.length+' checks for this plan',list:t});
+  S.c.filter(method).slice(0,3).forEach(c=>t.push('Customer in '+cname(c)+': local price and '+method(c)+'.'));
+  t.push('Failed renewal: card 4000 0000 0000 0341 on a test clock. Stripe retries 8 times over 14 days, then cancels.');
+  if(S.portal)t.push('Portal: switch plan and cancel with the test email.');
+  st.push({id:'test',a:'Test it',h:'<ul>'+t.map(x=>'<li>'+x+'</li>').join('')+'</ul>'});
+  st.push({id:'live',a:'Go live',h:'<p>Swap the sandbox keys and price IDs for live ones. Your plan, prices and settings carry over.</p>'});
   const hid=['Usage-based pricing','quantities'];
   if(!S.portal)hid.push('customer portal');if(!S.promo)hid.push('promo codes');if(!S.tax)hid.push('tax');
   if(!S.anchor)hid.push('fixed billing day');if(!ps.some(trialOn))hid.push('free trials');if(!S.c.length)hid.push('local currencies');
   return {st,hid};
 }
+
+/* ---------- preview ---------- */
+function preview(){
+  const ps=plans();if(!ps.length)return '<div class="conf">Add a price to see the payment page.</div>';
+  if(clash())return '<div class="conf bad"><b>No payment page.</b> Stripe refuses to create it while a fixed billing day and a free trial are on the same price. Fix the conflict on the left.</div>';
+  const p=ps.includes(S.vp)?S.vp:ps[0];const amt=p==='yearly'?S.yAmt:S.mAmt;const per=p==='yearly'?'year':'month';
+  const c=S.vc;const tr=trialOn(p);const m=money(amt,c);const lm=S.c.includes(c)?method(c):null;
+  const disc=S.promo&&S.applied;const converted=c!=='US'&&!(S.c.includes(c)&&cur(c));
+  const start=new Date(Date.now()+S.tDays*864e5).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+  const num=s=>parseFloat(s.replace(/[^0-9.]/g,''));const sym=m.replace(/[0-9.,]+/,'');
+  const fmt=v=>sym+v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+  const base=num(m.replace(/,/g,''));const off=Math.round(base*20)/100;
+  let L='<div class="biz">'+(S.icon?'<span class="ico">🦙</span>':'')+'Llama Inc sandbox <span class="sbx">Sandbox</span></div>';
+  L+='<div class="sub">'+(tr?'Try ':'Subscribe to ')+esc(S.name)+'</div>';
+  L+=tr?'<div class="big">'+S.tDays+' days free</div><div class="then">Then '+m+' per '+per+' starting '+start+'</div>'
+       :'<div class="big">'+m+'<small>per<br>'+per+'</small></div>';
+  if(S.anchor&&!tr)L+='<div class="then">First charge is prorated to your fixed billing day</div>';
+  L+='<div style="margin-top:16px"><div class="li"><div><b>'+esc(S.name)+'</b><span class="m">'+(tr?S.tDays+' days free, then billed '+per+'ly':'Billed '+per+'ly')+'</span></div><div><b>'+m+'</b></div></div>';
+  L+='<div class="li b"><span>Subtotal</span><span>'+m+'</span></div>';
+  if(S.promo)L+=disc?'<div class="li"><span><b>'+esc(S.code)+'</b><span class="m">20% off the first payment</span></span><span>'+(tr?'Applied':'−'+fmt(off))+' <button class="x" id="unapply" aria-label="Remove promo code">×</button></span></div>':'<button class="pc" id="apply">Add promotion code</button>';
+  if(S.tax)L+='<div class="li"><span>Tax<span class="m">Calculated from the billing address</span></span><span>—</span></div>';
+  if(tr)L+='<div class="li b"><span>Total after trial</span><span>'+m+'</span></div>';
+  L+='<div class="li b"><span>Total due today</span><span>'+(tr?fmt(0):fmt(disc?base-off:base))+'</span></div></div>';
+  const pms=[];
+  if(lm)pms.push([lm,'Local']);pms.push(['Card','']);
+  if(c==='US')pms.push(['Klarna',''],['Cash App Pay',''],['Amazon Pay','']);
+  let R='<div class="wal"><div style="background:#000;color:#fff">Apple Pay</div><div style="background:#00d66f;color:#0a2540">Link</div></div><div class="or">OR</div>';
+  R+='<b style="font-size:13px">Contact information</b><div class="fld">email@example.com</div><b style="font-size:13px">Payment method</b>';
+  R+='<div class="pm" style="margin-top:4px">'+pms.map(x=>'<div><i></i>'+x[0]+(x[1]?'<em>'+x[1]+'</em>':'')+'</div>').join('')+'</div>';
+  R+='<div class="sbtn">'+(tr?'Start trial':'Subscribe')+'</div><div class="pv">Preview only. No payment details are collected here.</div>';
+  let note='';
+  if(converted)note='<div class="conf" style="margin-top:10px">A customer in '+esc(cname(c))+' sees this price converted to their currency at checkout, and can pay by card, Apple Pay or Google Pay. '+(S.c.includes(c)?'':'Add '+esc(cname(c))+' to "Countries you sell to" to plan for it.')+'</div>';
+  else if(lm)note='<div class="conf" style="margin-top:10px;background:#e1f5e6;border-color:#bfe5c9;color:#1c7a3c">Because '+esc(S.name)+' has its own price in this currency, customers in '+esc(cname(c))+' can pay with '+lm+'.</div>';
+  return '<div class="co"><div class="cobar">Payment page preview</div><div class="cogrid"><div class="coL">'+L+'</div><div class="coR">'+R+'</div></div></div>'+note;
+}
+
+/* ---------- render ---------- */
 function renderPrices(){
   const row=(k,amt,per)=>'<div class="in"><span>$</span><input type="number" id="'+k+'Amt" value="'+amt+'" min="1" step="1" aria-label="'+per+' price"><span>'+per+'</span><span class="sfx">USD</span><button class="x" data-rm="'+k+'" aria-label="Remove '+per+' price">×</button></div>';
   $('prices').innerHTML=(S.mOn?row('m',S.mAmt,'per month'):'')+(S.yOn?row('y',S.yAmt,'per year'):'');
   $('addPrice').style.display=(S.mOn&&S.yOn)?'none':'';
-  $('addPrice').textContent=!S.mOn&&!S.yOn?'+ Add a price':'+ Add another price';
 }
 function renderMenu(){
-  const q=$('cq').value.trim().toLowerCase();
-  const list=ALL.filter(x=>!q||x.n.toLowerCase().includes(q));
-  $('cmenu').innerHTML='<div class="tools"><button class="add" id="call">Select all</button><button class="add" id="cnone">Clear</button><span style="margin-left:auto;font-size:12.5px;color:#6b7a94">'+S.c.length+' selected</span></div>'+
+  const q=$('cq').value.trim().toLowerCase();const list=ALL.filter(x=>!q||x.n.toLowerCase().includes(q));
+  $('cmenu').innerHTML='<div class="tools"><button class="add" id="call">Select all</button><button class="add" id="cnone">Clear</button><span class="small" style="margin-left:auto">'+S.c.length+' selected</span></div>'+
     (list.length?list.map(x=>'<label><input type="checkbox" data-cc="'+x.c+'"'+(S.c.includes(x.c)?' checked':'')+'>'+esc(x.n)+'</label>').join(''):'<label>No match</label>');
 }
 function render(keep){
-  if(!keep){$('pname').value=S.name;$('tDays').value=S.tDays;renderPrices();}
+  if(!keep){$('pname').value=S.name;$('tDays').value=S.tDays;$('code').value=S.code;$('brand').value=S.brand;$('icon').checked=S.icon;renderPrices();}
+  document.documentElement.style.setProperty('--brand',S.brand);
+  $('codeBox').style.display=S.promo?'':'none';
   $('tOn').innerHTML=[['yearly','Yearly only'],['monthly','Monthly only'],['both','All prices'],['none','No trial']].map(o=>'<option value="'+o[0]+'"'+(S.tOn===o[0]?' selected':'')+'>'+o[1]+'</option>').join('');
   document.querySelectorAll('[data-k]').forEach(b=>b.setAttribute('aria-pressed',String(!!S[b.dataset.k])));
   document.querySelectorAll('[data-l]').forEach(b=>b.setAttribute('aria-pressed',String(S.lang===b.dataset.l)));
   document.querySelectorAll('[data-ui]').forEach(b=>b.setAttribute('aria-pressed',String(S.ui===b.dataset.ui)));
-  let h='';
-  if(clash())h+='<div class="conf bad"><b>Stripe rejects this.</b> A fixed billing day cannot be combined with a free trial on the same price: "You may only specify one of these parameters: billing_cycle_anchor, trial_period_days."<br><button data-fix="anchor">Remove fixed billing day</button><button data-fix="trial">Remove trial</button></div>';
-  else if(S.anchor&&S.promo)h+='<div class="conf"><b>Heads up.</b> With a fixed billing day the first charge is prorated, and a one-time promo code is spent on that small charge.</div>';
-  else h+='<div class="conf"><b>Heads up.</b> A fixed billing day cannot be combined with a free trial on the same price.</div>';
-  $('heads').innerHTML=h;
-  $('sel').innerHTML=S.c.length>8?'<span class="tok" style="padding-right:10px">'+S.c.length+' countries selected</span>':S.c.map(c=>'<span class="tok">'+esc(cname(c))+'<button class="x" data-unc="'+c+'" aria-label="Remove '+esc(cname(c))+'">×</button></span>').join('');
+  const ps=plans();
+  $('heads').innerHTML=clash()?'<div class="conf bad"><b>Stripe rejects this.</b> A fixed billing day cannot be combined with a free trial on the same price: "You may only specify one of these parameters: billing_cycle_anchor, trial_period_days."<br><button data-fix="anchor">Remove fixed billing day</button><button data-fix="trial">Remove trial</button></div>'
+    :S.anchor&&S.promo?'<div class="conf"><b>Heads up.</b> With a fixed billing day the first charge is prorated, and a one-time promo code is spent on that small charge.</div>'
+    :'<div class="conf"><b>Heads up.</b> A fixed billing day cannot be combined with a free trial on the same price.</div>';
+  $('sel').innerHTML=S.c.length>6?'<span class="tok" style="padding-right:9px">'+S.c.length+' countries selected</span>':S.c.map(c=>'<span class="tok">'+esc(cname(c))+'<button class="x" data-unc="'+c+'" aria-label="Remove '+esc(cname(c))+'">×</button></span>').join('');
   if(!$('cmenu').hidden)renderMenu();
-  const ps=plans();const blocked=clash()||!ps.length;
-  if(blocked){$('stepSum').textContent='Your guide · waiting for your plan';
-    $('steps').innerHTML='<div class="st"><div class="n">!</div><div class="t"><div class="a">'+(ps.length?'Fix the conflict on the left first':'Add a price to start')+'</div><div class="b">The sample and the guide are built once the plan is one Stripe will accept.</div></div></div>';
-    $('dl').disabled=$('send').disabled=true;$('dl').style.opacity=$('send').style.opacity=.5;$('aiBox').innerHTML='';return;}
-  $('dl').disabled=$('send').disabled=false;$('dl').style.opacity=$('send').style.opacity=1;
-  const {st,hid}=steps();
-  $('stepSum').textContent='Your guide · '+st.length+' steps, '+st.filter(x=>x.d).length+' already done';
-  let k=0;$('steps').innerHTML=st.map(x=>{k++;
-    let body='<div class="a">'+x.a+'</div>'+(x.pre?'<pre>'+esc(x.pre)+'</pre>':'')+(x.b?'<div class="b">'+x.b+'</div>':'');
-    if(x.list)body+=(open[x.id]?'<ul class="tl">'+x.list.map(l=>'<li>'+l+'</li>').join('')+'</ul>':'')+'<button class="more" data-open="'+x.id+'">'+(open[x.id]?'Hide':'Show')+'</button>';
-    if(x.code)body+=(open[x.id]?x.code.map(c=>'<div class="b" style="margin-top:8px"><b>'+esc(c[0])+'</b></div><pre>'+esc(c[1])+'</pre>').join(''):'')+'<button class="more" data-open="'+x.id+'">'+(open[x.id]?'Hide code':'View code')+'</button>';
-    return '<div class="st"><div class="n'+(x.d?' d':'')+'">'+(x.d?'✓':k)+'</div><div class="t">'+body+'</div>'+(x.d?'<span class="tag ok">Done</span>':x.tag?'<span class="tag mutd">'+x.tag+'</span>':'')+'</div>';}).join('')
-    +'<div class="st" style="border:0;opacity:.6"><div class="n">–</div><div class="t"><div class="a" style="font-weight:400">'+hid.map((s,i)=>i?s:s[0].toUpperCase()+s.slice(1)).join(', ')+'</div><div class="b">Hidden: not part of your plan</div></div><span class="tag mutd">Skipped</span></div>';
-  $('aiBox').innerHTML=showAi?'<pre id="aiText">'+esc(aiPrompt())+'</pre>':'';
+  $('fit').innerHTML=ps.length?'<b>This guide fits your plan.</b> '+ps.length+' recurring price'+(ps.length>1?'s':'')+(ps.some(trialOn)?', a free trial':'')+(S.promo?', a promo code':'')+', hosted Checkout, '+(S.ui==='react'?'React and ':'')+LN[S.lang]+'.':'<b>Add a price</b> to check the fit.';
+  // viewer
+  const vopts=['US'].concat(S.c.slice().sort((a,b)=>cname(a).localeCompare(cname(b))));if(!vopts.includes(S.vc))S.vc='US';
+  $('vc').innerHTML=vopts.map(c=>'<option value="'+c+'"'+(S.vc===c?' selected':'')+'>'+esc(cname(c))+'</option>').join('');
+  if(!ps.includes(S.vp)&&ps.length)S.vp=ps[0];
+  $('vplan').innerHTML=ps.map(p=>'<button data-vp="'+p+'" aria-pressed="'+(S.vp===p)+'">'+(p==='monthly'?'Monthly':'Yearly')+'</button>').join('');
+  $('preview').innerHTML=preview();
+  const isLlama=S.name==='Plus'&&S.mAmt==8&&S.yAmt==80&&S.tDays==7&&S.tOn==='yearly'&&!S.anchor&&!S.tax&&ps.length&&['US','IN','NL','BR'].includes(S.vc);
+  $('realBtn').disabled=!isLlama;$('rPlan').value=S.vp;$('rCountry').value=S.vc;
+  $('realNote').textContent=isLlama?'Opens Stripe Checkout in the Llama sandbox for this plan and country.':'Available for the Llama Plus plan as built: $8, $80, 7-day trial on Yearly; United States, India, Netherlands or Brazil.';
+  // steps
+  const blocked=clash()||!ps.length;
+  $('dl').disabled=$('send').disabled=blocked;
+  if(blocked){$('stepSum').textContent='3 · Your guide · waiting for your plan';$('bar').style.width='0';
+    $('steps').innerHTML='<div class="bd" style="padding:8px 0">'+(ps.length?'Fix the conflict in your plan first.':'Add a price to start.')+' The sample and the guide are built once the plan is one Stripe will accept.</div>';$('aiBox').innerHTML='';return;}
+  const {st,hid}=steps();const isDone=x=>x.auto||done[x.id];const nd=st.filter(isDone).length;const next=st.find(x=>!isDone(x));
+  $('stepSum').textContent='3 · Your guide · '+st.length+' steps, '+nd+' done';$('bar').style.width=(100*nd/st.length)+'%';
+  let k=0;$('steps').innerHTML=st.map(x=>{k++;const d=isDone(x),nx=next&&next.id===x.id,o=open===x.id;
+    let h='<div class="st"><button class="sth" data-open="'+x.id+'" aria-expanded="'+o+'"><span class="n'+(d?' d':nx?' nx':'')+'">'+(d?'✓':k)+'</span><span class="a">'+x.a+'</span>'+(d?'<span class="tag ok">Done</span>':nx?'<span class="tag nxt">Next</span>':'')+'</button>';
+    if(o){h+='<div class="bd">'+x.h+(x.code?x.code.map(c=>'<p style="margin-top:8px"><b>'+esc(c[0])+'</b></p><pre>'+esc(c[1])+'</pre>').join(''):'')+'<div class="acts">'+
+      (x.auto?'':'<button class="p" data-done="'+x.id+'">'+(d?'Mark as not done':'Mark done, show next')+'</button>')+
+      (x.code?'<button data-copy="'+x.id+'">Copy code</button>':'')+'<button data-ask="'+x.id+'">Ask AI about this step</button></div></div>';}
+    return h+'</div>';}).join('')
+    +'<div class="st" style="border:0;opacity:.65"><div class="sth" style="cursor:default"><span class="n">–</span><span class="a" style="font-weight:400">'+hid.map((s,i)=>i?s:s[0].toUpperCase()+s.slice(1)).join(', ')+'</span><span class="tag mutd">Hidden</span></div></div>';
+  window._st=st;
+  $('aiBox').innerHTML=showAi?'<pre id="aiText">'+esc(showAi)+'</pre>':'';
 }
 function bundle(){
-  return '# '+S.name+' subscription sample, built for this plan\n\n## Run\nnpm install\nnpm start\n\n## '+({node:'server.js',python:'server.py',ruby:'server.rb'}[S.lang])+'\n'+serverCode()+'\n\n## '+(S.ui==='react'?'Pricing.jsx':'pricing.html')+'\n'+pageCode()+'\n\n## .env\n'+envCode()+'\n\n## Webhook\n'+hookCode()+'\n\n## Prompt for Claude or Cursor\n'+aiPrompt()+'\n';
+  const srv={node:'server.js',python:'server.py',ruby:'server.rb'}[S.lang];
+  return '# '+S.name+' subscription sample, built for this plan\n\n## Run\nnpm install\nnpm start\n\n## '+srv+'\n'+serverCode()+'\n\n## '+(S.ui==='react'?'Pricing.jsx':'pricing.html')+'\n'+pageCode()+'\n\n## .env\n'+envCode()+'\n\n## Webhook\n'+hookCode()+'\n\n## Test\nstripe listen --forward-to localhost:4242/webhook\nCard 4242 4242 4242 4242 · Link code 000000 · failed renewal card 4000 0000 0000 0341\n\n## Prompt for Claude or Cursor\n'+aiPrompt()+'\n';
 }
+function copy(t,b,label){if(navigator.clipboard)navigator.clipboard.writeText(t).then(()=>{const o=b.textContent;b.textContent=label||'Copied';setTimeout(()=>b.textContent=o,1500);}).catch(()=>{});}
 document.addEventListener('click',e=>{
-  const b=e.target.closest('button');
-  if(!e.target.closest('.pick')&&!$('cmenu').hidden){$('cmenu').hidden=true;}
-  if(!b)return;
-  if(b.dataset.k){S[b.dataset.k]=!S[b.dataset.k];render();}
+  if(!e.target.closest('.pick')&&!$('cmenu').hidden)$('cmenu').hidden=true;
+  const b=e.target.closest('button');if(!b||b.id==='realBtn')return;
+  if(b.dataset.k){S[b.dataset.k]=!S[b.dataset.k];if(b.dataset.k==='promo')S.applied=false;render();}
   else if(b.dataset.l){S.lang=b.dataset.l;render();}
   else if(b.dataset.ui){S.ui=b.dataset.ui;render();}
+  else if(b.dataset.vp){S.vp=b.dataset.vp;render(true);}
   else if(b.dataset.rm){S[b.dataset.rm+'On']=false;render();}
   else if(b.id==='addPrice'){if(!S.mOn)S.mOn=true;else S.yOn=true;render();}
   else if(b.dataset.fix){if(b.dataset.fix==='anchor')S.anchor=false;else S.tOn='none';render();}
   else if(b.dataset.unc){S.c=S.c.filter(c=>c!==b.dataset.unc);render();}
-  else if(b.id==='call'){S.c=ALL.map(x=>x.c);render();}
-  else if(b.id==='cnone'){S.c=[];render();}
-  else if(b.dataset.open){open[b.dataset.open]=!open[b.dataset.open];render();}
-  else if(b.id==='reset'){S=JSON.parse(JSON.stringify(DEF));open={};showAi=false;$('cq').value='';render();}
-  else if(b.id==='send'){showAi=true;render();const t=aiPrompt();if(navigator.clipboard)navigator.clipboard.writeText(t).then(()=>{b.textContent='Copied. Paste into Claude or Cursor';setTimeout(()=>b.textContent='Send this plan to Claude or Cursor',1800);}).catch(()=>{});}
+  else if(b.id==='call'){S.c=ALL.map(x=>x.c);render(true);}
+  else if(b.id==='cnone'){S.c=[];render(true);}
+  else if(b.id==='apply'){S.applied=true;render(true);}
+  else if(b.id==='unapply'){S.applied=false;render(true);}
+  else if(b.dataset.open){open=open===b.dataset.open?null:b.dataset.open;render(true);}
+  else if(b.dataset.done){const id=b.dataset.done;done[id]=!done[id];if(done[id]){const st=window._st;const nx=st.find(x=>!(x.auto||done[x.id]));open=nx?nx.id:null;}render(true);}
+  else if(b.dataset.copy){const x=window._st.find(s=>s.id===b.dataset.copy);copy(x.code.map(c=>'// '+c[0]+'\n'+c[1]).join('\n\n'),b);}
+  else if(b.dataset.ask){const x=window._st.find(s=>s.id===b.dataset.ask);showAi='I am on the step "'+x.a.replace(/<[^>]+>/g,'')+'" of setting up Stripe Checkout subscriptions.\nMy plan:\n'+aiPrompt().split('\n').slice(1).join('\n')+'\nExplain this step for my plan and tell me what to check.';render(true);copy(showAi,b,'Copied prompt');}
+  else if(b.id==='reset'){S=JSON.parse(JSON.stringify(DEF));open=null;done={};showAi=false;$('cq').value='';render();}
+  else if(b.id==='send'){showAi=aiPrompt();render(true);copy(showAi,b,'Copied. Paste into Claude or Cursor');}
   else if(b.id==='dl'){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([bundle()],{type:'text/markdown'}));a.download=S.name.toLowerCase().replace(/[^a-z0-9]+/g,'-')+'-subscription-sample.md';document.body.appendChild(a);a.click();a.remove();}
 });
 $('cq').addEventListener('focus',()=>{$('cmenu').hidden=false;renderMenu();});
@@ -325,14 +440,17 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')$('cmenu').hidden=tr
 document.addEventListener('change',e=>{const t=e.target;
   if(t.dataset.cc){if(t.checked){if(!S.c.includes(t.dataset.cc))S.c.push(t.dataset.cc);}else S.c=S.c.filter(c=>c!==t.dataset.cc);render(true);}
   else if(t.id==='tOn'){S.tOn=t.value;render(true);}
+  else if(t.id==='vc'){S.vc=t.value;render(true);}
+  else if(t.id==='icon'){S.icon=t.checked;render(true);}
 });
 document.addEventListener('input',e=>{const t=e.target;
   if(t.id==='pname')S.name=t.value||'Plus';
   else if(t.id==='mAmt')S.mAmt=Math.max(1,Number(t.value)||1);
   else if(t.id==='yAmt')S.yAmt=Math.max(1,Number(t.value)||1);
   else if(t.id==='tDays')S.tDays=Math.max(0,Number(t.value)||0);
+  else if(t.id==='code')S.code=(t.value||'LAUNCH20').toUpperCase();
+  else if(t.id==='brand')S.brand=t.value;
   else if(t.id==='cq'){$('cmenu').hidden=false;renderMenu();return;}
-  else if(t.id==='code'){S.code=(t.value||'LAUNCH20').toUpperCase();return;}
   else return;
   render(true);
 });
