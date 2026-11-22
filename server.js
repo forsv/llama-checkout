@@ -13,6 +13,96 @@ const idOf = (value) => {
   return value.id || 'none';
 };
 
+const firstItem = (subscription) => {
+  const items = subscription.items;
+  if (!items || !items.data || !items.data[0]) {
+    return null;
+  }
+  return items.data[0];
+};
+
+const priceInterval = (subscription) => {
+  const item = firstItem(subscription);
+  const recurring =
+    item &&
+    item.price &&
+    item.price.recurring;
+  if (recurring && recurring.interval) {
+    return recurring.interval;
+  }
+  if (item && item.plan && item.plan.interval) {
+    return item.plan.interval;
+  }
+  if (
+    subscription.plan &&
+    subscription.plan.interval
+  ) {
+    return subscription.plan.interval;
+  }
+  return 'none';
+};
+
+const dateOf = (unix) => {
+  if (!unix) return 'unknown';
+  return new Date(unix * 1000)
+    .toISOString()
+    .slice(0, 10);
+};
+
+const endingAt = (subscription) => {
+  if (subscription.cancel_at) {
+    return subscription.cancel_at;
+  }
+  const item = firstItem(subscription);
+  if (item && item.current_period_end) {
+    return item.current_period_end;
+  }
+  return subscription.current_period_end;
+};
+
+const premiumDecision = (type, subscription) => {
+  const status = subscription.status;
+  const ending =
+    subscription.cancel_at_period_end === true ||
+    Boolean(subscription.cancel_at);
+
+  if (type === 'customer.subscription.deleted') {
+    return 'PREMIUM OFF';
+  }
+  if (
+    type === 'customer.subscription.trial_will_end'
+  ) {
+    return (
+      'TRIAL ENDS SOON ' +
+      dateOf(subscription.trial_end)
+    );
+  }
+  if (
+    status === 'canceled' ||
+    status === 'unpaid' ||
+    status === 'paused' ||
+    status === 'incomplete_expired'
+  ) {
+    return 'PREMIUM OFF';
+  }
+  if (ending) {
+    return (
+      'PREMIUM ON, ENDING ' +
+      dateOf(endingAt(subscription))
+    );
+  }
+  if (status === 'past_due') {
+    return 'PREMIUM ON, PAYMENT RETRY';
+  }
+  if (status === 'trialing' || status === 'active') {
+    return 'PREMIUM ON';
+  }
+  return null;
+};
+
+const handledEventIds = new Set();
+
+// This demo prints decisions instead of updating a user database.
 app.post(
   '/webhook',
   express.raw({ type: 'application/json' }),
@@ -34,10 +124,25 @@ app.post(
       );
     }
 
+    if (handledEventIds.has(event.id)) {
+      console.log('Duplicate event skipped');
+      return res.sendStatus(200);
+    }
+    handledEventIds.add(event.id);
+
     const watched = [
       'checkout.session.completed',
       'invoice.paid',
       'invoice.payment_failed',
+    ];
+
+    const subscriptionEvents = [
+      'customer.subscription.created',
+      'customer.subscription.updated',
+      'customer.subscription.deleted',
+      'customer.subscription.paused',
+      'customer.subscription.resumed',
+      'customer.subscription.trial_will_end',
     ];
 
     if (watched.includes(event.type)) {
@@ -55,6 +160,26 @@ app.post(
           ' customer=' + customer +
           ' subscription=' + subscription
       );
+    } else if (
+      subscriptionEvents.includes(event.type)
+    ) {
+      const object = event.data.object;
+      console.log(
+        event.type +
+          ' customer=' + idOf(object.customer) +
+          ' subscription=' + idOf(object) +
+          ' status=' + (object.status || 'none') +
+          ' interval=' + priceInterval(object) +
+          ' cancel_at_period_end=' +
+          (object.cancel_at_period_end
+            ? 'true'
+            : 'false')
+      );
+      const decision = premiumDecision(
+        event.type,
+        object
+      );
+      if (decision) console.log(decision);
     } else {
       console.log('Other event ' + event.type);
     }
