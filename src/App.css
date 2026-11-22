@@ -11,13 +11,20 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 section {
-  background: #ffffff;
+  background: transparent;
   display: flex;
   flex-direction: column;
   width: 400px;
-  height: 112px;
-  border-radius: 6px;
+  height: auto;
+  gap: 16px;
   justify-content: space-between;
+}
+form {
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  border-radius: 6px;
+  overflow: hidden;
 }
 .product {
   display: flex;

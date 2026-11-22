@@ -5,6 +5,7 @@ const stripe = require('stripe')(
 const express = require('express');
 const app = express();
 app.use(express.static('public'));
+app.use(express.urlencoded({ extended: false }));
 
 const YOUR_DOMAIN =
   process.env.DOMAIN ||
@@ -14,28 +15,39 @@ app.post(
   '/create-checkout-session',
   async (req, res) => {
     try {
+      const plan = req.body.plan;
+      const price =
+        plan === 'yearly'
+          ? process.env.PRICE_YEARLY
+          : process.env.PRICE_MONTHLY;
+      const sessionParams = {
+        line_items: [
+          {
+            price,
+            quantity: 1,
+          },
+        ],
+        mode: 'subscription',
+        managed_payments: {
+          enabled: false,
+        },
+        success_url:
+          `${YOUR_DOMAIN}` +
+          '/checkout?success=true',
+        cancel_url:
+          `${YOUR_DOMAIN}` +
+          '/checkout?canceled=true',
+      };
+
+      if (plan === 'yearly') {
+        sessionParams.subscription_data = {
+          trial_period_days: 7,
+        };
+      }
+
       const session = await
         stripe.checkout.sessions
-          .create({
-            line_items: [
-              {
-                price:
-                  process.env
-                    .PRICE_MONTHLY,
-                quantity: 1,
-              },
-            ],
-            mode: 'subscription',
-            managed_payments: {
-              enabled: false,
-            },
-            success_url:
-              `${YOUR_DOMAIN}` +
-              '/checkout?success=true',
-            cancel_url:
-              `${YOUR_DOMAIN}` +
-              '/checkout?canceled=true',
-          });
+          .create(sessionParams);
 
       res.redirect(303, session.url);
     } catch (err) {
