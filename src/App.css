@@ -1,101 +1,302 @@
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #242d60;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
-  'Helvetica Neue', 'Ubuntu', sans-serif;
-  height: 100vh;
-  margin: 0;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+:root {
+  --bg: #f6f1e8;
+  --ink: #2b241e;
+  --muted: #5e554c;
+  --accent: #9c4224;
+  --accent-dark: #7d3319;
+  --card: #fffdfb;
+  --line: #e5d8c8;
+  --peach: #f6e2d4;
+  --banner: #2b241e;
+  --serif: "Iowan Old Style", Palatino, "Palatino Linotype", Georgia, serif;
+  --sans: "Avenir Next", "Segoe UI", sans-serif;
 }
-section {
-  background: #ffffff;
-  display: flex;
-  flex-direction: column;
-  width: 400px;
-  height: auto;
-  border-radius: 6px;
-  justify-content: space-between;
-  overflow: hidden;
-}
-form {
-  display: flex;
-  flex-direction: column;
-}
-.description {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 20px 20px 8px;
-}
-.plans {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 4px 20px 16px;
-}
-label {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  color: #242d60;
-  font-size: 14px;
-  line-height: 20px;
-  font-weight: 500;
-}
-p {
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 20px;
-  letter-spacing: -0.154px;
-  color: #242d60;
-  height: 100%;
-  width: 100%;
-  padding: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+
+* {
   box-sizing: border-box;
 }
-h3,
-h5 {
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 20px;
-  letter-spacing: -0.154px;
-  color: #242d60;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
   margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
 }
-h5 {
-  opacity: 0.5;
+
+.page {
+  min-height: 100vh;
 }
-button {
-  height: 36px;
-  background: #556cd6;
-  color: white;
-  width: 100%;
-  font-size: 14px;
+
+.banner {
+  background: var(--banner);
+  color: #f6f1e8;
+}
+
+.banner p {
+  max-width: 52rem;
+  margin: 0 auto;
+  padding: 0.55rem 1.1rem;
+  font-size: 0.86rem;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+.site-header {
+  border-bottom: 1px solid var(--line);
+  background: rgba(255, 253, 251, 0.92);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 0.9rem 1.25rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.mark {
+  display: block;
+  color: var(--accent);
+  flex: none;
+}
+
+.wordmark {
+  font-family: var(--serif);
+  font-size: 1.65rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.hero {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 4.2rem 1.25rem 2.2rem;
+}
+
+.hero h1,
+.status h1,
+.benefits h2,
+.pricing h2 {
+  font-family: var(--serif);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.hero h1 {
+  margin: 0 0 0.9rem;
+  font-size: clamp(2.15rem, 6vw, 3.35rem);
+}
+
+.hero p {
+  margin: 0 0 1.5rem;
+  max-width: 36rem;
+  color: var(--muted);
+  font-size: 1.12rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 0.7rem 1.25rem;
   border: 0;
-  font-weight: 500;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fffdfb;
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
   cursor: pointer;
-  letter-spacing: 0.6;
-  border-radius: 0;
-  transition: all 0.2s ease;
-  box-shadow: 0px 4px 5.5px 0px rgba(0, 0, 0, 0.07);
 }
-button:hover {
-  opacity: 0.8;
+
+.btn:hover {
+  background: var(--accent-dark);
 }
+
+.btn:focus-visible,
+.brand:focus-visible,
+.portal-link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.benefits,
+.pricing {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 1.2rem 1.25rem 2.6rem;
+}
+
+.benefits h2,
+.pricing h2 {
+  margin: 0 0 1rem;
+  font-size: 1.7rem;
+}
+
+.card-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 1.2rem 1.25rem 1.25rem;
+}
+
+.card h3 {
+  margin: 0 0 0.35rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.card p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.plan {
+  display: flex;
+  flex-direction: column;
+  border-width: 2px;
+  padding: 1.35rem 1.3rem 1.25rem;
+}
+
+.plan h3 {
+  margin-top: 0.35rem;
+  font-family: var(--serif);
+  font-size: 1.45rem;
+  font-weight: 600;
+}
+
+.plan .price {
+  margin: 0.15rem 0 0;
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 2.5rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.plan .price span {
+  display: block;
+  margin-top: 0.2rem;
+  color: var(--muted);
+  font-family: var(--sans);
+  font-size: 0.98rem;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.plan form {
+  padding-top: 1.35rem;
+}
+
+.recommended {
+  border-color: var(--accent);
+  background: #fff8f3;
+  box-shadow: 0 12px 30px rgba(156, 66, 36, 0.1);
+}
+
+.recommend {
+  margin: 0 0 0.55rem;
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.badge {
+  display: inline-block;
+  width: fit-content;
+  margin: 0;
+  padding: 0.22rem 0.6rem;
+  border-radius: 999px;
+  background: var(--peach);
+  color: var(--accent-dark);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.save {
+  margin-top: 0.7rem;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.launch {
+  margin: 1.35rem 0 0.35rem;
+  text-align: center;
+  color: var(--ink);
+}
+
 .portal-link {
   display: block;
+  margin: 0.2rem 0 0.4rem;
+  color: var(--accent);
+  font-weight: 600;
   text-align: center;
-  font-size: 12px;
-  line-height: 16px;
-  font-weight: 500;
-  color: #242d60;
-  padding: 12px 20px 16px;
+}
+
+.status {
+  max-width: 36rem;
+  margin: 0 auto;
+  padding: 4.5rem 1.25rem 3rem;
+}
+
+.status h1 {
+  margin: 0 0 0.7rem;
+  font-size: clamp(2rem, 5vw, 2.8rem);
+}
+
+.status p {
+  margin: 0 0 1.2rem;
+  color: var(--muted);
+  font-size: 1.12rem;
+}
+
+.status .portal-link {
+  text-align: left;
+}
+
+#pricing {
+  scroll-margin-top: 1.25rem;
+}
+
+@media (min-width: 720px) {
+  .card-grid.two {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
+
+@media (min-width: 840px) {
+  .card-grid.three {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
