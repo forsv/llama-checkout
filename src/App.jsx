@@ -320,7 +320,6 @@ function Success() {
     <main className="status-wrap">
       <section className="status-card">
         <h1>Welcome to Llama Plus</h1>
-        <p>The yearly plan starts with a 7-day free trial.</p>
         <PortalLink />
       </section>
     </main>
