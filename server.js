@@ -28,6 +28,7 @@ app.post(
           },
         ],
         mode: 'subscription',
+        allow_promotion_codes: true,
         managed_payments: {
           enabled: false,
         },
