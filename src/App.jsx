@@ -276,6 +276,97 @@ function PlanPicker() {
   );
 }
 
+function LaunchNote() {
+  const reduced = useReducedMotion();
+  const ref = React.useRef(null);
+  const [drawn, setDrawn] = useState(false);
+
+  useEffect(() => {
+    if (reduced) return undefined;
+    const node = ref.current;
+    if (!node) return undefined;
+    const section = node.closest("#pricing");
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        if (section && !section.contains(entry.target)) return;
+        setDrawn(true);
+        observer.disconnect();
+      },
+      { threshold: 0.8 }
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [reduced]);
+
+  return (
+    <p className="note" ref={ref}>
+      Launch code{" "}
+      <span className={drawn ? "launch-code is-drawn" : "launch-code"}>
+        <svg
+          className="launch-mark"
+          viewBox="0 0 320 64"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <defs>
+            <filter
+              id="launch-pencil"
+              x="-8%"
+              y="-28%"
+              width="116%"
+              height="156%"
+              colorInterpolationFilters="sRGB"
+            >
+              <feTurbulence
+                type="fractalNoise"
+                baseFrequency="0.7"
+                numOctaves="2"
+                seed="5"
+                result="grain"
+              />
+              <feDisplacementMap
+                in="SourceGraphic"
+                in2="grain"
+                scale="3.2"
+                xChannelSelector="R"
+                yChannelSelector="G"
+                result="rough"
+              />
+              <feColorMatrix
+                in="grain"
+                type="matrix"
+                result="shade"
+                values="0 0 0 0 0.78  0 0 0 0 0.62  0 0 0 0 0.12  0 0 0 1 0"
+              />
+              <feBlend in="rough" in2="shade" mode="multiply" />
+            </filter>
+          </defs>
+          <g filter="url(#launch-pencil)">
+            <path
+              fill="#FFE14D"
+              d="M6 26c22-14 34 10 58 2 24-12 30 12 56 1 26-12 32 11 58 0 24-10 30 10 54 2 22-8 30 8 48 1 8 8 2 14-6 18-22 8-34-8-56-2-26 10-32-10-58 0-24 10-30-8-54 2-22 8-32-4-46 4-10 6-16-2-18-6 2-8 6-12 14-16z"
+            />
+            <path
+              fill="#FFE14D"
+              transform="translate(7 4)"
+              d="M6 26c22-14 34 10 58 2 24-12 30 12 56 1 26-12 32 11 58 0 24-10 30 10 54 2 22-8 30 8 48 1 8 8 2 14-6 18-22 8-34-8-56-2-26 10-32-10-58 0-24 10-30-8-54 2-22 8-32-4-46 4-10 6-16-2-18-6 2-8 6-12 14-16z"
+            />
+            <path
+              fill="#FFE14D"
+              transform="translate(-4 1)"
+              d="M18 24c18-10 28 8 48 2 22-10 26 10 48 1 22-10 28 9 50 0 20-8 26 8 44 2 16-6 22 6 36 1 6 7 0 12-6 14-16 6-28-6-46-1-22 8-26-8-48 0-20 8-26-6-44 2-16 6-24-2-34 3-8 4-12-2-14-4 1-6 5-9 12-12z"
+            />
+          </g>
+        </svg>
+        <span className="launch-word">LAUNCH20</span>
+      </span>{" "}
+      gives 20% off the first payment.
+    </p>
+  );
+}
+
 function Landing() {
   return (
     <main>
@@ -296,9 +387,7 @@ function Landing() {
           A planner for the whole trip, billed monthly or once a year.
         </p>
         <PlanPicker />
-        <p className="note">
-          Launch code LAUNCH20 gives 20% off the first payment.
-        </p>
+        <LaunchNote />
         <p className="note">Secure payment by Stripe</p>
         <PortalLink />
       </section>

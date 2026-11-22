@@ -400,6 +400,47 @@ a {
   color: var(--white);
 }
 
+.launch-code {
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+  color: #0f172a;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.launch-word {
+  position: relative;
+  z-index: 1;
+}
+
+.launch-mark {
+  position: absolute;
+  z-index: 0;
+  left: -0.28em;
+  width: calc(100% + 0.56em);
+  bottom: -0.02em;
+  height: 70%;
+  transform: rotate(-2deg);
+  transform-origin: center;
+  pointer-events: none;
+  overflow: visible;
+  clip-path: inset(-45% 100% -45% 0);
+}
+
+.launch-code.is-drawn .launch-mark {
+  animation: launch-draw 0.8s ease-out forwards;
+}
+
+@keyframes launch-draw {
+  from {
+    clip-path: inset(-45% 100% -45% 0);
+  }
+  to {
+    clip-path: inset(-45% 0% -45% 0);
+  }
+}
+
 .portal-link {
   display: inline-block;
   margin-top: 0.55rem;
@@ -510,5 +551,11 @@ a {
 
   .layer {
     transition: none;
+  }
+
+  .launch-mark,
+  .launch-code.is-drawn .launch-mark {
+    animation: none;
+    clip-path: none;
   }
 }
