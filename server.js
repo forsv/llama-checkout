@@ -215,6 +215,14 @@ app.post(
         managed_payments: {
           enabled: false,
         },
+        branding_settings: {
+          icon: {
+            type: 'url',
+            url: YOUR_DOMAIN +
+              '/checkout/' +
+              'llama-icon.png',
+          },
+        },
         success_url:
           `${YOUR_DOMAIN}` +
           '/checkout?success=true',
