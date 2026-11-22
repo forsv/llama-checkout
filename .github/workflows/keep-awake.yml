@@ -1,0 +1,13 @@
+name: Keep demo awake
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping the public demo
+        run: >
+          curl -fsS -o /dev/null -m 90
+          https://llama-checkout-jb8q.onrender.com/checkout
