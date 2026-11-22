@@ -7,41 +7,45 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{--ink:#1a2b4a;--mut:#5b6b85;--line:#edf0f5;--pri:#635bff;--navy:#0a2540;--brand:#008cff}
-body{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;color:var(--ink);background:#f6f8fb;font-size:14px;line-height:1.45}
+body{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;color:var(--ink);background:#f6f8fb;font-size:13.5px;line-height:1.45}
 .note{font-size:12.5px;color:var(--mut);text-align:center;padding:10px 16px 0}
 .note b{color:var(--ink)}
-.win{max-width:1480px;margin:12px auto 40px;background:#fff;border-radius:14px;box-shadow:0 18px 50px rgba(20,40,80,.12),0 0 0 1px #dfe5ee;overflow:hidden}
+.win{max-width:1680px;margin:12px auto 40px;background:#fff;border-radius:14px;box-shadow:0 18px 50px rgba(20,40,80,.12),0 0 0 1px #dfe5ee;overflow:hidden}
 .bar{height:40px;background:#eef1f6;display:flex;align-items:center;padding:0 16px;gap:8px;border-bottom:1px solid #dfe5ee}
 .bar i{width:11px;height:11px;border-radius:50%;background:#cfd6e2;display:block}
 .url{margin-left:14px;flex:1;background:#fff;border-radius:7px;height:24px;font-size:12.5px;color:var(--mut);display:flex;align-items:center;padding:0 12px;overflow:hidden;white-space:nowrap}
-.hd{padding:16px 22px 12px;border-bottom:1px solid var(--line);display:flex;gap:16px;align-items:flex-end;flex-wrap:wrap}
-.hd .tx{flex:1;min-width:260px}
-.crumb{font-size:12px;color:#6b7a94;margin-bottom:4px}
+.hd{padding:14px 20px 12px;border-bottom:1px solid var(--line);display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.hd .tx{flex:1;min-width:240px}
+.crumb{font-size:12px;color:#6b7a94;margin-bottom:3px}
 .hd h1{font-size:21px;font-weight:600;letter-spacing:-.2px}
-.hd p{color:var(--mut);margin-top:3px;font-size:13px}
-.fit{font-size:12.5px;background:#e1f5e6;color:#1c7a3c;border-radius:8px;padding:7px 11px;max-width:420px}
-.cols{display:grid;grid-template-columns:300px minmax(0,1fr) 380px}
-.col{padding:16px 18px;min-width:0}
+.acct{display:flex;align-items:center;gap:8px;border:1px solid #dfe5ee;border-radius:999px;padding:5px 12px 5px 6px;font-size:12.5px;font-weight:600;background:#fff}
+.acct .av{width:24px;height:24px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px}
+.sbx{background:var(--navy);color:#fff;font-size:10.5px;font-weight:700;border-radius:4px;padding:2px 6px}
+.cols{display:grid;grid-template-columns:270px minmax(0,1.25fr) minmax(0,1fr) 300px}
+.col{padding:14px 16px;min-width:0}
 .col+.col{border-left:1px solid var(--line)}
 .mid{background:#fafbfd}
-h2{font-size:11.5px;letter-spacing:.6px;text-transform:uppercase;color:#6b7a94;margin-bottom:10px;font-weight:600}
-.f{margin-bottom:13px}
+h2{font-size:11.5px;letter-spacing:.6px;text-transform:uppercase;color:#6b7a94;margin-bottom:10px;font-weight:600;display:flex;align-items:center;gap:8px}
+h2{flex-wrap:wrap}
+h2 .cnt{margin-left:auto;text-transform:none;letter-spacing:0;font-size:12px;color:#1c7a3c;background:#e1f5e6;border-radius:999px;padding:2px 9px;white-space:nowrap}
+.f{margin-bottom:12px}
 .lab{display:block;font-size:12.5px;color:var(--mut);margin-bottom:5px}
-.in{border:1px solid #d5dbe6;border-radius:7px;padding:0 10px;display:flex;align-items:center;gap:6px;background:#fff;margin-bottom:6px;min-height:34px}
+.in{border:1px solid #d5dbe6;border-radius:7px;padding:0 10px;display:flex;align-items:center;gap:6px;background:#fff;margin-bottom:6px;min-height:33px}
 .in input,.in select{font:inherit;color:inherit;border:0;outline:0;background:transparent;padding:6px 0;min-width:0}
 .in input[type=text]{flex:1}
-.in input[type=number]{width:52px}
+.in input[type=number]{width:48px}
 .in input[type=color]{width:26px;height:22px;padding:0;border:0}
 .in:focus-within{border-color:var(--pri);box-shadow:0 0 0 3px #e6e4ff}
 .in .sfx{margin-left:auto;color:#6b7a94;font-size:12.5px;white-space:nowrap}
 .x{font:inherit;border:0;background:none;color:#8a96ab;cursor:pointer;font-size:16px;line-height:1;padding:2px 4px}
-.add{font:inherit;font-size:13px;color:var(--pri);background:none;border:0;cursor:pointer;padding:2px 0;text-align:left}
+.add{font:inherit;font-size:12.5px;color:var(--pri);background:none;border:0;cursor:pointer;padding:2px 0;text-align:left}
 .chips{display:flex;gap:6px;flex-wrap:wrap}
 .chip{font:inherit;font-size:12.5px;padding:5px 10px;border-radius:999px;border:1px solid #d5dbe6;color:var(--mut);background:#fff;cursor:pointer}
 .chip[aria-pressed=true]{background:#efeeff;border-color:var(--pri);color:#4338ca;font-weight:500}
 button:focus-visible{outline:2px solid var(--pri);outline-offset:2px}
 .conf{background:#fff7e6;border:1px solid #f3d999;border-radius:8px;padding:9px 11px;font-size:12.5px;color:#7a5200;margin-top:8px}
 .conf.bad{background:#fdecea;border-color:#f3b7b1;color:#8f1f17}
+.conf.good{background:#e1f5e6;border-color:#bfe5c9;color:#1c7a3c}
 .conf button{font:inherit;font-size:12px;margin:6px 6px 0 0;padding:3px 8px;border-radius:6px;border:1px solid currentColor;background:#fff;color:inherit;cursor:pointer}
 .sel{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:6px}
 .tok{font-size:12px;background:#eef1f6;border-radius:999px;padding:3px 3px 3px 9px;display:inline-flex;align-items:center}
@@ -50,77 +54,102 @@ button:focus-visible{outline:2px solid var(--pri);outline-offset:2px}
 .menu label{display:flex;align-items:center;gap:8px;padding:6px 10px;font-size:13px;cursor:pointer}
 .menu label:hover{background:#f3f5fa}
 .menu .tools{display:flex;gap:12px;padding:6px 10px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#fff}
+.fitrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:4px}
+.fitok{font-size:12.5px;font-weight:600;color:#1c7a3c}.fitbad{font-size:12.5px;font-weight:600;color:#b3261e}
 /* preview */
 .vbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
-.vbar select{font:inherit;border:1px solid #d5dbe6;border-radius:7px;padding:5px 8px;background:#fff;color:inherit}
+.vbar select{font:inherit;border:1px solid #d5dbe6;border-radius:7px;padding:5px 8px;background:#fff;color:inherit;max-width:170px}
 .seg{display:inline-flex;border:1px solid #d5dbe6;border-radius:7px;overflow:hidden}
 .seg button{font:inherit;font-size:12.5px;padding:5px 10px;border:0;background:#fff;color:var(--mut);cursor:pointer}
 .seg button[aria-pressed=true]{background:var(--navy);color:#fff}
 .co{border:1px solid #dfe5ee;border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 6px 20px rgba(20,40,80,.06)}
-.cobar{font-size:11.5px;color:#6b7a94;text-align:center;padding:6px;border-bottom:1px solid var(--line);background:#fff}
+.cobar{font-size:11.5px;color:#6b7a94;text-align:center;padding:6px;border-bottom:1px solid var(--line)}
 .cogrid{display:grid;grid-template-columns:1fr 1fr}
-.coL{background:#f5f5f5;padding:22px 22px 26px}
-.coR{padding:22px}
-.biz{display:flex;align-items:center;gap:8px;font-weight:600;font-size:13px}
-.ico{width:26px;height:26px;border-radius:50%;background:#fff;box-shadow:0 0 0 1px #e1e4ea;display:flex;align-items:center;justify-content:center;font-size:14px}
-.sbx{background:var(--navy);color:#fff;font-size:10.5px;font-weight:700;border-radius:4px;padding:2px 6px}
-.sub{color:#6b6f76;margin-top:18px;font-size:14px}
-.big{font-size:30px;font-weight:700;letter-spacing:-.5px;display:flex;align-items:center;gap:8px;line-height:1.1;margin-top:2px}
-.big small{font-size:12px;font-weight:600;color:#6b6f76;line-height:1.15}
-.then{font-size:12.5px;color:#6b6f76;margin-top:4px}
-.li{display:flex;justify-content:space-between;gap:10px;padding:9px 0;font-size:13px}
+.coL{background:#f5f5f5;padding:18px 18px 22px}
+.coR{padding:18px}
+.biz{display:flex;align-items:center;gap:8px;font-weight:600;font-size:12.5px;flex-wrap:wrap}
+.ico{width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 0 0 1px #e1e4ea;display:flex;align-items:center;justify-content:center;font-size:13px}
+.sub{color:#6b6f76;margin-top:16px}
+.big{font-size:27px;font-weight:700;letter-spacing:-.5px;display:flex;align-items:center;gap:8px;line-height:1.1;margin-top:2px}
+.big small{font-size:11.5px;font-weight:600;color:#6b6f76;line-height:1.15}
+.then{font-size:12px;color:#6b6f76;margin-top:4px}
+.li{display:flex;justify-content:space-between;gap:10px;padding:8px 0;font-size:12.5px}
 .li.b{border-top:1px solid #e1e1e1;font-weight:600}
-.li span.m{color:#6b6f76;font-weight:400;font-size:12px;display:block}
-.pc{font:inherit;font-size:12.5px;font-weight:600;background:#e9e9e9;border:0;border-radius:8px;padding:7px 11px;cursor:pointer;margin:2px 0 8px}
+.li span.m{color:#6b6f76;font-weight:400;font-size:11.5px;display:block}
+.pc{font:inherit;font-size:12px;font-weight:600;background:#e9e9e9;border:0;border-radius:8px;padding:6px 10px;cursor:pointer;margin:2px 0 8px}
 .wal{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.wal div{border-radius:6px;height:36px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px}
-.or{text-align:center;color:#8a8f98;font-size:11px;margin:10px 0}
-.fld{border:1px solid #e1e4ea;border-radius:6px;padding:8px 10px;color:#a0a5ae;font-size:13px;margin:4px 0 12px}
+.wal div{border-radius:6px;height:34px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12.5px}
+.or{text-align:center;color:#8a8f98;font-size:11px;margin:9px 0}
+.fld{border:1px solid #e1e4ea;border-radius:6px;padding:7px 10px;color:#a0a5ae;font-size:12.5px;margin:4px 0 11px}
 .pm{border:1px solid #e1e4ea;border-radius:8px}
-.pm div{display:flex;align-items:center;gap:9px;padding:9px 11px;font-size:13px;font-weight:600}
+.pm div{display:flex;align-items:center;gap:9px;padding:8px 11px;font-size:12.5px;font-weight:600}
 .pm div+div{border-top:1px solid #e1e4ea}
 .pm i{width:13px;height:13px;border-radius:50%;border:1.5px solid #9aa1ad;display:block}
 .pm em{margin-left:auto;font-style:normal;font-size:11px;color:#1c7a3c;background:#e1f5e6;border-radius:4px;padding:1px 6px;font-weight:700}
-.sbtn{margin-top:14px;border-radius:7px;height:40px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;background:var(--brand)}
+.sbtn{margin-top:13px;border-radius:7px;height:38px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;background:var(--brand)}
 .pv{font-size:11.5px;color:#8a8f98;text-align:center;margin-top:8px}
 .real{margin-top:12px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.btn{font:inherit;font-size:13px;font-weight:500;padding:8px 13px;border-radius:7px;background:var(--pri);color:#fff;border:0;cursor:pointer}
+.btn{font:inherit;font-size:12.5px;font-weight:500;padding:8px 12px;border-radius:7px;background:var(--pri);color:#fff;border:0;cursor:pointer}
 .btn.o{background:#fff;color:var(--ink);box-shadow:0 0 0 1px #cfd6e2}
 .btn[disabled]{opacity:.45;cursor:not-allowed}
 .small{font-size:12px;color:var(--mut)}
-/* steps */
-.prog{height:6px;border-radius:3px;background:#eef1f6;margin-bottom:10px;overflow:hidden}
-.prog i{display:block;height:100%;background:#1c7a3c}
-.st{border-bottom:1px solid var(--line)}
-.sth{font:inherit;color:inherit;width:100%;text-align:left;background:none;border:0;display:flex;gap:10px;padding:10px 0;align-items:center;cursor:pointer}
+/* guide */
+.prog{height:6px;border-radius:3px;background:#eef1f6;margin-bottom:6px;overflow:hidden}
+.prog i{display:block;height:100%;background:#1c7a3c;transition:width .25s}
+.grp{font-size:11.5px;font-weight:700;color:var(--navy);margin:14px 0 2px;padding-top:10px;border-top:1px solid var(--line);display:flex;justify-content:space-between}
+.grp:first-of-type{border-top:0;margin-top:6px;padding-top:0}
+.grp span{font-weight:500;color:#6b7a94}
+.sth{font:inherit;color:inherit;width:100%;text-align:left;background:none;border:0;display:flex;gap:10px;padding:8px 0;align-items:center;cursor:pointer}
 .n{width:22px;height:22px;border-radius:50%;background:#eef1f6;color:var(--mut);font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;flex:none}
 .n.d{background:#1c7a3c;color:#fff}.n.nx{background:var(--pri);color:#fff}
-.sth .a{flex:1;font-weight:500;font-size:13.5px}
+.sth .a{flex:1;font-weight:500;font-size:13px}
 .tag{font-size:11px;font-weight:700;padding:2px 7px;border-radius:5px;white-space:nowrap}
 .ok{background:#e1f5e6;color:#1c7a3c}.nxt{background:#e6e4ff;color:#4338ca}.mutd{background:#eef1f6;color:#6b7a94}
 .bd{padding:0 0 12px 32px;font-size:12.5px;color:var(--mut)}
 .bd ul{margin:4px 0 0 16px}.bd li{margin-bottom:3px}
-.bd .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-.bd .acts button{font:inherit;font-size:12px;padding:4px 9px;border-radius:6px;border:1px solid #cfd6e2;background:#fff;cursor:pointer;color:var(--ink)}
-.bd .acts button.p{background:var(--pri);border-color:var(--pri);color:#fff}
-pre{background:var(--navy);color:#d6e2ff;border-radius:7px;padding:9px 11px;margin-top:6px;font:11.5px/1.5 Menlo,Consolas,monospace;overflow:auto;max-height:260px}
-.ft{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.bd table{border-collapse:collapse;width:100%;margin-top:6px}
+.bd td{padding:4px 6px 4px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:9px}
+.acts button{font:inherit;font-size:12px;padding:4px 9px;border-radius:6px;border:1px solid #cfd6e2;background:#fff;cursor:pointer;color:var(--ink)}
+.acts button.p{background:var(--pri);border-color:var(--pri);color:#fff}
+/* code block */
+.cb{margin-top:8px;border-radius:9px;overflow:hidden;background:#0a2540;box-shadow:0 0 0 1px #0a2540}
+.cbh{display:flex;align-items:center;background:#0f3154;padding:0 6px 0 4px;gap:2px}
+.cbh .tabs{display:flex;flex:1;min-width:0;overflow-x:auto}
+.cbh .tab{font:12px Menlo,Consolas,monospace;color:#9fb4d6;background:none;border:0;padding:8px 10px;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap}
+.cbh .tab[aria-selected=true]{color:#fff;border-bottom-color:#7a73ff}
+.cbh .sp{flex:1}
+.cbh .ic{font:inherit;font-size:11.5px;color:#cfe0ff;background:#17406b;border:0;border-radius:5px;padding:4px 8px;cursor:pointer;white-space:nowrap;margin-left:4px}
+.cb pre{margin:0;padding:10px 0;font:11.5px/1.6 Menlo,Consolas,monospace;color:#d6e2ff;overflow:auto;max-height:420px;counter-reset:ln}
+.cb pre span.l{display:block;padding:0 12px 0 0;white-space:pre}
+.cb pre span.l:before{counter-increment:ln;content:counter(ln);display:inline-block;width:34px;text-align:right;margin-right:12px;color:#5d7a9f;user-select:none}
 code{font:11.5px Menlo,Consolas,monospace;background:#eef1f6;padding:1px 5px;border-radius:4px;color:var(--ink)}
-@media(max-width:1180px){.cols{grid-template-columns:300px minmax(0,1fr)}.col.r{grid-column:1/-1;border-left:0;border-top:1px solid var(--line)}}
-@media(max-width:760px){.cols{grid-template-columns:1fr}.col+.col{border-left:0;border-top:1px solid var(--line)}.cogrid{grid-template-columns:1fr}}
+/* assistant */
+.asst{display:flex;flex-direction:column;gap:8px}
+.log{border:1px solid var(--line);border-radius:10px;padding:10px;min-height:220px;max-height:460px;overflow:auto;background:#fafbfd;display:flex;flex-direction:column;gap:8px}
+.msg{font-size:12.5px;padding:8px 10px;border-radius:10px;max-width:95%}
+.msg.q{background:var(--pri);color:#fff;align-self:flex-end}
+.msg.a{background:#fff;box-shadow:0 0 0 1px #e3e8f0}
+.sug{display:flex;flex-direction:column;gap:5px}
+.sug button{font:inherit;font-size:12px;text-align:left;border:1px solid #d5dbe6;background:#fff;border-radius:8px;padding:6px 9px;cursor:pointer;color:var(--ink)}
+.sug button:hover{border-color:var(--pri)}
+.ask{display:flex;gap:6px}
+.ask input{flex:1;font:inherit;border:1px solid #d5dbe6;border-radius:7px;padding:7px 9px;min-width:0}
+@media(max-width:1380px){.cols{grid-template-columns:270px minmax(0,1fr) minmax(0,1fr)}.col.ai{grid-column:1/-1;border-left:0;border-top:1px solid var(--line)}.log{max-height:260px}}
+@media(max-width:1000px){.cols{grid-template-columns:270px minmax(0,1fr)}.col.r{grid-column:1/-1;border-left:0;border-top:1px solid var(--line)}}
+@media(max-width:720px){.cols{grid-template-columns:1fr}.col+.col{border-left:0;border-top:1px solid var(--line)}.cogrid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<p class="note"><b>Concept prototype.</b> Not a Stripe product. The Checkout in the middle is a preview; the sandbox results are simulated.</p>
+<p class="note"><b>Concept prototype.</b> Not a Stripe product. The payment page is a preview; sandbox results and assistant answers are simulated.</p>
 <div class="win">
-  <div class="bar"><i></i><i></i><i></i><div class="url">Concept · Sell subscriptions as a SaaS startup · plan-first setup</div></div>
+  <div class="bar"><i></i><i></i><i></i><div class="url">Concept · Plan-first setup · Sell subscriptions as a SaaS startup</div></div>
   <div class="hd">
     <div class="tx">
-      <div class="crumb">Get started › Sell subscriptions as a SaaS startup</div>
-      <h1>Tell us your plan. We set up the rest.</h1>
-      <p>Signed in as Llama Inc sandbox · Online payments, subscriptions, digital goods</p>
+      <div class="crumb">Get started › Sell subscriptions as a SaaS startup › Plan-first setup</div>
+      <h1>Tell us your plan. We will take care of the rest.</h1>
     </div>
-    <div class="fit" id="fit"></div>
+    <div class="acct" title="Signed in"><span class="av">L</span>Llama Inc <span class="sbx">Sandbox</span></div>
   </div>
   <div class="cols">
     <div class="col">
@@ -151,7 +180,8 @@ code{font:11.5px Menlo,Consolas,monospace;background:#eef1f6;padding:1px 5px;bor
           <button class="chip" data-l="node">Node</button><button class="chip" data-l="ruby">Ruby</button><button class="chip" data-l="python">Python</button>
         </div>
       </div>
-      <button class="add" id="reset">Reset to the Llama Plus plan</button>
+      <div class="fitrow"><span id="fit"></span></div>
+      <button class="add" id="reset" style="margin-top:6px">Reset to the Llama Plus plan</button>
     </div>
 
     <div class="col mid">
@@ -171,11 +201,20 @@ code{font:11.5px Menlo,Consolas,monospace;background:#eef1f6;padding:1px 5px;bor
     </div>
 
     <div class="col r">
-      <h2 id="stepSum"></h2>
+      <h2>3 · Your personal plan <span class="cnt" id="cnt"></span></h2>
       <div class="prog"><i id="bar"></i></div>
       <div id="steps"></div>
-      <div class="ft"><button class="btn" id="dl">Download sample for this plan</button><button class="btn o" id="send">Send this plan to Claude or Cursor</button></div>
-      <div id="aiBox"></div>
+      <div class="acts" style="margin-top:14px"><button class="p" id="dl">Download the whole sample</button><button id="send">Send this plan to Claude or Cursor</button></div>
+    </div>
+
+    <div class="col ai">
+      <h2>4 · Assistant <span class="cnt" style="color:#4338ca;background:#e6e4ff" id="ctx"></span></h2>
+      <div class="asst">
+        <div class="log" id="log" aria-live="polite"></div>
+        <div class="sug" id="sug"></div>
+        <form class="ask" id="askForm"><input type="text" id="askIn" placeholder="Ask about your plan or this step" aria-label="Ask the assistant"><button class="btn" type="submit">Ask</button></form>
+        <div class="acts"><button id="human">Talk to a person, 24x7</button></div>
+      </div>
     </div>
   </div>
 </div>
@@ -187,10 +226,12 @@ let dn;try{dn=new Intl.DisplayNames(['en'],{type:'region'});}catch(e){}
 const cname=c=>{if(c==='US')return 'United States';try{return dn?dn.of(c):c;}catch(e){return c;}};
 const ALL=AP.map(c=>({c,n:cname(c)})).sort((a,b)=>a.n.localeCompare(b.n));
 const DEF={name:'Plus',mOn:true,mAmt:8,yOn:true,yAmt:80,tDays:7,tOn:'yearly',promo:true,portal:true,anchor:false,tax:false,icon:true,brand:'#008cff',code:'LAUNCH20',c:['IN','NL','BR'],lang:'node',ui:'react',vc:'US',vp:'yearly',applied:false};
-let S=JSON.parse(JSON.stringify(DEF));let open=null;let done={};let showAi=false;
+let S=JSON.parse(JSON.stringify(DEF));let open=null;let done={};let tabs={};let chat=[];
 const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
 const LN={node:'Node',python:'Python',ruby:'Ruby'};
+const SRV=()=>({node:'server.js',python:'server.py',ruby:'server.rb'}[S.lang]);
+const PG=()=>S.ui==='react'?'App.jsx':'index.html';
 function plans(){const a=[];if(S.mOn)a.push('monthly');if(S.yOn)a.push('yearly');return a;}
 function trialOn(p){return S.tDays>0&&(S.tOn==='both'||S.tOn===p);}
 function clash(){return S.anchor&&plans().some(trialOn);}
@@ -213,8 +254,8 @@ function sessionParams(p){
   if(Object.keys(sd).length)o.subscription_data=sd;
   if(S.tax)o.automatic_tax={enabled:true};
   if(S.icon)o.branding_settings={icon:{type:'url',url:'{{DOMAIN}}/logo.png'}};
-  o.success_url='{{DOMAIN}}/checkout?success=true';
-  o.cancel_url='{{DOMAIN}}/checkout#pricing';
+  o.success_url='{{DOMAIN}}/?success=true';
+  o.cancel_url='{{DOMAIN}}/#pricing';
   return o;
 }
 function ser(v,lang,ind){
@@ -222,7 +263,7 @@ function ser(v,lang,ind){
   if(typeof v==='string'){
     const m=v.match(/^\{\{(\w+)\}\}(.*)$/);
     if(m){const name=m[1],rest=m[2];
-      if(name==='NEXT_BILLING_DAY')return lang==='node'?'nextBillingDay':'next_billing_day';
+      if(name==='NEXT_BILLING_DAY')return lang==='node'?'nextBillingDay()':'next_billing_day()';
       const env=lang==='node'?'process.env.'+name:lang==='python'?"os.environ['"+name+"']":"ENV['"+name+"']";
       return rest?env+" + '"+rest+"'":env;}
     return "'"+v+"'";}
@@ -231,48 +272,69 @@ function ser(v,lang,ind){
   if(Array.isArray(v))return '[\n'+v.map(x=>pad2+ser(x,lang,ind+1)).join(',\n')+',\n'+pad+']';
   return '{\n'+Object.keys(v).map(k=>pad2+(lang==='python'?"'"+k+"': ":k+': ')+ser(v[k],lang,ind+1)).join(',\n')+',\n'+pad+'}';
 }
-function serverCode(){
-  const ps=plans();const L=S.lang;const two=ps.length===2;
-  const anchor=S.anchor&&ps.some(p=>!trialOn(p));
-  if(L==='node'){
-    let s="const stripe = require('stripe')(\n  process.env.STRIPE_SECRET_KEY\n);\n\napp.post('/create-checkout-session', async (req, res) => {\n";
-    if(two)s+="  const plan = req.body.plan === 'yearly' ? 'yearly' : 'monthly';\n";
-    if(anchor)s+="  const nextBillingDay = nextFixedBillingDay(); // Unix time\n";
-    s+=two?"  const params = {\n    monthly: "+ser(sessionParams('monthly'),L,2)+",\n    yearly: "+ser(sessionParams('yearly'),L,2)+",\n  }[plan];\n":"  const params = "+ser(sessionParams(ps[0]),L,1)+";\n";
-    return s+"  const session = await stripe.checkout.sessions.create(params);\n  res.redirect(303, session.url);\n});";}
-  if(L==='python'){
-    let s="import os, stripe\nstripe.api_key = os.environ['STRIPE_SECRET_KEY']\n\n@app.post('/create-checkout-session')\ndef create_checkout_session():\n";
-    if(two)s+="  plan = 'yearly' if request.form.get('plan') == 'yearly' else 'monthly'\n";
-    if(anchor)s+="  next_billing_day = next_fixed_billing_day()  # Unix time\n";
-    s+=two?"  params = {\n    'monthly': "+ser(sessionParams('monthly'),L,2)+",\n    'yearly': "+ser(sessionParams('yearly'),L,2)+",\n  }[plan]\n":"  params = "+ser(sessionParams(ps[0]),L,1)+"\n";
-    return s+"  session = stripe.checkout.Session.create(**params)\n  return redirect(session.url, code=303)";}
-  let s="require 'stripe'\nStripe.api_key = ENV['STRIPE_SECRET_KEY']\n\npost '/create-checkout-session' do\n";
-  if(two)s+="  plan = params['plan'] == 'yearly' ? :yearly : :monthly\n";
-  if(anchor)s+="  next_billing_day = next_fixed_billing_day # Unix time\n";
-  s+=two?"  session_params = {\n    monthly: "+ser(sessionParams('monthly'),L,2)+",\n    yearly: "+ser(sessionParams('yearly'),L,2)+",\n  }[plan]\n":"  session_params = "+ser(sessionParams(ps[0]),L,1)+"\n";
-  return s+"  session = Stripe::Checkout::Session.create(session_params)\n  redirect session.url, 303\nend";
+function events(){const e=['checkout.session.completed','invoice.paid','invoice.payment_failed','customer.subscription.created','customer.subscription.updated','customer.subscription.deleted'];if(plans().some(trialOn))e.push('customer.subscription.trial_will_end');return e;}
+function hookCode(){
+  const ev=events();
+  if(S.lang==='node')return "// Stripe sends one POST per event. Keep the raw body\n// so the signature can be verified.\napp.post(\n  '/webhook',\n  express.raw({ type: 'application/json' }),\n  (req, res) => {\n    let event;\n    try {\n      event = stripe.webhooks.constructEvent(\n        req.body,\n        req.headers['stripe-signature'],\n        process.env.STRIPE_WEBHOOK_SECRET\n      );\n    } catch (err) {\n      return res.status(400).send('Bad signature');\n    }\n\n    switch (event.type) {\n"+ev.map(e=>"      case '"+e+"':").join('\n')+"\n        // Decide Premium from the subscription status,\n        // not from the order events arrive in.\n        console.log(event.type);\n        break;\n    }\n    res.sendStatus(200);\n  }\n);";
+  if(S.lang==='python')return "# Stripe sends one POST per event. Use the raw body\n# so the signature can be verified.\n@app.post('/webhook')\ndef webhook():\n  try:\n    event = stripe.Webhook.construct_event(\n      request.data,\n      request.headers.get('Stripe-Signature'),\n      os.environ['STRIPE_WEBHOOK_SECRET'],\n    )\n  except Exception:\n    return 'Bad signature', 400\n\n  if event['type'] in (\n"+ev.map(e=>"    '"+e+"',").join('\n')+"\n  ):\n    # Decide Premium from the subscription status,\n    # not from the order events arrive in.\n    print(event['type'])\n  return '', 200";
+  return "# Stripe sends one POST per event. Use the raw body\n# so the signature can be verified.\npost '/webhook' do\n  begin\n    event = Stripe::Webhook.construct_event(\n      request.body.read,\n      request.env['HTTP_STRIPE_SIGNATURE'],\n      ENV['STRIPE_WEBHOOK_SECRET']\n    )\n  rescue StandardError\n    halt 400, 'Bad signature'\n  end\n\n  case event.type\n  when "+ev.map(e=>"'"+e+"'").join(",\n       ")+"\n    # Decide Premium from the subscription status,\n    # not from the order events arrive in.\n    puts event.type\n  end\n  status 200\nend";
 }
-function trialSnippet(){const d=Number(S.tDays);return S.lang==='python'?"'subscription_data': {\n  'trial_period_days': "+d+",\n}":"subscription_data: {\n  trial_period_days: "+d+",\n}";}
+function sessionRoute(){
+  const ps=plans();const L=S.lang;const two=ps.length===2;
+  if(L==='node'){
+    let s="app.post('/create-checkout-session', async (req, res) => {\n";
+    if(two)s+="  const plan = req.body.plan === 'yearly' ? 'yearly' : 'monthly';\n";
+    s+=two?"  const params = {\n    monthly: "+ser(sessionParams('monthly'),L,2)+",\n    yearly: "+ser(sessionParams('yearly'),L,2)+",\n  }[plan];\n":"  const params = "+ser(sessionParams(ps[0]),L,1)+";\n";
+    return s+"  try {\n    const session = await stripe.checkout.sessions.create(params);\n    res.redirect(303, session.url);\n  } catch (err) {\n    // Show Stripe's message on the page, not only in the terminal.\n    res.status(400).send(err.message);\n  }\n});";}
+  if(L==='python'){
+    let s="@app.post('/create-checkout-session')\ndef create_checkout_session():\n";
+    if(two)s+="  plan = 'yearly' if request.form.get('plan') == 'yearly' else 'monthly'\n";
+    s+=two?"  params = {\n    'monthly': "+ser(sessionParams('monthly'),L,2)+",\n    'yearly': "+ser(sessionParams('yearly'),L,2)+",\n  }[plan]\n":"  params = "+ser(sessionParams(ps[0]),L,1)+"\n";
+    return s+"  try:\n    session = stripe.checkout.Session.create(**params)\n    return redirect(session.url, code=303)\n  except stripe.StripeError as err:\n    # Show Stripe's message on the page, not only in the terminal.\n    return str(err), 400";}
+  let s="post '/create-checkout-session' do\n";
+  if(two)s+="  plan = params['plan'] == 'yearly' ? :yearly : :monthly\n";
+  s+=two?"  session_params = {\n    monthly: "+ser(sessionParams('monthly'),L,2)+",\n    yearly: "+ser(sessionParams('yearly'),L,2)+",\n  }[plan]\n":"  session_params = "+ser(sessionParams(ps[0]),L,1)+"\n";
+  return s+"  begin\n    session = Stripe::Checkout::Session.create(session_params)\n    redirect session.url, 303\n  rescue Stripe::StripeError => e\n    # Show Stripe's message on the page, not only in the terminal.\n    halt 400, e.message\n  end\nend";
+}
+function anchorHelper(){
+  if(!(S.anchor&&plans().some(p=>!trialOn(p))))return '';
+  if(S.lang==='node')return "// Unix time of the next fixed billing day (the 1st).\nconst nextBillingDay = () => {\n  const d = new Date();\n  return Math.floor(\n    Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + 1, 1) / 1000\n  );\n};\n\n";
+  if(S.lang==='python')return "# Unix time of the next fixed billing day (the 1st).\ndef next_billing_day():\n  d = datetime.now(timezone.utc)\n  y, m = (d.year + 1, 1) if d.month == 12 else (d.year, d.month + 1)\n  return int(datetime(y, m, 1, tzinfo=timezone.utc).timestamp())\n\n";
+  return "# Unix time of the next fixed billing day (the 1st).\ndef next_billing_day\n  d = Time.now.utc\n  y, m = d.month == 12 ? [d.year + 1, 1] : [d.year, d.month + 1]\n  Time.utc(y, m, 1).to_i\nend\n\n";
+}
+function serverCode(){
+  const L=S.lang;
+  if(L==='node')return "require('dotenv').config();\nconst express = require('express');\nconst stripe = require('stripe')(\n  process.env.STRIPE_SECRET_KEY\n);\nconst app = express();\n\n"+anchorHelper()+hookCode()+"\n\napp.use(express.urlencoded({ extended: false }));\napp.use(express.static('public'));\n\n"+sessionRoute()+"\n\napp.listen(4242, () => console.log('Running on port 4242'));";
+  if(L==='python')return "import os\n"+(anchorHelper()?"from datetime import datetime, timezone\n":"")+"import stripe\nfrom dotenv import load_dotenv\nfrom flask import Flask, request, redirect\n\nload_dotenv()\nstripe.api_key = os.environ['STRIPE_SECRET_KEY']\napp = Flask(__name__, static_folder='public', static_url_path='')\n\n"+anchorHelper()+hookCode()+"\n\n"+sessionRoute()+"\n\nif __name__ == '__main__':\n  app.run(port=4242)";
+  return "require 'dotenv/load'\nrequire 'sinatra'\nrequire 'stripe'\n\nStripe.api_key = ENV['STRIPE_SECRET_KEY']\nset :port, 4242\nset :public_folder, 'public'\n\n"+anchorHelper()+hookCode()+"\n\n"+sessionRoute();
+}
 function pageCode(){
-  const ps=plans();const p=ps.includes('yearly')?'yearly':'monthly';
-  const price=p==='yearly'?usd(S.yAmt)+' per year':usd(S.mAmt)+' per month';
-  const btn=trialOn(p)?'Start '+S.tDays+'-day free trial':'Subscribe';
-  let f='<form action="/create-checkout-session" method="POST">\n';
-  if(ps.length===2)f+='  <input type="hidden" name="plan" value="'+p+'" />\n';
-  f+='  <h3>'+S.name+'</h3>\n  <p>'+price+'</p>\n  <button type="submit">'+btn+'</button>\n</form>';
-  return S.ui==='html'?f:'export default function Pricing() {\n  return (\n'+f.split('\n').map(l=>'    '+l).join('\n')+'\n  );\n}';
+  const ps=plans();const two=ps.length===2;const n=S.name;
+  const lbl=p=>(p==='yearly'?usd(S.yAmt)+' per year':usd(S.mAmt)+' per month');
+  const btn=p=>trialOn(p)?'Start '+S.tDays+'-day free trial':'Subscribe';
+  if(S.ui==='react'){
+    if(!two){const p=ps[0];return "export default function App() {\n  return (\n    <form action=\"/create-checkout-session\" method=\"POST\">\n      <h1>"+n+"</h1>\n      <p>"+lbl(p)+"</p>\n      <button type=\"submit\">"+btn(p)+"</button>\n    </form>\n  );\n}";}
+    return "import { useState } from 'react';\n\nconst PLANS = {\n  monthly: { price: '"+lbl('monthly')+"', button: '"+btn('monthly')+"' },\n  yearly: { price: '"+lbl('yearly')+"', button: '"+btn('yearly')+"' },\n};\n\nexport default function App() {\n  const [plan, setPlan] = useState('yearly');\n  return (\n    <form action=\"/create-checkout-session\" method=\"POST\">\n      <h1>"+n+"</h1>\n      <div role=\"group\" aria-label=\"Billing period\">\n        {Object.keys(PLANS).map((key) => (\n          <button\n            key={key}\n            type=\"button\"\n            aria-pressed={plan === key}\n            onClick={() => setPlan(key)}\n          >\n            {key === 'yearly' ? 'Yearly' : 'Monthly'}\n          </button>\n        ))}\n      </div>\n      <p>{PLANS[plan].price}</p>\n      <input type=\"hidden\" name=\"plan\" value={plan} />\n      <button type=\"submit\">{PLANS[plan].button}</button>\n    </form>\n  );\n}";}
+  if(!two){const p=ps[0];return "<form action=\"/create-checkout-session\" method=\"POST\">\n  <h1>"+n+"</h1>\n  <p>"+lbl(p)+"</p>\n  <button type=\"submit\">"+btn(p)+"</button>\n</form>";}
+  return "<form action=\"/create-checkout-session\" method=\"POST\">\n  <h1>"+n+"</h1>\n  <label>\n    <input type=\"radio\" name=\"plan\" value=\"monthly\">\n    Monthly, "+lbl('monthly')+"\n  </label>\n  <label>\n    <input type=\"radio\" name=\"plan\" value=\"yearly\" checked>\n    Yearly, "+lbl('yearly')+"\n  </label>\n  <button type=\"submit\">Continue to payment</button>\n</form>";
 }
 function envCode(){
-  let s='STRIPE_SECRET_KEY=sk_test_...   # never commit this file\nSTRIPE_WEBHOOK_SECRET=whsec_...\nDOMAIN=http://localhost:4242\n';
+  let s='# Never commit this file.\nSTRIPE_SECRET_KEY=sk_test_...\nSTRIPE_WEBHOOK_SECRET=whsec_...\nDOMAIN=http://localhost:4242\n';
   if(S.mOn)s+='MONTHLY_PRICE=price_...   # '+usd(S.mAmt)+' per month\n';
   if(S.yOn)s+='YEARLY_PRICE=price_...    # '+usd(S.yAmt)+' per year\n';
   return s.trim();
 }
-function events(){const e=['checkout.session.completed','invoice.paid','invoice.payment_failed','customer.subscription.created','customer.subscription.updated','customer.subscription.deleted'];if(plans().some(trialOn))e.push('customer.subscription.trial_will_end');return e;}
-function hookCode(){
-  if(S.lang!=='node')return '# '+LN[S.lang]+': verify the signature, answer 200,\n# then act on the event type.\n# Events for this plan:\n'+events().map(e=>'#   '+e).join('\n');
-  return "app.post('/webhook',\n  express.raw({ type: 'application/json' }),\n  (req, res) => {\n    let event;\n    try {\n      event = stripe.webhooks.constructEvent(\n        req.body,\n        req.headers['stripe-signature'],\n        process.env.STRIPE_WEBHOOK_SECRET\n      );\n    } catch (err) {\n      return res.status(400).send('Bad signature');\n    }\n    switch (event.type) {\n"+events().map(e=>"      case '"+e+"':").join('\n')+"\n        // turn Premium on or off from\n        // event.data.object.status\n        break;\n    }\n    res.sendStatus(200);\n  }\n);";
+function depsFile(){
+  if(S.lang==='node')return ['package.json','{\n  "name": "'+S.name.toLowerCase().replace(/[^a-z0-9]+/g,'-')+'-subscriptions",\n  "private": true,\n  "scripts": {\n    "start": "node server.js"\n  },\n  "dependencies": {\n    "dotenv": "^16.4.5",\n    "express": "^4.21.2",\n    "stripe": "^23.2.0"\n  }\n}'];
+  if(S.lang==='python')return ['requirements.txt','flask\npython-dotenv\nstripe'];
+  return ['Gemfile',"source 'https://rubygems.org'\n\ngem 'dotenv'\ngem 'sinatra'\ngem 'puma'\ngem 'stripe'"];
 }
+function readme(){
+  const run=S.lang==='node'?'npm install\nnpm start':S.lang==='python'?'pip install -r requirements.txt\npython server.py':'bundle install\nruby server.rb';
+  return '# '+S.name+' subscriptions\n\nBuilt for this plan: '+plans().map(p=>p==='monthly'?usd(S.mAmt)+' per month':usd(S.yAmt)+' per year').join(', ')+(plans().some(trialOn)?', '+S.tDays+'-day free trial':'')+'.\n\n## Run\n'+run+'\n\nOpen http://localhost:4242\n\n## Test webhooks on your laptop\nstripe listen --forward-to localhost:4242/webhook\n\nThen make a test purchase with card 4242 4242 4242 4242.';
+}
+function sampleFiles(){return [[SRV(),serverCode()],[PG(),pageCode()],['.env',envCode()],depsFile(),['README.md',readme()]];}
+function trialSnippet(){const d=Number(S.tDays);return S.lang==='python'?"'subscription_data': {\n  'trial_period_days': "+d+",\n},":"subscription_data: {\n  trial_period_days: "+d+",\n},";}
 function aiPrompt(){
   const ps=plans();let s='Add a '+S.name+' subscription checkout to my site with Stripe Checkout, in '+(S.ui==='react'?'React and ':'')+LN[S.lang]+'.\n';
   if(S.mOn)s+='- Monthly price: '+usd(S.mAmt)+' per month.\n';
@@ -287,37 +349,39 @@ function aiPrompt(){
   return s+'- Opt each session out of Managed Payments.\n- Add a webhook that verifies the signature, answers 200, and turns Premium on or off from the subscription status.\n- Work in my sandbox only. Keep the secret key in .env and never commit it.';
 }
 
-/* ---------- steps ---------- */
+/* ---------- personal plan ---------- */
+const CARDS=[['Payment succeeds','4242 4242 4242 4242'],['Payment needs authentication','4000 0025 0000 3155'],['Payment is declined','4000 0000 0000 9995'],['Card saves, then renewals fail','4000 0000 0000 0341']];
 function steps(){
-  const ps=plans();const st=[];const g=localGroups();const gk=Object.keys(g);const srv={node:'server.js',python:'server.py',ruby:'server.rb'}[S.lang];
-  st.push({id:'prod',auto:1,a:'Product and '+ps.length+' price'+(ps.length===1?'':'s')+' created in your sandbox',
-    h:'<p>Created from your plan, so there is no product form to fill in again and the guide, the Dashboard and the sample all show '+esc(S.name)+'.</p><ul>'+ps.map(p=>'<li><code>price_… '+p+'</code> '+(p==='monthly'?usd(S.mAmt)+' per month':usd(S.yAmt)+' per year')+'</li>').join('')+'</ul><p style="margin-top:6px"><span class="tag mutd">Simulated in this prototype</span></p>'});
-  st.push({id:'sample',auto:1,a:'Sample built for this plan',
-    h:'<p>Subscription mode, '+(ps.length===2?'both prices':'your price')+', the page shows '+esc(S.name)+' and not a placeholder product, and the README says <code>npm install</code> then <code>npm start</code>, which is what the scripts run. It uses the current Stripe library and opts each session out of Managed Payments, which is on by default and would reject the first Checkout.</p>',
-    code:[[srv,serverCode()],[S.ui==='react'?'Pricing.jsx':'pricing.html',pageCode()],['.env',envCode()]]});
-  if(ps.some(trialOn))st.push({id:'trial',a:'Add the '+S.tDays+'-day trial'+(S.tOn==='both'?'':' to '+(S.tOn==='yearly'?'Yearly':'Monthly')),
-    h:'<p>Already in your sample, in '+LN[S.lang]+', with your price. A trial signup charges $0.00, so look under Subscriptions, not Transactions. Stripe sends a trial-ending event 3 days before the trial converts, so you can remind the customer.</p>',code:[[srv+' · trial',trialSnippet()]]});
-  if(S.promo)st.push({id:'promo',a:'Create the '+esc(S.code)+' promo code',h:'<p>20% off the first payment. Checkout shows the code box because the sample turns on promotion codes. Try it in the preview: click "Add promotion code".</p>'});
-  if(S.c.length)st.push({id:'local',a:'Set prices for '+S.c.length+' countr'+(S.c.length===1?'y':'ies')+' outside the United States',
-    h:'<p>For subscriptions sold across borders, converted prices offer cards, Apple Pay and Google Pay only.</p>'+(gk.length?'<p style="margin-top:5px">Add a price in the local currency so these customers can pay the way they already do:</p><ul>'+gk.map(k=>'<li><b>'+k+'</b>: '+(g[k].length>4?g[k].length+' countries':g[k].join(', '))+'</li>').join('')+'</ul>':'')+'<p style="margin-top:5px">Switch "Customer in" above the preview to see each one.</p>'});
-  if(S.portal)st.push({id:'portal',a:'Turn on the customer portal',h:'<p>Customers switch plans, cancel and update their card without emailing you.</p><p style="margin-top:5px"><b>One setting to turn on with it:</b> "Limit customers to one subscription". Without it, each Checkout with the same email creates a new customer, and the portal shows only the newest one.</p>'});
-  if(S.anchor)st.push({id:'anchor',a:'Set the fixed billing day',h:'<p>Applies to prices without a trial. The first charge is prorated up to your billing day'+(S.promo?', and a one-time promo code is spent on that part-month charge, so the saving is smaller than a full period.':'.')+'</p>'});
-  if(S.tax)st.push({id:'tax',a:'Set up tax',h:'<p>Confirm your head office address, choose whether tax is added on top of the price, and add a registration for each place you must collect. Everywhere else Checkout shows $0.00 tax.</p>'});
-  st.push({id:'brand',a:'Brand the payment page',h:'<p>Your button color'+(S.icon?' and logo are':' is')+' passed from the sample, so the page does not look like a stranger\'s site. Change them on the left and watch the preview.</p>'});
-  st.push({id:'hook',a:'Listen for subscription events',h:'<p>Your server learns about renewals, failed payments and cancellations only through events. Verify the signature, answer 200, then turn Premium on or off from the subscription status, not from the order events arrive in.</p>',
-    code:[['Webhook',hookCode()],['Test on your laptop','stripe listen --forward-to localhost:4242/webhook\n# then make a test purchase in Checkout']]});
-  const t=['First payment: card 4242 4242 4242 4242, any future date, any CVC.','Returning customer with Link: test code 000000.'];
-  if(ps.some(trialOn))t.push('Trial signup: total due today is $0.00.');
-  if(S.promo)t.push('Promo: enter '+esc(S.code)+' at Checkout.');
-  S.c.filter(method).slice(0,3).forEach(c=>t.push('Customer in '+cname(c)+': local price and '+method(c)+'.'));
-  t.push('Failed renewal: card 4000 0000 0000 0341 on a test clock. Stripe retries 8 times over 14 days, then cancels.');
-  if(S.portal)t.push('Portal: switch plan and cancel with the test email.');
-  st.push({id:'test',a:'Test it',h:'<ul>'+t.map(x=>'<li>'+x+'</li>').join('')+'</ul>'});
-  st.push({id:'live',a:'Go live',h:'<p>Swap the sandbox keys and price IDs for live ones. Your plan, prices and settings carry over.</p>'});
+  const ps=plans();const g=localGroups();const gk=Object.keys(g);const st=[];
+  const G1='Create product and price',G2='Accept subscription payments',G3='Additional recommended configurations',G4='Monitor your subscriptions',G5='Go live';
+  st.push({g:G1,id:'prod',auto:1,a:esc(S.name)+' and '+ps.length+' price'+(ps.length===1?'':'s')+' created in your sandbox',
+    h:'<p>Created from your plan, so there is no product form to retype and the guide, the Dashboard and the sample all show '+esc(S.name)+'.</p><table>'+ps.map(p=>'<tr><td><code>price_… '+p+'</code></td><td>'+(p==='monthly'?usd(S.mAmt)+' per month':usd(S.yAmt)+' per year')+'</td></tr>').join('')+'</table><p style="margin-top:6px"><span class="tag mutd">Simulated in this prototype</span></p>'});
+  if(S.c.length)st.push({g:G1,id:'local',a:'Set prices for '+S.c.length+' countr'+(S.c.length===1?'y':'ies')+' outside the United States',
+    h:'<p>For subscriptions sold across borders, converted prices offer cards, Apple Pay and Google Pay only.</p>'+(gk.length?'<p style="margin-top:5px">Add a price in the local currency so these customers can pay the way they already do:</p><table>'+gk.map(k=>'<tr><td><b>'+k+'</b></td><td>'+(g[k].length>4?g[k].length+' countries':g[k].join(', '))+'</td></tr>').join('')+'</table>':'')+'<p style="margin-top:5px">Switch "Customer in" above the preview to see each one.</p>'});
+  st.push({g:G2,id:'sample',auto:1,a:'Sample built for your plan',
+    h:'<p>Subscription mode, '+(ps.length===2?'both prices':'your price')+', and the page shows '+esc(S.name)+', not a placeholder product. The README start command matches the scripts, the Stripe library is current, and each session opts out of Managed Payments, which is on by default and would reject your first Checkout.</p>',files:sampleFiles()});
+  st.push({g:G2,id:'pay',a:'Make a test payment',h:'<p>Run the sample, open the page and pay with a test card. Use any future date and any CVC.</p><table>'+CARDS.slice(0,3).map(c=>'<tr><td>'+c[0]+'</td><td><code>'+c[1]+'</code></td></tr>').join('')+'<tr><td>Returning customer with Link</td><td>Code <code>000000</code></td></tr></table>',
+    files:[['Terminal',(S.lang==='node'?'npm install\nnpm start':S.lang==='python'?'pip install -r requirements.txt\npython server.py':'bundle install\nruby server.rb')+'\n# open http://localhost:4242']]});
+  if(ps.some(trialOn))st.push({g:G3,id:'trial',a:'Add the '+S.tDays+'-day trial'+(S.tOn==='both'?'':' to '+(S.tOn==='yearly'?'Yearly':'Monthly')),
+    h:'<p>Already in your sample, in '+LN[S.lang]+', with your price. A trial signup charges $0.00, so look under Subscriptions, not Transactions.</p>',files:[[SRV()+' · trial',trialSnippet()]]});
+  if(S.promo)st.push({g:G3,id:'promo',a:'Create the '+esc(S.code)+' promo code',h:'<p>20% off the first payment. Checkout shows the code box because the sample turns on promotion codes. Try it in the preview: click "Add promotion code".</p>'});
+  if(S.portal)st.push({g:G3,id:'portal',a:'Turn on the customer portal',h:'<p>Customers switch plans, cancel and update their card without emailing you.</p><p style="margin-top:5px"><b>Turn on with it:</b> "Limit customers to one subscription". Without it, each Checkout with the same email creates a new customer, and the portal shows only the newest one.</p>'});
+  if(S.anchor)st.push({g:G3,id:'anchor',a:'Set the fixed billing day',h:'<p>Applies to prices without a trial. The first charge is prorated up to your billing day'+(S.promo?', and a one-time promo code is spent on that part-month charge, so the saving is smaller than a full period.':'.')+'</p>'});
+  if(S.tax)st.push({g:G3,id:'tax',a:'Set up tax',h:'<p>Confirm your head office address, choose whether tax is added on top of the price, and add a registration for each place you must collect. Everywhere else Checkout shows $0.00 tax.</p>'});
+  st.push({g:G3,id:'brand',a:'Brand the payment page',h:'<p>Your button color'+(S.icon?' and logo are':' is')+' passed from the sample, so the page does not look like a stranger\'s site. Change them on the left and watch the preview.</p>'});
+  st.push({g:G4,id:'hook',a:'Listen for subscription events',h:'<p>Your server learns about renewals, failed payments and cancellations only through events. Verify the signature, answer 200, then turn Premium on or off from the subscription status.</p>',
+    files:[[SRV()+' · webhook',hookCode()],['Terminal','stripe listen --forward-to localhost:4242/webhook\n# then make a test purchase in Checkout']]});
+  st.push({g:G4,id:'fail',a:'See a failed renewal recover or cancel',h:'<p>Stripe retries a declined renewal on its own. In my sandbox it retried 8 times over 14 days, then canceled the subscription.</p><table><tr><td>Test card</td><td><code>'+CARDS[3][1]+'</code> on a test clock</td></tr><tr><td>While retrying</td><td><code>customer.subscription.updated</code>, status past_due</td></tr><tr><td>After the last retry</td><td><code>customer.subscription.deleted</code></td></tr></table>'});
+  if(ps.some(trialOn))st.push({g:G4,id:'remind',a:'Remind customers before the trial converts',h:'<p>Stripe sends <code>customer.subscription.trial_will_end</code> 3 days before the trial ends. Use it to email the customer, so nobody feels tricked by the first charge.</p>'});
+  st.push({g:G5,id:'live',a:'Switch to live keys',h:'<p>Swap the sandbox keys and price IDs for live ones. Your plan, prices and settings carry over.</p>'});
   const hid=['Usage-based pricing','quantities'];
   if(!S.portal)hid.push('customer portal');if(!S.promo)hid.push('promo codes');if(!S.tax)hid.push('tax');
   if(!S.anchor)hid.push('fixed billing day');if(!ps.some(trialOn))hid.push('free trials');if(!S.c.length)hid.push('local currencies');
   return {st,hid};
+}
+function codeBlock(id,files){
+  const i=Math.min(tabs[id]||0,files.length-1);const f=files[i];
+  return '<div class="cb"><div class="cbh"><div class="tabs" role="tablist">'+files.map((x,j)=>'<button class="tab" role="tab" aria-selected="'+(j===i)+'" data-tab="'+id+':'+j+'">'+esc(x[0])+'</button>').join('')+'</div><button class="ic" data-cp="'+id+'">Copy</button><button class="ic" data-dlf="'+id+'">Download</button></div><pre>'+f[1].split('\n').map(l=>'<span class="l">'+(esc(l)||' ')+'</span>').join('')+'</pre></div>';
 }
 
 /* ---------- preview ---------- */
@@ -328,31 +392,59 @@ function preview(){
   const c=S.vc;const tr=trialOn(p);const m=money(amt,c);const lm=S.c.includes(c)?method(c):null;
   const disc=S.promo&&S.applied;const converted=c!=='US'&&!(S.c.includes(c)&&cur(c));
   const start=new Date(Date.now()+S.tDays*864e5).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
-  const num=s=>parseFloat(s.replace(/[^0-9.]/g,''));const sym=m.replace(/[0-9.,]+/,'');
+  const sym=m.replace(/[0-9.,]+/,'');const base=parseFloat(m.replace(/,/g,'').replace(/[^0-9.]/g,''));const off=Math.round(base*20)/100;
   const fmt=v=>sym+v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
-  const base=num(m.replace(/,/g,''));const off=Math.round(base*20)/100;
-  let L='<div class="biz">'+(S.icon?'<span class="ico">🦙</span>':'')+'Llama Inc sandbox <span class="sbx">Sandbox</span></div>';
+  let L='<div class="biz">'+(S.icon?'<span class="ico">🦙</span>':'')+'Llama Inc <span class="sbx">Sandbox</span></div>';
   L+='<div class="sub">'+(tr?'Try ':'Subscribe to ')+esc(S.name)+'</div>';
-  L+=tr?'<div class="big">'+S.tDays+' days free</div><div class="then">Then '+m+' per '+per+' starting '+start+'</div>'
-       :'<div class="big">'+m+'<small>per<br>'+per+'</small></div>';
+  L+=tr?'<div class="big">'+S.tDays+' days free</div><div class="then">Then '+m+' per '+per+' starting '+start+'</div>':'<div class="big">'+m+'<small>per<br>'+per+'</small></div>';
   if(S.anchor&&!tr)L+='<div class="then">First charge is prorated to your fixed billing day</div>';
-  L+='<div style="margin-top:16px"><div class="li"><div><b>'+esc(S.name)+'</b><span class="m">'+(tr?S.tDays+' days free, then billed '+per+'ly':'Billed '+per+'ly')+'</span></div><div><b>'+m+'</b></div></div>';
+  L+='<div style="margin-top:14px"><div class="li"><div><b>'+esc(S.name)+'</b><span class="m">'+(tr?S.tDays+' days free, then billed '+per+'ly':'Billed '+per+'ly')+'</span></div><div><b>'+m+'</b></div></div>';
   L+='<div class="li b"><span>Subtotal</span><span>'+m+'</span></div>';
   if(S.promo)L+=disc?'<div class="li"><span><b>'+esc(S.code)+'</b><span class="m">20% off the first payment</span></span><span>'+(tr?'Applied':'−'+fmt(off))+' <button class="x" id="unapply" aria-label="Remove promo code">×</button></span></div>':'<button class="pc" id="apply">Add promotion code</button>';
   if(S.tax)L+='<div class="li"><span>Tax<span class="m">Calculated from the billing address</span></span><span>—</span></div>';
   if(tr)L+='<div class="li b"><span>Total after trial</span><span>'+m+'</span></div>';
   L+='<div class="li b"><span>Total due today</span><span>'+(tr?fmt(0):fmt(disc?base-off:base))+'</span></div></div>';
-  const pms=[];
-  if(lm)pms.push([lm,'Local']);pms.push(['Card','']);
-  if(c==='US')pms.push(['Klarna',''],['Cash App Pay',''],['Amazon Pay','']);
+  const pms=[];if(lm)pms.push([lm,'Local']);pms.push(['Card','']);if(c==='US')pms.push(['Klarna',''],['Cash App Pay',''],['Amazon Pay','']);
   let R='<div class="wal"><div style="background:#000;color:#fff">Apple Pay</div><div style="background:#00d66f;color:#0a2540">Link</div></div><div class="or">OR</div>';
-  R+='<b style="font-size:13px">Contact information</b><div class="fld">email@example.com</div><b style="font-size:13px">Payment method</b>';
+  R+='<b style="font-size:12.5px">Contact information</b><div class="fld">email@example.com</div><b style="font-size:12.5px">Payment method</b>';
   R+='<div class="pm" style="margin-top:4px">'+pms.map(x=>'<div><i></i>'+x[0]+(x[1]?'<em>'+x[1]+'</em>':'')+'</div>').join('')+'</div>';
   R+='<div class="sbtn">'+(tr?'Start trial':'Subscribe')+'</div><div class="pv">Preview only. No payment details are collected here.</div>';
   let note='';
-  if(converted)note='<div class="conf" style="margin-top:10px">A customer in '+esc(cname(c))+' sees this price converted to their currency at checkout, and can pay by card, Apple Pay or Google Pay. '+(S.c.includes(c)?'':'Add '+esc(cname(c))+' to "Countries you sell to" to plan for it.')+'</div>';
-  else if(lm)note='<div class="conf" style="margin-top:10px;background:#e1f5e6;border-color:#bfe5c9;color:#1c7a3c">Because '+esc(S.name)+' has its own price in this currency, customers in '+esc(cname(c))+' can pay with '+lm+'.</div>';
+  if(converted)note='<div class="conf" style="margin-top:10px">A customer in '+esc(cname(c))+' sees this price converted to their currency at checkout, and can pay by card, Apple Pay or Google Pay.</div>';
+  else if(lm)note='<div class="conf good" style="margin-top:10px">Because '+esc(S.name)+' has its own price in this currency, customers in '+esc(cname(c))+' can pay with '+lm+'.</div>';
   return '<div class="co"><div class="cobar">Payment page preview</div><div class="cogrid"><div class="coL">'+L+'</div><div class="coR">'+R+'</div></div></div>'+note;
+}
+
+/* ---------- assistant ---------- */
+const QA={
+ mp:['Why would my first Checkout fail?','Your sandbox has Managed Payments on by default. It rejects a Checkout for a product that has no tax code. Your sample opts every session out with <code>managed_payments: { enabled: false }</code>, so the first payment goes through. The other fix is to give '+'the product a tax code.'],
+ trial:['Where do I see a trial signup?','A trial signup charges $0.00, so it does not appear under Transactions. Open Subscriptions and you will see it there, with the date of the first charge.'],
+ clash:['Can I combine a free trial and a fixed billing day?','Not on the same price. Stripe refuses to create the Checkout page and returns: "You may only specify one of these parameters: billing_cycle_anchor, trial_period_days." Keep the trial on one price and the fixed day on another, or drop one.'],
+ hook:['How do I test webhooks on my laptop?','Run <code>stripe listen --forward-to localhost:4242/webhook</code>, then make a test purchase. Avoid <code>stripe trigger checkout.session.completed</code> on this account: it sends shipping details, which Managed Payments rejects.'],
+ local:['Why would a customer in India not see UPI?','For subscriptions sold across borders, a converted price offers only cards, Apple Pay and Google Pay. Give the price its own INR amount and UPI appears. The same holds for Pix with BRL and SEPA Direct Debit with EUR.'],
+ dup:['Why is one email showing as three customers?','Each Checkout creates a new customer, even for the same email, and the customer portal shows only the newest one. Turn on "Limit customers to one subscription" and a returning customer is sent to the portal instead.'],
+ fail:['What happens when a renewal payment fails?','Stripe retries on its own. In this sandbox it retried 8 times over 14 days, then canceled. Your server sees the subscription go to past_due, then a deleted event. Test it with card 4000 0000 0000 0341 on a test clock.'],
+ promo:['Will my promo code work with a fixed billing day?','It works, but a one-time code is spent on the prorated first charge, so the saving is smaller than a full period. Either drop the fixed billing day or make the code last longer than one invoice.'],
+ link:['How do I test a returning customer with Link?','Tick "Save my information" on the first test payment. On the next one, enter the same email and use the test code 000000.'],
+ tax:['Why is tax showing $0.00?','Stripe calculates tax only where you have added a registration. Add one for each place you must collect; everywhere else stays at $0.00.'],
+ live:['What changes when I go live?','Only the keys and the price IDs. Swap the sandbox values in .env for live ones; your plan and settings carry over.'],
+};
+const KW={mp:['managed','fail','first checkout','tax code','error'],trial:['trial','$0','transactions','where'],clash:['combine','billing day','anchor','both'],hook:['webhook','event','listen','trigger','local'],local:['upi','pix','sepa','india','brazil','currency','local','ideal'],dup:['duplicate','customer','email','portal'],fail:['renew','retry','declin','past_due','failed'],promo:['promo','coupon','code','discount'],link:['link','000000','returning'],tax:['tax','vat','gst'],live:['live','production','launch']};
+const STEPQ={prod:['local','live'],local:['local','tax'],sample:['mp','hook'],pay:['mp','link'],trial:['trial','clash'],promo:['promo'],portal:['dup'],anchor:['clash','promo'],tax:['tax'],brand:['mp'],hook:['hook','fail'],fail:['fail','hook'],remind:['trial'],live:['live','tax']};
+function ctxLabel(){const st=window._st||[];const x=st.find(s=>s.id===open);return x?x.a.replace(/<[^>]+>/g,''):'Your plan';}
+function suggestions(){const ids=(open&&STEPQ[open])||['mp','local','clash'];const asked=chat.filter(m=>m.k).map(m=>m.k);return ids.concat(['mp','trial','dup','fail','hook']).filter((v,i,a)=>a.indexOf(v)===i&&!asked.includes(v)).slice(0,3);}
+function ask(k,text){
+  if(k){chat.push({q:QA[k][0]});chat.push({a:QA[k][1],k});}
+  else{const t=text.toLowerCase();let best=null,score=0;Object.keys(KW).forEach(id=>{const s=KW[id].filter(w=>t.includes(w)).length;if(s>score){score=s;best=id;}});
+    chat.push({q:esc(text)});
+    chat.push(best?{a:QA[best][1],k:best}:{a:'I do not have a scripted answer for that in this prototype. In the product, the assistant would answer with your plan and your current step ("'+esc(ctxLabel())+'") already attached, so you would not have to explain your setup.'});}
+  renderChat();
+}
+function renderChat(){
+  $('ctx').textContent='On: '+ctxLabel().slice(0,34);
+  $('log').innerHTML=(chat.length?'':'<div class="msg a">I can see your plan and the step you have open. Ask me anything, or pick a question below.</div>')+chat.map(m=>m.q?'<div class="msg q">'+m.q+'</div>':'<div class="msg a">'+m.a+'</div>').join('');
+  $('log').scrollTop=$('log').scrollHeight;
+  $('sug').innerHTML=suggestions().map(k=>'<button data-q="'+k+'">'+QA[k][0]+'</button>').join('');
 }
 
 /* ---------- render ---------- */
@@ -374,14 +466,12 @@ function render(keep){
   document.querySelectorAll('[data-k]').forEach(b=>b.setAttribute('aria-pressed',String(!!S[b.dataset.k])));
   document.querySelectorAll('[data-l]').forEach(b=>b.setAttribute('aria-pressed',String(S.lang===b.dataset.l)));
   document.querySelectorAll('[data-ui]').forEach(b=>b.setAttribute('aria-pressed',String(S.ui===b.dataset.ui)));
-  const ps=plans();
-  $('heads').innerHTML=clash()?'<div class="conf bad"><b>Stripe rejects this.</b> A fixed billing day cannot be combined with a free trial on the same price: "You may only specify one of these parameters: billing_cycle_anchor, trial_period_days."<br><button data-fix="anchor">Remove fixed billing day</button><button data-fix="trial">Remove trial</button></div>'
-    :S.anchor&&S.promo?'<div class="conf"><b>Heads up.</b> With a fixed billing day the first charge is prorated, and a one-time promo code is spent on that small charge.</div>'
-    :'<div class="conf"><b>Heads up.</b> A fixed billing day cannot be combined with a free trial on the same price.</div>';
+  const ps=plans();const blocked=clash()||!ps.length;
+  $('heads').innerHTML=clash()?'<div class="conf bad"><b>Stripe rejects this.</b> A fixed billing day cannot be combined with a free trial on the same price.<br><button data-fix="anchor">Remove fixed billing day</button><button data-fix="trial">Remove trial</button></div>'
+    :S.anchor&&S.promo?'<div class="conf"><b>Heads up.</b> With a fixed billing day the first charge is prorated, and a one-time promo code is spent on that small charge.</div>':'';
   $('sel').innerHTML=S.c.length>6?'<span class="tok" style="padding-right:9px">'+S.c.length+' countries selected</span>':S.c.map(c=>'<span class="tok">'+esc(cname(c))+'<button class="x" data-unc="'+c+'" aria-label="Remove '+esc(cname(c))+'">×</button></span>').join('');
   if(!$('cmenu').hidden)renderMenu();
-  $('fit').innerHTML=ps.length?'<b>This guide fits your plan.</b> '+ps.length+' recurring price'+(ps.length>1?'s':'')+(ps.some(trialOn)?', a free trial':'')+(S.promo?', a promo code':'')+', hosted Checkout, '+(S.ui==='react'?'React and ':'')+LN[S.lang]+'.':'<b>Add a price</b> to check the fit.';
-  // viewer
+  $('fit').innerHTML=!ps.length?'<span class="fitbad">Add a price to check your plan.</span>':clash()?'<span class="fitbad">✕ Stripe will reject this plan. Fix the conflict above.</span>':'<span class="fitok">✓ Your plan will work on Stripe.</span>';
   const vopts=['US'].concat(S.c.slice().sort((a,b)=>cname(a).localeCompare(cname(b))));if(!vopts.includes(S.vc))S.vc='US';
   $('vc').innerHTML=vopts.map(c=>'<option value="'+c+'"'+(S.vc===c?' selected':'')+'>'+esc(cname(c))+'</option>').join('');
   if(!ps.includes(S.vp)&&ps.length)S.vp=ps[0];
@@ -390,31 +480,26 @@ function render(keep){
   const isLlama=S.name==='Plus'&&S.mAmt==8&&S.yAmt==80&&S.tDays==7&&S.tOn==='yearly'&&!S.anchor&&!S.tax&&ps.length&&['US','IN','NL','BR'].includes(S.vc);
   $('realBtn').disabled=!isLlama;$('rPlan').value=S.vp;$('rCountry').value=S.vc;
   $('realNote').textContent=isLlama?'Opens Stripe Checkout in the Llama sandbox for this plan and country.':'Available for the Llama Plus plan as built: $8, $80, 7-day trial on Yearly; United States, India, Netherlands or Brazil.';
-  // steps
-  const blocked=clash()||!ps.length;
   $('dl').disabled=$('send').disabled=blocked;
-  if(blocked){$('stepSum').textContent='3 · Your guide · waiting for your plan';$('bar').style.width='0';
-    $('steps').innerHTML='<div class="bd" style="padding:8px 0">'+(ps.length?'Fix the conflict in your plan first.':'Add a price to start.')+' The sample and the guide are built once the plan is one Stripe will accept.</div>';$('aiBox').innerHTML='';return;}
-  const {st,hid}=steps();const isDone=x=>x.auto||done[x.id];const nd=st.filter(isDone).length;const next=st.find(x=>!isDone(x));
-  $('stepSum').textContent='3 · Your guide · '+st.length+' steps, '+nd+' done';$('bar').style.width=(100*nd/st.length)+'%';
-  let k=0;$('steps').innerHTML=st.map(x=>{k++;const d=isDone(x),nx=next&&next.id===x.id,o=open===x.id;
-    let h='<div class="st"><button class="sth" data-open="'+x.id+'" aria-expanded="'+o+'"><span class="n'+(d?' d':nx?' nx':'')+'">'+(d?'✓':k)+'</span><span class="a">'+x.a+'</span>'+(d?'<span class="tag ok">Done</span>':nx?'<span class="tag nxt">Next</span>':'')+'</button>';
-    if(o){h+='<div class="bd">'+x.h+(x.code?x.code.map(c=>'<p style="margin-top:8px"><b>'+esc(c[0])+'</b></p><pre>'+esc(c[1])+'</pre>').join(''):'')+'<div class="acts">'+
-      (x.auto?'':'<button class="p" data-done="'+x.id+'">'+(d?'Mark as not done':'Mark done, show next')+'</button>')+
-      (x.code?'<button data-copy="'+x.id+'">Copy code</button>':'')+'<button data-ask="'+x.id+'">Ask AI about this step</button></div></div>';}
+  if(blocked){$('cnt').textContent='Waiting';$('bar').style.width='0';window._st=[];
+    $('steps').innerHTML='<div class="bd" style="padding:8px 0">'+(ps.length?'Fix the conflict in your plan first.':'Add a price to start.')+' Your personal plan is built once Stripe will accept it.</div>';renderChat();return;}
+  const {st,hid}=steps();window._st=st;const isDone=x=>x.auto||done[x.id];const nd=st.filter(isDone).length;const next=st.find(x=>!isDone(x));
+  $('cnt').textContent=nd+' of '+st.length+' done';$('bar').style.width=(100*nd/st.length)+'%';
+  let k=0,lastG='';$('steps').innerHTML=st.map(x=>{k++;const d=isDone(x),nx=next&&next.id===x.id,o=open===x.id;let h='';
+    if(x.g!==lastG){lastG=x.g;const gs=st.filter(s=>s.g===x.g);h+='<div class="grp">'+x.g+'<span>'+gs.filter(isDone).length+'/'+gs.length+'</span></div>';}
+    h+='<div class="st"><button class="sth" data-open="'+x.id+'" aria-expanded="'+o+'"><span class="n'+(d?' d':nx?' nx':'')+'">'+(d?'✓':k)+'</span><span class="a">'+x.a+'</span>'+(d?'<span class="tag ok">Done</span>':nx?'<span class="tag nxt">Next</span>':'')+'</button>';
+    if(o)h+='<div class="bd">'+x.h+(x.files?codeBlock(x.id,x.files):'')+'<div class="acts">'+(x.auto?'':'<button class="p" data-done="'+x.id+'">'+(d?'Mark as not done':'Mark done, show next')+'</button>')+'</div></div>';
     return h+'</div>';}).join('')
-    +'<div class="st" style="border:0;opacity:.65"><div class="sth" style="cursor:default"><span class="n">–</span><span class="a" style="font-weight:400">'+hid.map((s,i)=>i?s:s[0].toUpperCase()+s.slice(1)).join(', ')+'</span><span class="tag mutd">Hidden</span></div></div>';
-  window._st=st;
-  $('aiBox').innerHTML=showAi?'<pre id="aiText">'+esc(showAi)+'</pre>':'';
+    +'<div class="grp" style="opacity:.7">Hidden, not part of your plan<span></span></div><div class="bd" style="padding:4px 0 0">'+hid.map((s,i)=>i?s:s[0].toUpperCase()+s.slice(1)).join(', ')+'</div>';
+  renderChat();
 }
-function bundle(){
-  const srv={node:'server.js',python:'server.py',ruby:'server.rb'}[S.lang];
-  return '# '+S.name+' subscription sample, built for this plan\n\n## Run\nnpm install\nnpm start\n\n## '+srv+'\n'+serverCode()+'\n\n## '+(S.ui==='react'?'Pricing.jsx':'pricing.html')+'\n'+pageCode()+'\n\n## .env\n'+envCode()+'\n\n## Webhook\n'+hookCode()+'\n\n## Test\nstripe listen --forward-to localhost:4242/webhook\nCard 4242 4242 4242 4242 · Link code 000000 · failed renewal card 4000 0000 0000 0341\n\n## Prompt for Claude or Cursor\n'+aiPrompt()+'\n';
-}
+function bundle(){return sampleFiles().map(f=>'===== '+f[0]+' =====\n'+f[1]).join('\n\n')+'\n\n===== Prompt for Claude or Cursor =====\n'+aiPrompt()+'\n';}
+function save(name,text){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type:'text/plain'}));a.download=name;document.body.appendChild(a);a.click();a.remove();}
 function copy(t,b,label){if(navigator.clipboard)navigator.clipboard.writeText(t).then(()=>{const o=b.textContent;b.textContent=label||'Copied';setTimeout(()=>b.textContent=o,1500);}).catch(()=>{});}
+function curFile(id){const x=window._st.find(s=>s.id===id);return x.files[Math.min(tabs[id]||0,x.files.length-1)];}
 document.addEventListener('click',e=>{
   if(!e.target.closest('.pick')&&!$('cmenu').hidden)$('cmenu').hidden=true;
-  const b=e.target.closest('button');if(!b||b.id==='realBtn')return;
+  const b=e.target.closest('button');if(!b||b.closest('form'))return;
   if(b.dataset.k){S[b.dataset.k]=!S[b.dataset.k];if(b.dataset.k==='promo')S.applied=false;render();}
   else if(b.dataset.l){S.lang=b.dataset.l;render();}
   else if(b.dataset.ui){S.ui=b.dataset.ui;render();}
@@ -428,13 +513,17 @@ document.addEventListener('click',e=>{
   else if(b.id==='apply'){S.applied=true;render(true);}
   else if(b.id==='unapply'){S.applied=false;render(true);}
   else if(b.dataset.open){open=open===b.dataset.open?null:b.dataset.open;render(true);}
-  else if(b.dataset.done){const id=b.dataset.done;done[id]=!done[id];if(done[id]){const st=window._st;const nx=st.find(x=>!(x.auto||done[x.id]));open=nx?nx.id:null;}render(true);}
-  else if(b.dataset.copy){const x=window._st.find(s=>s.id===b.dataset.copy);copy(x.code.map(c=>'// '+c[0]+'\n'+c[1]).join('\n\n'),b);}
-  else if(b.dataset.ask){const x=window._st.find(s=>s.id===b.dataset.ask);showAi='I am on the step "'+x.a.replace(/<[^>]+>/g,'')+'" of setting up Stripe Checkout subscriptions.\nMy plan:\n'+aiPrompt().split('\n').slice(1).join('\n')+'\nExplain this step for my plan and tell me what to check.';render(true);copy(showAi,b,'Copied prompt');}
-  else if(b.id==='reset'){S=JSON.parse(JSON.stringify(DEF));open=null;done={};showAi=false;$('cq').value='';render();}
-  else if(b.id==='send'){showAi=aiPrompt();render(true);copy(showAi,b,'Copied. Paste into Claude or Cursor');}
-  else if(b.id==='dl'){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([bundle()],{type:'text/markdown'}));a.download=S.name.toLowerCase().replace(/[^a-z0-9]+/g,'-')+'-subscription-sample.md';document.body.appendChild(a);a.click();a.remove();}
+  else if(b.dataset.tab){const [id,j]=b.dataset.tab.split(':');tabs[id]=Number(j);render(true);}
+  else if(b.dataset.cp){copy(curFile(b.dataset.cp)[1],b);}
+  else if(b.dataset.dlf){const f=curFile(b.dataset.dlf);save(f[0].replace(/ · .*/,'').replace(/^Terminal$/,'commands.txt'),f[1]);}
+  else if(b.dataset.done){const id=b.dataset.done;done[id]=!done[id];if(done[id]){const nx=window._st.find(x=>!(x.auto||done[x.id]));open=nx?nx.id:null;}render(true);}
+  else if(b.dataset.q){ask(b.dataset.q);}
+  else if(b.id==='human'){chat.push({a:'In the product this opens a chat with a Stripe specialist, with your plan and current step attached, so support and the assistant are in one place.'});renderChat();}
+  else if(b.id==='reset'){S=JSON.parse(JSON.stringify(DEF));open=null;done={};tabs={};chat=[];$('cq').value='';render();}
+  else if(b.id==='send'){const t=aiPrompt();chat.push({q:'Send this plan to Claude or Cursor'});chat.push({a:'Copied. Paste this into Claude with the Stripe connector, or into Cursor:<br><br>'+esc(t).replace(/\n/g,'<br>')});renderChat();copy(t,b,'Copied');}
+  else if(b.id==='dl'){save(S.name.toLowerCase().replace(/[^a-z0-9]+/g,'-')+'-subscription-sample.txt',bundle());}
 });
+$('askForm').addEventListener('submit',e=>{e.preventDefault();const v=$('askIn').value.trim();if(v){ask(null,v);$('askIn').value='';}});
 $('cq').addEventListener('focus',()=>{$('cmenu').hidden=false;renderMenu();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')$('cmenu').hidden=true;});
 document.addEventListener('change',e=>{const t=e.target;
