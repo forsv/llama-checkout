@@ -21,3 +21,25 @@ npm start
 ~~~
 
 3. Go to [http://localhost:3000/checkout](http://localhost:3000/checkout)
+
+## Deploy
+
+Build the page:
+
+~~~
+npm run build
+~~~
+
+Start the app:
+
+~~~
+node server.js
+~~~
+
+Environment variables:
+
+- DOMAIN
+- STRIPE_SECRET_KEY
+- PRICE_MONTHLY
+- PRICE_YEARLY
+- STRIPE_WEBHOOK_SECRET

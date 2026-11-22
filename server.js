@@ -1,10 +1,11 @@
 require('dotenv').config();
+const path = require('path');
 const stripe = require('stripe')(
   process.env.STRIPE_SECRET_KEY
 );
 const express = require('express');
 const app = express();
-app.use(express.static('public'));
+const buildDir = path.join(__dirname, 'build');
 
 const idOf = (value) => {
   if (!value) return 'none';
@@ -115,8 +116,22 @@ app.post(
   }
 );
 
-app.listen(4242, () =>
+const sendCheckoutPage = (req, res) => {
+  res.sendFile(path.join(buildDir, 'index.html'));
+};
+
+app.get('/', (req, res) => {
+  res.redirect('/checkout');
+});
+
+app.get('/checkout', sendCheckoutPage);
+app.get('/checkout/', sendCheckoutPage);
+app.use('/checkout', express.static(buildDir));
+
+const port = process.env.PORT || 4242;
+
+app.listen(port, () =>
   console.log(
-    'Running on port 4242'
+    'Running on port ' + port
   )
 );
