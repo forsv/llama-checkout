@@ -8,7 +8,21 @@ const stripe = require('stripe')(
 );
 const express = require('express');
 const app = express();
+app.set('trust proxy', true);
 const buildDir = path.join(__dirname, 'build');
+
+const orUnknown = (value) => {
+  if (value === undefined || value === null || value === '') {
+    return 'unknown';
+  }
+  return String(value).replace(/[\r\n]+/g, ' ');
+};
+
+const visitorIp = (req) => {
+  const forwarded = req.get('x-forwarded-for');
+  if (!forwarded) return orUnknown(req.ip);
+  return orUnknown(String(forwarded).split(',')[0].trim());
+};
 
 const idOf = (value) => {
   if (!value) return 'none';
@@ -368,6 +382,15 @@ app.post(
   async (req, res) => {
     try {
       const plan = req.body.plan;
+      console.log(
+        'CHECKOUT_START' +
+          ' ip=' + visitorIp(req) +
+          ' country=' +
+          orUnknown(req.get('cf-ipcountry')) +
+          ' plan=' + orUnknown(plan) +
+          ' picked=' +
+          orUnknown(req.body.country)
+      );
       const price =
         plan === 'yearly'
           ? process.env.PRICE_YEARLY
@@ -525,6 +548,33 @@ const sendCheckoutPage = (req, res) => {
 
 app.get('/favicon.ico', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'favicon.ico'));
+});
+
+const pageViewPaths = {
+  '/': true,
+  '/checkout': true,
+  '/checkout/': true,
+  '/checkout/plan-first.html': true,
+};
+
+app.use((req, res, next) => {
+  if (req.method !== 'GET' || !pageViewPaths[req.path]) {
+    next();
+    return;
+  }
+  console.log(
+    'PAGE_VIEW' +
+      ' time=' + new Date().toISOString() +
+      ' path=' + orUnknown(req.originalUrl) +
+      ' ip=' + visitorIp(req) +
+      ' country=' + orUnknown(req.get('cf-ipcountry')) +
+      ' city=' + orUnknown(req.get('cf-ipcity')) +
+      ' region=' + orUnknown(req.get('cf-region')) +
+      ' ua=' + orUnknown(req.get('user-agent')) +
+      ' lang=' + orUnknown(req.get('accept-language')) +
+      ' ref=' + orUnknown(req.get('referer'))
+  );
+  next();
 });
 
 app.get('/', (req, res) => {
