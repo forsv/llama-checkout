@@ -1,45 +1,36 @@
-# Accept a Payment with Stripe Checkout
+# Llama Plus checkout
 
-Stripe Checkout is the fastest way to get started with payments. Included are some basic build and run scripts you can use to start up the application.
+Llama Inc sells Llama Plus, an AI assistant for planning a trip. It builds the days, watches fares, and keeps the plan available offline.
 
-## Set Price ID
+Live demo: https://llama-checkout-jb8q.onrender.com/checkout
 
-In the server code, replace `{{PRICE_ID}}` with a Price ID (`price_xxx`) that you created.
+The plan is $8 a month, or $80 a year with a 7-day free trial on the yearly plan.
 
-## Running the sample
+## Run it locally
 
-1. Build the application
+1. Install dependencies.
 
-~~~
+```bash
 npm install
-~~~
+```
 
-2. Run the application
+2. Copy `.env.example` to `.env` and fill in the values. The server reads `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `DOMAIN`, `PRICE_MONTHLY`, `PRICE_YEARLY`, and `PORT`.
 
-~~~
+3. Start the app.
+
+```bash
 npm start
-~~~
+```
 
-3. Go to [http://localhost:3000/checkout](http://localhost:3000/checkout)
+4. Open http://localhost:3000/checkout
 
-## Deploy
+To serve the built page the way the live demo does, run `npm run build`, then `node server.js`, and open http://localhost:4242/checkout. If `PORT` is set, use that port instead.
 
-Build the page:
+## Test cards
 
-~~~
-npm run build
-~~~
+Use these Stripe test cards. Any future expiry and any CVC work.
 
-Start the app:
+- `4242 4242 4242 4242` — the payment succeeds
+- `4000 0000 0000 0341` — the card can be saved, and the charge fails
 
-~~~
-node server.js
-~~~
-
-Environment variables:
-
-- DOMAIN
-- STRIPE_SECRET_KEY
-- PRICE_MONTHLY
-- PRICE_YEARLY
-- STRIPE_WEBHOOK_SECRET
+Built with Cursor and Claude.
