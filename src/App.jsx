@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import ReactDOM from "react-dom";
 import "./App.css";
 
 const PORTAL_URL =
@@ -703,6 +704,128 @@ function Landing() {
   );
 }
 
+const FEATURE_LABELS = {
+  "unlimited-itineraries": "Unlimited itineraries",
+  "price-alerts": "Price alerts",
+  "offline-trip-plans": "Offline trip plans",
+  "day-by-day-routes": "Day-by-day routes",
+};
+
+const FEATURE_ORDER = [
+  "unlimited-itineraries",
+  "price-alerts",
+  "offline-trip-plans",
+  "day-by-day-routes",
+];
+
+const CONFETTI_COLORS = ["#2F6BF0", "#FFE14D", "#ffffff", "#7DCFC4"];
+
+function labeledFeatures(keys) {
+  const known = FEATURE_ORDER.filter((key) => keys.includes(key)).map(
+    (key) => ({ key, label: FEATURE_LABELS[key] })
+  );
+  const unknown = keys
+    .filter((key) => !FEATURE_LABELS[key])
+    .map((key) => ({ key, label: key }));
+  return [...known, ...unknown];
+}
+
+function Confetti() {
+  const reduced = useReducedMotion();
+  const canvasRef = useRef(null);
+  const [done, setDone] = useState(false);
+  const played = useRef(false);
+
+  useEffect(() => {
+    if (played.current) return undefined;
+    played.current = true;
+    if (reduced) return undefined;
+
+    const canvas = canvasRef.current;
+    const context = canvas && canvas.getContext("2d");
+    if (!canvas || !context) return undefined;
+
+    let frame = 0;
+    let width = 0;
+    let height = 0;
+
+    const fit = () => {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      const ratio = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.floor(width * ratio);
+      canvas.height = Math.floor(height * ratio);
+      context.setTransform(ratio, 0, 0, ratio, 0, 0);
+    };
+    fit();
+
+    const flakes = Array.from({ length: 170 }, (_, index) => ({
+      x: Math.random() * width,
+      y: -8 - Math.random() * 70,
+      vx: (Math.random() - 0.5) * 150,
+      vy: 180 + Math.random() * 720,
+      spin: (Math.random() - 0.5) * 7,
+      angle: Math.random() * Math.PI * 2,
+      sway: Math.random() * Math.PI * 2,
+      w: 7 + Math.random() * 6,
+      h: 10 + Math.random() * 8,
+      color: CONFETTI_COLORS[index % CONFETTI_COLORS.length],
+    }));
+
+    const started = performance.now();
+    let previous = started;
+    let stopped = false;
+
+    const draw = (now) => {
+      if (stopped) return;
+      const elapsed = now - started;
+      const dt = Math.min(0.034, (now - previous) / 1000);
+      previous = now;
+      context.clearRect(0, 0, width, height);
+      flakes.forEach((flake) => {
+        flake.vy += 80 * dt;
+        flake.x += flake.vx * dt;
+        flake.y += flake.vy * dt;
+        flake.angle += flake.spin * dt;
+        flake.sway += dt * 5;
+        context.save();
+        context.translate(flake.x + Math.sin(flake.sway) * 16, flake.y);
+        context.rotate(flake.angle);
+        context.fillStyle = flake.color;
+        context.fillRect(-flake.w / 2, -flake.h / 2, flake.w, flake.h);
+        context.restore();
+      });
+      if (elapsed < 4000) {
+        frame = window.requestAnimationFrame(draw);
+      }
+    };
+
+    const stop = () => {
+      stopped = true;
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener("resize", fit);
+    };
+
+    frame = window.requestAnimationFrame(draw);
+    window.addEventListener("resize", fit);
+    const end = window.setTimeout(() => {
+      stop();
+      setDone(true);
+    }, 4000);
+    return () => {
+      window.clearTimeout(end);
+      stop();
+    };
+  }, [reduced]);
+
+  if (reduced || done) return null;
+
+  return ReactDOM.createPortal(
+    <canvas ref={canvasRef} className="confetti" aria-hidden="true" />,
+    document.body
+  );
+}
+
 function Success() {
   const params = new URLSearchParams(window.location.search);
   const sessionId = params.get("session_id");
@@ -747,26 +870,31 @@ function Success() {
     };
   }, [sessionId]);
 
+  const unlocked = labeledFeatures(features);
+
   return (
-    <main className="status-wrap">
-      <section className="status-card">
-        <h1>Welcome to Llama Plus</h1>
-        {features.length > 0 && (
-          <>
-            <p>Unlocked on your account</p>
-            <ul className="unlocked">
-              {features.map((name) => (
-                <li key={name}>
-                  <span className="check" aria-hidden="true" />
-                  {name}
-                </li>
-              ))}
-            </ul>
-          </>
-        )}
-        <PortalLink />
-      </section>
-    </main>
+    <>
+      <Confetti />
+      <main className="status-wrap">
+        <section className="status-card">
+          <h1>Welcome to Llama Plus</h1>
+          {unlocked.length > 0 && (
+            <>
+              <p>Unlocked on your account</p>
+              <ul className="unlocked">
+                {unlocked.map((item, index) => (
+                  <li key={item.key + "-" + index}>
+                    <span className="check" aria-hidden="true" />
+                    {item.label}
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+          <PortalLink />
+        </section>
+      </main>
+    </>
   );
 }
 
