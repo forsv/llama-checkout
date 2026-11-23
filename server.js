@@ -585,6 +585,10 @@ app.get('/checkout', sendCheckoutPage);
 app.get('/checkout/', sendCheckoutPage);
 app.use('/checkout', express.static(buildDir));
 
+app.get('/healthz', (req, res) => {
+  res.status(200).json({ ok: true });
+});
+
 const port = process.env.PORT || 4242;
 
 app.listen(port, () =>
