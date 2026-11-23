@@ -1,4 +1,5 @@
 require('dotenv').config();
+const fs = require('fs');
 const https = require('https');
 const path = require('path');
 const querystring = require('querystring');
@@ -103,12 +104,116 @@ const premiumDecision = (type, subscription) => {
 };
 
 const handledEventIds = new Set();
+const subscribersPath = path.join(
+  __dirname,
+  'data',
+  'subscribers.json'
+);
+
+const readSubscribers = () => {
+  try {
+    return JSON.parse(
+      fs.readFileSync(subscribersPath, 'utf8')
+    );
+  } catch (err) {
+    return {};
+  }
+};
+
+const writeSubscribers = (subscribers) => {
+  fs.mkdirSync(path.dirname(subscribersPath), {
+    recursive: true,
+  });
+  fs.writeFileSync(
+    subscribersPath,
+    JSON.stringify(subscribers, null, 2) + '\n'
+  );
+};
+
+const saveSubscriber = (
+  customer,
+  subscription,
+  status
+) => {
+  if (!customer || customer === 'none') return;
+  const subscribers = readSubscribers();
+  subscribers[customer] = {
+    customer,
+    subscription:
+      subscription && subscription !== 'none'
+        ? subscription
+        : 'none',
+    status: status || 'none',
+  };
+  writeSubscribers(subscribers);
+};
+
+const updateSubscriberStatus = (
+  customer,
+  status,
+  subscription
+) => {
+  if (!customer || customer === 'none') return;
+  const subscribers = readSubscribers();
+  const current = subscribers[customer] || {
+    customer,
+    subscription:
+      subscription && subscription !== 'none'
+        ? subscription
+        : 'none',
+    status: 'none',
+  };
+  current.status = status || 'none';
+  subscribers[customer] = current;
+  writeSubscribers(subscribers);
+};
+
+const stripeForm = (method, requestPath, fields) =>
+  new Promise((resolve, reject) => {
+    const body = querystring.stringify(fields);
+    const req = https.request(
+      {
+        hostname: 'api.stripe.com',
+        path: requestPath,
+        method,
+        headers: {
+          Authorization:
+            'Bearer ' +
+            process.env.STRIPE_SECRET_KEY,
+          'Content-Type':
+            'application/x-www-form-urlencoded',
+          'Content-Length': Buffer.byteLength(body),
+        },
+      },
+      (response) => {
+        let payload = '';
+        response.on('data', (chunk) => {
+          payload += chunk;
+        });
+        response.on('end', () => {
+          if (response.statusCode >= 400) {
+            reject(
+              new Error(
+                'Stripe request failed ' +
+                  response.statusCode
+              )
+            );
+            return;
+          }
+          resolve(JSON.parse(payload));
+        });
+      }
+    );
+    req.on('error', reject);
+    req.write(body);
+    req.end();
+  });
 
 // This demo prints decisions instead of updating a user database.
 app.post(
   '/webhook',
   express.raw({ type: 'application/json' }),
-  (req, res) => {
+  async (req, res) => {
     let event;
 
     try {
@@ -147,6 +252,7 @@ app.post(
       'customer.subscription.trial_will_end',
     ];
 
+    try {
     if (watched.includes(event.type)) {
       const object = event.data.object;
       const customer = idOf(object.customer);
@@ -162,6 +268,41 @@ app.post(
           ' customer=' + customer +
           ' subscription=' + subscription
       );
+      if (event.type === 'checkout.session.completed') {
+        saveSubscriber(
+          customer,
+          subscription,
+          object.status
+        );
+      }
+      if (
+        event.type === 'invoice.payment_failed' &&
+        customer !== 'none'
+      ) {
+        updateSubscriberStatus(
+          customer,
+          'past_due',
+          subscription
+        );
+        const portal = await stripeForm(
+          'POST',
+          '/v1/billing_portal/sessions',
+          {
+            customer,
+            return_url:
+              (process.env.DOMAIN ||
+                'http://localhost:3000') +
+              '/checkout',
+          }
+        );
+        if (portal && portal.url) {
+          console.log(
+            'PAYMENT_FAILED customer=' +
+              customer +
+              ' portal_link_ready=true'
+          );
+        }
+      }
     } else if (
       event.type ===
       'entitlements.active_entitlement_summary.updated'
@@ -200,8 +341,16 @@ app.post(
         object
       );
       if (decision) console.log(decision);
+      updateSubscriberStatus(
+        idOf(object.customer),
+        object.status,
+        idOf(object)
+      );
     } else {
       console.log('Other event ' + event.type);
+    }
+    } catch (err) {
+      console.error('Webhook handler failed');
     }
 
     res.sendStatus(200);
