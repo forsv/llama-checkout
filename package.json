@@ -1,6 +1,6 @@
 {
   "name": "llama-checkout",
-  "version": "0.1.20",
+  "version": "0.1.21",
   "description": "Checkout demo for Llama Plus, an AI trip planner from Llama Inc.",
   "dependencies": {
     "@stripe/react-stripe-js": "^3.7.0",

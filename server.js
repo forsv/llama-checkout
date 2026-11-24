@@ -350,6 +350,16 @@ app.post(
             ? 'true'
             : 'false')
       );
+      if (
+        event.type ===
+        'customer.subscription.trial_will_end'
+      ) {
+        console.log(
+          'trial ending' +
+            ' event=' + event.id +
+            ' subscription=' + idOf(object)
+        );
+      }
       const decision = premiumDecision(
         event.type,
         object
